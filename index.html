@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neron · El sistema premium para tu agencia de autos</title>
+<meta name="description" content="Neron profesionaliza tu agencia de autos: inventario, ventas, créditos, cobranza, contratos y reportes en un solo lugar. Prueba gratis 14 días." />
+<meta property="og:title" content="Neron · El sistema premium para tu agencia" />
+<meta property="og:description" content="Inventario, ventas, créditos, cobranza y contratos en un solo lugar. Prueba gratis 14 días." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0b0b0d; --panel:#16161a; --panel2:#1d1d22; --linea:rgba(217,184,96,.16);
+    --oro:#D9B860; --oro2:#e7cd86; --texto:#f2f2f4; --suave:#a4a4ab; --tenue:#6c6c73;
+    --serif:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif; --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--texto); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  a{color:inherit; text-decoration:none}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 22px}
+  .oro{color:var(--oro)}
+  h1,h2,h3{font-family:var(--serif); font-weight:700; letter-spacing:-.3px; line-height:1.12}
+  svg.ic{width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none; vertical-align:-.14em}
+
+  /* INTRO — solo el logo, animado al entrar */
+  #intro{position:fixed; inset:0; z-index:200; background:#000; display:flex; align-items:center; justify-content:center; transition:opacity .9s ease, visibility .9s}
+  #intro.hide{opacity:0; visibility:hidden}
+  .intro-logo{width:min(340px,70vw); opacity:0; animation:logoEnter 1.7s cubic-bezier(.16,.84,.3,1) forwards}
+  @keyframes logoEnter{
+    0%{opacity:0; transform:translateY(22px) scale(.82); filter:blur(8px)}
+    55%{opacity:1; filter:blur(0)}
+    100%{opacity:1; transform:translateY(0) scale(1)}
+  }
+
+  /* NAV */
+  header{position:sticky; top:0; z-index:50; background:rgba(11,11,13,.8); backdrop-filter:blur(12px); border-bottom:1px solid var(--linea)}
+  .nav{display:flex; align-items:center; justify-content:space-between; height:70px}
+  .marca img{height:48px; width:auto; display:block}
+  .nav-cta{display:flex; align-items:center; gap:13px}
+  .btn{display:inline-flex; align-items:center; gap:8px; border-radius:999px; font-weight:600; cursor:pointer; border:none; font-size:15px; font-family:var(--sans); transition:.18s; white-space:nowrap}
+  .btn svg.ic{font-size:18px}
+  .btn-oro{background:linear-gradient(180deg,var(--oro2),var(--oro)); color:#231c08; padding:12px 22px}
+  .btn-oro:hover{filter:brightness(1.06); transform:translateY(-1px); box-shadow:0 8px 22px rgba(217,184,96,.22)}
+  .btn-ghost{background:transparent; color:var(--texto); border:1px solid rgba(255,255,255,.16); padding:11px 20px}
+  .btn-ghost:hover{border-color:var(--oro); color:var(--oro)}
+  .btn-wa{background:#1faa56; color:#fff; padding:12px 22px}
+  .btn-wa:hover{filter:brightness(1.08); transform:translateY(-1px)}
+  .nav .btn-ghost{display:none}
+  @media(min-width:720px){ .nav .btn-ghost{display:inline-flex} }
+
+  /* Reveal */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.visible{opacity:1; transform:none}
+  .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s}
+
+  /* HERO */
+  .hero{position:relative; text-align:center; padding:92px 0 60px}
+  .aurora{position:absolute; inset:-200px 0 auto 0; height:560px; pointer-events:none; z-index:-1;
+    background:radial-gradient(50% 60% at 50% 30%, rgba(217,184,96,.16), transparent 70%),
+               radial-gradient(40% 50% at 20% 10%, rgba(120,90,200,.08), transparent 70%)}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:3px; text-transform:uppercase; color:var(--oro); border:1px solid var(--linea); border-radius:999px; padding:7px 18px; margin-bottom:26px}
+  .eyebrow svg.ic{font-size:15px}
+  .hero h1{font-size:clamp(34px,6vw,60px); font-weight:700; letter-spacing:-.5px; margin-bottom:20px}
+  .hero h1 em{font-style:normal; color:var(--oro)}
+  .hero .lead{font-size:clamp(17px,2.3vw,21px); color:var(--suave); max-width:620px; margin:0 auto 32px}
+  .hero-cta{display:flex; flex-wrap:wrap; gap:13px; justify-content:center; margin-bottom:16px}
+  .hero-cta .btn{padding:15px 30px; font-size:16px}
+  .micro{font-size:13.5px; color:var(--tenue)}
+
+  /* PREVIEW */
+  .preview{margin:58px auto 0; max-width:920px; position:relative}
+  .preview::after{content:''; position:absolute; inset:auto 8% -30px 8%; height:60px; background:radial-gradient(ellipse at center, rgba(217,184,96,.22), transparent 70%); filter:blur(8px); z-index:-1}
+  .ventana{background:linear-gradient(180deg,#17171c,#121216); border:1px solid var(--linea); border-radius:16px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .ventana-top{display:flex; align-items:center; gap:7px; padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.06)}
+  .ventana-top i{width:11px; height:11px; border-radius:50%; background:#3a3a40; display:inline-block}
+  .ventana-top .url{margin-left:14px; font-size:12px; color:var(--tenue); letter-spacing:.5px}
+  .ventana-cuerpo{padding:22px}
+  .pv-titulo{font-family:var(--serif); font-size:22px; margin-bottom:3px}
+  .pv-fecha{font-size:12px; color:var(--tenue); margin-bottom:18px}
+  .pv-tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px}
+  .pv-tile{background:#1c1c21; border:1px solid rgba(217,184,96,.12); border-radius:12px; padding:14px 10px; text-align:center}
+  .pv-tile .ic-box{width:36px; height:36px; border-radius:9px; background:rgba(217,184,96,.12); color:var(--oro); display:flex; align-items:center; justify-content:center; margin:0 auto 8px; font-size:20px}
+  .pv-tile span{font-size:11.5px; color:var(--suave)}
+  .pv-metrics{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+  .pv-metric{background:#1c1c21; border-radius:12px; padding:14px}
+  .pv-metric .v{font-size:20px; font-weight:700; color:var(--oro); font-family:var(--serif)}
+  .pv-metric .l{font-size:11px; color:var(--tenue)}
+  @media(max-width:620px){ .pv-tiles{grid-template-columns:repeat(2,1fr)} .pv-metrics{grid-template-columns:repeat(1,1fr)} }
+
+  /* TRUST */
+  .trust{display:flex; flex-wrap:wrap; gap:12px 28px; justify-content:center; padding:30px 0; border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); margin-top:84px}
+  .trust span{display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--suave)}
+  .trust svg.ic{font-size:18px; color:var(--oro)}
+
+  /* SECCIONES */
+  section.bloque{padding:84px 0}
+  .titulo{text-align:center; margin-bottom:50px}
+  .titulo .et{font-size:12.5px; letter-spacing:3px; text-transform:uppercase; color:var(--oro); margin-bottom:12px}
+  .titulo h2{font-size:clamp(30px,4.4vw,46px); margin-bottom:12px}
+  .titulo p{color:var(--suave); font-size:17px; max-width:560px; margin:0 auto}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px}
+  .card{background:var(--panel); border:1px solid var(--linea); border-radius:18px; padding:28px 25px; transition:.22s}
+  .card:hover{transform:translateY(-5px); border-color:rgba(217,184,96,.42); box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .card .ic-box{width:56px; height:56px; border-radius:14px; background:rgba(217,184,96,.1); color:var(--oro); display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:18px}
+  .card h3{font-size:23px; margin-bottom:8px}
+  .card p{color:var(--suave); font-size:15px}
+
+  /* PASOS */
+  .pasos{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px}
+  .paso{background:var(--panel); border:1px solid var(--linea); border-radius:18px; padding:32px 26px}
+  .paso .num{font-family:var(--serif); width:46px; height:46px; border-radius:50%; border:1px solid var(--oro); color:var(--oro); font-weight:700; display:flex; align-items:center; justify-content:center; margin-bottom:18px; font-size:22px}
+  .paso h3{font-size:21px; margin-bottom:7px}
+  .paso p{color:var(--suave); font-size:15px}
+
+  /* PRECIO — 3 planes */
+  .planes{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px; align-items:stretch; max-width:920px; margin:0 auto}
+  .plan{position:relative; display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--linea); border-radius:22px; padding:34px 28px; text-align:center}
+  .plan.destacado{background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1.5px solid rgba(217,184,96,.55); box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .plan .pop{position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:linear-gradient(180deg,var(--oro2),var(--oro)); color:#231c08; font-size:11.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:6px 16px; border-radius:999px; white-space:nowrap}
+  .plan .pnombre{font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--oro); margin-bottom:14px}
+  .plan .monto{font-family:var(--serif); font-size:50px; font-weight:700; line-height:1; letter-spacing:-1px}
+  .plan .monto small{font-family:var(--sans); font-size:15px; color:var(--suave); font-weight:500; display:block; margin-top:4px}
+  .plan .ahorro{color:var(--oro); font-size:13px; margin-top:8px; min-height:18px}
+  .plan .btn{width:100%; justify-content:center; padding:14px; margin-top:22px}
+  .plan-incluye{max-width:560px; margin:40px auto 0; text-align:center}
+  .plan-incluye h4{font-family:var(--serif); font-size:20px; margin-bottom:18px; color:var(--texto)}
+  .plan-incluye ul{list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px 22px; text-align:left}
+  .plan-incluye li{display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:var(--suave)}
+  .plan-incluye li svg.ic{font-size:19px; color:var(--oro); margin-top:1px; flex:none}
+
+  /* CTA FINAL */
+  .cta-final{position:relative; text-align:center; padding:90px 0}
+  .cta-final h2{font-size:clamp(28px,4.4vw,46px); margin-bottom:16px}
+  .cta-final h2 em{font-style:normal; color:var(--oro)}
+  .cta-final p{color:var(--suave); font-size:18px; margin-bottom:30px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--linea); padding:42px 0; color:var(--tenue); font-size:14px}
+  .foot{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between}
+  .foot a{color:var(--suave)} .foot a:hover{color:var(--oro)}
+
+  /* WHATSAPP FLOTANTE */
+  .wa-float{position:fixed; right:20px; bottom:20px; z-index:80; background:#1faa56; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 8px 24px rgba(0,0,0,.45); transition:.2s}
+  .wa-float:hover{transform:scale(1.08)}
+  .wa-float::after{content:''; position:absolute; inset:0; border-radius:50%; pointer-events:none; animation:ring 2.2s ease-out infinite}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(31,170,86,.5)}100%{box-shadow:0 0 0 18px rgba(31,170,86,0)}}
+
+  /* Animaciones extra */
+  .ventana{animation:flota 6s ease-in-out infinite}
+  @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .aurora{animation:deriva 16s ease-in-out infinite}
+  @keyframes deriva{0%,100%{transform:translateX(0) scale(1); opacity:1}50%{transform:translateX(16px) scale(1.05); opacity:.82}}
+  .eyebrow{animation:pulso 3.6s ease-in-out infinite}
+  @keyframes pulso{0%,100%{box-shadow:0 0 0 0 rgba(217,184,96,0)}50%{box-shadow:0 0 22px 0 rgba(217,184,96,.2)}}
+  .hero h1 em,.cta-final h2 em{animation:brillo 3s ease-in-out infinite}
+  @keyframes brillo{0%,100%{filter:brightness(1)}50%{filter:brightness(1.28)}}
+  .btn-oro{animation:latido 2.8s ease-in-out infinite}
+  @keyframes latido{0%,100%{box-shadow:0 0 0 0 rgba(217,184,96,0)}50%{box-shadow:0 6px 26px rgba(217,184,96,.32)}}
+  @media (prefers-reduced-motion: reduce){ .ventana,.aurora,.eyebrow,.wa-float::after,.hero h1 em,.cta-final h2 em,.btn-oro{animation:none} }
+</style>
+</head>
+<body>
+
+<!-- SPRITE DE ICONOS (dibujados en la página, siempre se ven) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4 20l1.4-3.5a7.5 7.5 0 1 1 3.1 2.7z"/><path d="M9 9.5c0 2.8 2.3 5 5 5a.7.7 0 0 0 .7-.7v-.9c0-.4-.3-.7-.7-.6l-1.1.2-1.6-1.6.2-1.1c.1-.4-.2-.7-.6-.7h-.9a.7.7 0 0 0-.7.7z"/></symbol>
+  <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13"/><rect x="3" y="13" width="18" height="5" rx="1"/><circle cx="7.5" cy="18" r="1.3"/><circle cx="16.5" cy="18" r="1.3"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h5"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.4"/><path d="M6 9v0M18 15v0"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 18a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-pie" viewBox="0 0 24 24"><path d="M12 3v9h9a9 9 0 1 1-9-9z"/><path d="M14 3.3A9 9 0 0 1 20.7 10H14z"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 4l1.7 4.3L18 10l-4.3 1.7L12 16l-1.7-4.3L6 10l4.3-1.7z"/><path d="M18 15l.7 1.8L20.5 17.5l-1.8.7L18 20l-.7-1.8L15.5 17.5l1.8-.7z"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/><path d="M3 4h2l2.2 11h10l1.8-7H6"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.2A3 3 0 0 1 16 11M21 20a6 6 0 0 0-4.2-5.7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></symbol>
+</svg>
+
+<!-- INTRO -->
+<div id="intro">
+  <img class="intro-logo" src="logo-principal-full.png" alt="Neron" />
+</div>
+
+<!-- NAV -->
+<header>
+  <div class="wrap nav">
+    <a class="marca" href="#top" aria-label="Neron"><img src="logo-final.png" alt="Neron" /></a>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://autos.neronfix.com">Entrar</a>
+      <a class="btn btn-oro" href="https://autos.neronfix.com">Empieza gratis</a>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<!-- HERO -->
+<section class="hero">
+  <div class="aurora"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal"><svg class="ic"><use href="#i-diamond"/></svg> Software premium para agencias</span>
+    <h1 class="reveal d1">Tu agencia, al nivel<br>de los <em>grandes</em></h1>
+    <p class="lead reveal d2">El sistema que ordena tu negocio y trabaja por ti: inventario, ventas, créditos, cobranza, contratos y reportes — todo en un solo lugar, elegante y fácil.</p>
+    <div class="hero-cta reveal d3">
+      <a class="btn btn-oro" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empieza gratis 14 días</a>
+      <a class="btn btn-wa" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Neron%20para%20mi%20agencia." target="_blank" rel="noreferrer"><svg class="ic"><use href="#i-whatsapp"/></svg> Habla con nosotros</a>
+    </div>
+    <p class="micro reveal d3">Sin tarjeta para probar · Sin contratos forzosos · Cancela cuando quieras</p>
+
+    <div class="preview reveal d4">
+      <div class="ventana">
+        <div class="ventana-top"><i></i><i></i><i></i><span class="url">autos.neronfix.com</span></div>
+        <div class="ventana-cuerpo">
+          <div class="pv-titulo">Resumen del negocio</div>
+          <div class="pv-fecha">Tu agencia, de un vistazo</div>
+          <div class="pv-tiles">
+            <div class="pv-tile"><div class="ic-box"><svg class="ic"><use href="#i-cart"/></svg></div><span>Nueva venta</span></div>
+            <div class="pv-tile"><div class="ic-box"><svg class="ic"><use href="#i-car"/></svg></div><span>Inventario</span></div>
+            <div class="pv-tile"><div class="ic-box"><svg class="ic"><use href="#i-users"/></svg></div><span>Clientes</span></div>
+            <div class="pv-tile"><div class="ic-box"><svg class="ic"><use href="#i-file"/></svg></div><span>Contratos</span></div>
+          </div>
+          <div class="pv-metrics">
+            <div class="pv-metric"><div class="v">$1,205,000</div><div class="l">Cobranza pendiente</div></div>
+            <div class="pv-metric"><div class="v">$482,000</div><div class="l">Ingresos del mes</div></div>
+            <div class="pv-metric"><div class="v">$212,000</div><div class="l">Ganancia del mes</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust reveal">
+      <span><svg class="ic"><use href="#i-shield"/></svg> Datos privados por agencia</span>
+      <span><svg class="ic"><use href="#i-lock"/></svg> Pagos seguros con Clip</span>
+      <span><svg class="ic"><use href="#i-mobile"/></svg> Desde cualquier dispositivo</span>
+      <span><svg class="ic"><use href="#i-flag"/></svg> Hecho en México</span>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section class="bloque" id="beneficios">
+  <div class="wrap">
+    <div class="titulo reveal">
+      <div class="et">Todo incluido</div>
+      <h2>Hecho para vender más y mejor</h2>
+      <p>Deja los cuadernos y los Excel. Neron lleva tu negocio con orden y elegancia.</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal d1"><div class="ic-box"><svg class="ic"><use href="#i-car"/></svg></div><h3>Inventario en un lugar</h3><p>Tus autos, fotos y documentos ordenados y a la mano — desde la compu, la tablet o el celular.</p></div>
+      <div class="card reveal d2"><div class="ic-box"><svg class="ic"><use href="#i-file"/></svg></div><h3>Contratos automáticos</h3><p>Genera el contrato de compraventa en PDF, llenado solo y listo para firmar en segundos.</p></div>
+      <div class="card reveal d3"><div class="ic-box"><svg class="ic"><use href="#i-cash"/></svg></div><h3>Ventas y créditos</h3><p>De contado o a crédito con planes de pago a la medida y pagarés personalizados.</p></div>
+      <div class="card reveal d1"><div class="ic-box"><svg class="ic"><use href="#i-bell"/></svg></div><h3>Cobranza al día</h3><p>El sistema te dice quién debe y a quién avisar, y manda recordatorios por WhatsApp.</p></div>
+      <div class="card reveal d2"><div class="ic-box"><svg class="ic"><use href="#i-pie"/></svg></div><h3>Reportes claros</h3><p>Cuánto ganaste, cuánto te deben e ingresos por mes — con gráficas fáciles de leer.</p></div>
+      <div class="card reveal d3"><div class="ic-box"><svg class="ic"><use href="#i-sparkles"/></svg></div><h3>IA y voz a tu favor</h3><p>Escanea una INE con la cámara o dicta “gasté 2,500 en frenos del Civic” y se registra solo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="bloque" id="como" style="background:#08080a">
+  <div class="wrap">
+    <div class="titulo reveal">
+      <div class="et">Así de fácil</div>
+      <h2>Empieza en minutos</h2>
+      <p>Sin instalar nada. Sin complicaciones.</p>
+    </div>
+    <div class="pasos">
+      <div class="paso reveal d1"><div class="num">1</div><h3>Regístrate gratis</h3><p>Crea tu cuenta con tu correo y arranca tu prueba de 14 días, sin tarjeta.</p></div>
+      <div class="paso reveal d2"><div class="num">2</div><h3>Carga tus autos</h3><p>Sube tu inventario con fotos y datos. Personaliza tu logo y tu negocio.</p></div>
+      <div class="paso reveal d3"><div class="num">3</div><h3>Vende y cobra</h3><p>Registra ventas, genera contratos y deja que el sistema lleve tu cobranza.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIO -->
+<section class="bloque" id="precio">
+  <div class="wrap">
+    <div class="titulo reveal">
+      <div class="et">Inversión</div>
+      <h2>Elige el plan que te late</h2>
+      <p>14 días gratis en cualquiera. Sin contratos forzosos · cancela cuando quieras.</p>
+    </div>
+    <div class="planes reveal d1">
+      <div class="plan">
+        <div class="pnombre">Semanal</div>
+        <div class="monto">$250 <small>MXN / semana</small></div>
+        <div class="ahorro">Máxima flexibilidad</div>
+        <a class="btn btn-ghost" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empieza gratis</a>
+      </div>
+      <div class="plan destacado">
+        <span class="pop">★ El más elegido</span>
+        <div class="pnombre">Mensual</div>
+        <div class="monto">$850 <small>MXN / mes</small></div>
+        <div class="ahorro">El equilibrio perfecto</div>
+        <a class="btn btn-oro" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empieza gratis</a>
+      </div>
+      <div class="plan">
+        <div class="pnombre">Trimestral</div>
+        <div class="monto">$2,200 <small>MXN / 3 meses</small></div>
+        <div class="ahorro">Ahorras $350</div>
+        <a class="btn btn-ghost" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empieza gratis</a>
+      </div>
+    </div>
+    <div class="plan-incluye reveal d2">
+      <h4>Todos los planes incluyen:</h4>
+      <ul>
+        <li><svg class="ic"><use href="#i-check"/></svg> Inventario, ventas y créditos ilimitados</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Contratos y pagarés en PDF</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Cobranza y recordatorios por WhatsApp</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Reportes y gráficas de ganancias</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> IA, voz y escaneo de INE</li>
+        <li><svg class="ic"><use href="#i-check"/></svg> Tu logo y varios usuarios por agencia</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="aurora"></div>
+  <div class="wrap reveal">
+    <h2>Tu agencia merece <em>verse profesional</em></h2>
+    <p>Únete a las agencias que ya manejan su negocio con Neron.</p>
+    <div class="hero-cta">
+      <a class="btn btn-oro" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empieza gratis 14 días</a>
+      <a class="btn btn-wa" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Neron%20para%20mi%20agencia." target="_blank" rel="noreferrer"><svg class="ic"><use href="#i-whatsapp"/></svg> Habla con nosotros</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© <span id="anio"></span> Neron</div>
+    <div style="display:flex; gap:20px">
+      <a href="https://autos.neronfix.com">Entrar al sistema</a>
+      <a href="https://wa.me/5216461213719" target="_blank" rel="noreferrer">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Neron%20para%20mi%20agencia." target="_blank" rel="noreferrer" aria-label="WhatsApp"><svg class="ic"><use href="#i-whatsapp"/></svg></a>
+
+<script>
+  document.getElementById('anio').textContent = new Date().getFullYear();
+  window.addEventListener('load', function(){ setTimeout(function(){ document.getElementById('intro').classList.add('hide'); }, 2000); });
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold:.14 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  setTimeout(function(){ document.querySelectorAll('.hero .reveal').forEach(function(el){ el.classList.add('visible'); }); }, 2050);
+</script>
+
+</body>
+</html>
