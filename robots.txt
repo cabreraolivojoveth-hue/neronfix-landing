@@ -1,4 +1,36 @@
+# robots.txt — Neron (neronfix.com)
+# Todos los buscadores tienen permiso para rastrear TODO el sitio.
+
+# Regla general (cualquier buscador)
 User-agent: *
 Allow: /
 
-Sitemap: https://neronfix.com/sitemap.xml
+# Google (búsqueda web)
+User-agent: Googlebot
+Allow: /
+
+# Google Imágenes
+User-agent: Googlebot-Image
+Allow: /
+
+# Google (noticias / otros)
+User-agent: Googlebot-News
+Allow: /
+
+# Bing y Yahoo (Yahoo usa el buscador de Bing)
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Apple (Siri / Spotlight)
+User-agent: Applebot
+Allow: /
+
+# Ubicación del mapa del sitio
+Sitemap: https://www.neronfix.com/sitemap.xml
