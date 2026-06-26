@@ -211,34 +211,16 @@
         <a class="btn btn-oro" href="https://celulares.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Celulares</a>
       </div>
 
+      <style>#caja-planes::-webkit-scrollbar{display:none}</style>
       <div class="producto reveal d3">
         <div class="pico"><svg class="ic"><use href="#i-cart"/></svg></div>
         <div class="para">Cualquier negocio</div>
         <h3>Caja</h3>
-        <ul>
-          <li><svg class="ic"><use href="#i-cart"/></svg> Punto de venta para cualquier giro</li>
-          <li><svg class="ic"><use href="#i-cash"/></svg> Corte de caja y compras a proveedores</li>
-          <li><svg class="ic"><use href="#i-pie"/></svg> Inventario, créditos y apartados</li>
-          <li><svg class="ic"><use href="#i-device"/></svg> Funciona en compu, tablet o celular</li>
-        </ul>
-        <div class="precio">Desde <b id="caja-precio-min">$220</b> / mes · 14 días gratis</div>
-        <a class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Caja</a>
+        <div style="font-size:12.5px;color:#B0892B;font-weight:800;letter-spacing:.3px;margin:-2px 0 10px">Desliza para ver los planes →</div>
+        <div id="caja-planes" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;margin:0 0 12px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch"></div>
+        <div id="caja-dots" style="display:flex;gap:6px;justify-content:center;margin-bottom:14px"></div>
+        <a class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empezar gratis</a>
       </div>
-    </div>
-
-    <!-- Planes de Neron Caja: dentro de la MISMA sección, se llenan solos -->
-    <div id="planes-caja" style="margin-top:40px">
-      <div class="reveal" style="text-align:center; margin-bottom:22px">
-        <div style="font-size:clamp(17px,2.4vw,21px); font-weight:800; color:#fff">¿Te late Caja? Estos son los planes</div>
-        <div style="font-size:13px; color:#9b9488; margin-top:5px">14 días gratis · Pago seguro con tarjeta · Cancela cuando quieras</div>
-      </div>
-      <div style="display:flex; justify-content:center; margin-bottom:28px">
-        <div id="planes-toggle" style="display:inline-flex; background:#1a1a1d; border:1px solid #2a2a2e; border-radius:30px; padding:4px">
-          <button data-per="mensual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:#B0892B; color:#fff">Mensual</button>
-          <button data-per="anual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:transparent; color:#cfc7bb">Anual · 2 meses gratis</button>
-        </div>
-      </div>
-      <div id="planes-caja-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
     </div>
   </div>
 </section>
@@ -296,54 +278,39 @@
   // ── Planes de Neron Caja: se cargan solos desde la fuente única ──
   (function(){
     var API = 'https://caja.neronfix.com/api/planes';
-    var grid = document.getElementById('planes-caja-grid');
-    var sec = document.getElementById('planes-caja');
-    var toggle = document.getElementById('planes-toggle');
-    if(!grid) return;
+    var cont = document.getElementById('caja-planes');
+    var dots = document.getElementById('caja-dots');
+    if(!cont) return;
     // Respaldo: se muestra de inmediato; la consulta en vivo lo actualiza si funciona.
-    var TODOS = [
-      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, popular:false, desc:'Lo esencial para operar', feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
-      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, desc:'El más completo', feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
-      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, popular:false, desc:'Para negocios grandes', feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
-      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, popular:true, desc:'El más completo · 2 meses gratis', feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
-      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, popular:false, desc:'Para negocios grandes · 2 meses gratis', feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
+    var DEFAULT = [
+      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
+      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
+      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
+      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
+      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
     ];
-    var periodo = 'mensual';
     var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
-    function pinta(){
-      var lista = TODOS.filter(function(p){ return p.periodo===periodo; });
-      grid.innerHTML = lista.map(function(p){
-        var pop = p.popular;
-        var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:13px;color:#d7d2c8"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
-        var ahorro = p.ahorro ? '<div style="display:inline-block;background:#13301f;color:#5fd08a;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:20px;margin-bottom:12px">Ahorras '+pesos(p.ahorro)+' al año</div>' : '';
-        return '<div style="position:relative;background:#161618;border:2px solid '+(pop?'#B0892B':'#2a2a2e')+';border-radius:18px;padding:24px 20px;text-align:left;display:flex;flex-direction:column">'
-          + (pop?'<div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#B0892B;color:#fff;font-size:11px;font-weight:800;padding:4px 14px;border-radius:20px;white-space:nowrap">★ El más popular</div>':'')
-          + '<div style="font-size:16px;font-weight:800;color:#fff;margin-top:4px">'+p.nombre+'</div>'
-          + '<div style="font-size:12.5px;color:#9b9488;margin-bottom:10px">'+(p.desc||'')+'</div>'
-          + '<div style="font-size:34px;font-weight:800;color:#B0892B;line-height:1.1;margin-bottom:'+(p.ahorro?'4px':'14px')+'">'+pesos(p.precio)+'<span style="font-size:14px;font-weight:500;color:#9b9488">'+(p.periodo==='anual'?'/año':'/mes')+'</span></div>'
+    function render(lista){
+      cont.innerHTML = lista.map(function(p){
+        var per = p.periodo==='anual' ? '/año' : '/mes';
+        var etiqueta = p.nombre + (p.periodo==='anual' ? ' · Anual' : '');
+        var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;font-size:12.5px;color:#d7d2c8;line-height:1.35"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
+        var ahorro = p.ahorro ? '<div style="display:inline-block;background:#13301f;color:#5fd08a;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;margin-bottom:8px">Ahorras '+pesos(p.ahorro)+' al año</div>' : '';
+        var pop = p.popular ? '<span style="display:inline-block;background:#B0892B;color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:6px">★ Popular</span>' : '';
+        return '<div style="min-width:100%;scroll-snap-align:start;box-sizing:border-box;padding:2px 2px 0">'
+          + '<div style="font-size:12px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">'+etiqueta+pop+'</div>'
+          + '<div style="font-size:32px;font-weight:800;color:#B0892B;line-height:1.05;margin-bottom:'+(p.ahorro?'6px':'10px')+'">'+pesos(p.precio)+'<span style="font-size:14px;font-weight:500;color:#9b9488">'+per+'</span></div>'
           + ahorro
-          + '<ul style="list-style:none;padding:0;margin:0 0 18px;flex:1">'+feats+'</ul>'
-          + '<a class="btn btn-oro" href="https://caja.neronfix.com" style="justify-content:center">Empezar gratis</a>'
+          + '<ul style="list-style:none;padding:0;margin:0">'+feats+'</ul>'
           + '</div>';
       }).join('');
+      dots.innerHTML = lista.map(function(_,i){ return '<span data-i="'+i+'" style="width:7px;height:7px;border-radius:50%;background:'+(i===0?'#B0892B':'#3a3a3e')+';cursor:pointer;transition:background .2s"></span>'; }).join('');
     }
-    if(toggle){ toggle.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; periodo=b.getAttribute('data-per');
-      toggle.querySelectorAll('button').forEach(function(x){ var on=x.getAttribute('data-per')===periodo; x.style.background=on?'#B0892B':'transparent'; x.style.color=on?'#fff':'#cfc7bb'; });
-      pinta(); }); }
-    // Pinta de inmediato con el respaldo y muestra la sección
-    if(sec) sec.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
-    pinta();
-    fetch(API).then(function(r){ return r.json(); }).then(function(j){
-      if(!j || !j.planes || !j.planes.length) return;
-      TODOS = j.planes;
-      sec.style.display = '';
-      // Mostrar de inmediato (sin depender de la animación de scroll)
-      sec.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
-      pinta();
-      // Actualiza el "Desde $X" de la tarjeta de Caja con el plan mensual más barato
-      var men = TODOS.filter(function(p){ return p.periodo==='mensual'; });
-      if(men.length){ var min = Math.min.apply(null, men.map(function(p){ return p.precio; })); var el=document.getElementById('caja-precio-min'); if(el) el.textContent = pesos(min); }
-    }).catch(function(){ /* si falla, la sección queda oculta */ });
+    function syncDots(){ if(!cont.clientWidth) return; var i=Math.round(cont.scrollLeft/cont.clientWidth); dots.querySelectorAll('span').forEach(function(s,j){ s.style.background = j===i?'#B0892B':'#3a3a3e'; }); }
+    render(DEFAULT);
+    cont.addEventListener('scroll', function(){ window.requestAnimationFrame(syncDots); });
+    dots.addEventListener('click', function(e){ var s=e.target.closest('span'); if(!s) return; var i=+s.getAttribute('data-i'); cont.scrollTo({ left:i*cont.clientWidth, behavior:'smooth' }); });
+    fetch(API).then(function(r){ return r.json(); }).then(function(j){ if(j && j.planes && j.planes.length){ render(j.planes); } }).catch(function(){ /* se queda el respaldo */ });
   })();
 </script>
 
