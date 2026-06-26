@@ -300,6 +300,7 @@
     }
     function render(lista){
       CURRENT = lista;
+      cont.innerHTML = lista.map(function(p){
         var per = p.periodo==='anual' ? '/año' : '/mes';
         var etiqueta = p.nombre + (p.periodo==='anual' ? ' · Anual' : '');
         var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;font-size:12.5px;color:#d7d2c8;line-height:1.35"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
