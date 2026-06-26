@@ -221,10 +221,28 @@
           <li><svg class="ic"><use href="#i-pie"/></svg> Inventario, créditos y apartados</li>
           <li><svg class="ic"><use href="#i-device"/></svg> Funciona en compu, tablet o celular</li>
         </ul>
-        <div class="precio">Desde <b>$220</b> / mes · 14 días gratis</div>
+        <div class="precio">Desde <b id="caja-precio-min">$220</b> / mes · 14 días gratis</div>
         <a class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Caja</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PLANES DE NERON CAJA (se llenan solos desde caja.neronfix.com/api/planes) -->
+<section class="bloque" id="planes-caja" style="background:#0d0d0f; display:none">
+  <div class="wrap">
+    <div class="titulo reveal">
+      <div class="et">Planes de Neron Caja</div>
+      <h2>Elige el plan para tu negocio</h2>
+      <p>14 días gratis. Pago seguro con tarjeta. Cancela cuando quieras.</p>
+    </div>
+    <div style="display:flex; justify-content:center; margin-bottom:28px">
+      <div id="planes-toggle" style="display:inline-flex; background:#1a1a1d; border:1px solid #2a2a2e; border-radius:30px; padding:4px">
+        <button data-per="mensual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:#B0892B; color:#fff">Mensual</button>
+        <button data-per="anual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:transparent; color:#cfc7bb">Anual · 2 meses gratis</button>
+      </div>
+    </div>
+    <div id="planes-caja-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
   </div>
 </section>
 
@@ -277,6 +295,48 @@
   var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold:.14 });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
   setTimeout(function(){ document.querySelectorAll('.hero .reveal').forEach(function(el){ el.classList.add('visible'); }); }, 2050);
+
+  // ── Planes de Neron Caja: se cargan solos desde la fuente única ──
+  (function(){
+    var API = 'https://caja.neronfix.com/api/planes';
+    var grid = document.getElementById('planes-caja-grid');
+    var sec = document.getElementById('planes-caja');
+    var toggle = document.getElementById('planes-toggle');
+    if(!grid) return;
+    var TODOS = [];
+    var periodo = 'mensual';
+    var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
+    function pinta(){
+      var lista = TODOS.filter(function(p){ return p.periodo===periodo; });
+      grid.innerHTML = lista.map(function(p){
+        var pop = p.popular;
+        var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:13px;color:#d7d2c8"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
+        var ahorro = p.ahorro ? '<div style="display:inline-block;background:#13301f;color:#5fd08a;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:20px;margin-bottom:12px">Ahorras '+pesos(p.ahorro)+' al año</div>' : '';
+        return '<div style="position:relative;background:#161618;border:2px solid '+(pop?'#B0892B':'#2a2a2e')+';border-radius:18px;padding:24px 20px;text-align:left;display:flex;flex-direction:column">'
+          + (pop?'<div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#B0892B;color:#fff;font-size:11px;font-weight:800;padding:4px 14px;border-radius:20px;white-space:nowrap">★ El más popular</div>':'')
+          + '<div style="font-size:16px;font-weight:800;color:#fff;margin-top:4px">'+p.nombre+'</div>'
+          + '<div style="font-size:12.5px;color:#9b9488;margin-bottom:10px">'+(p.desc||'')+'</div>'
+          + '<div style="font-size:34px;font-weight:800;color:#B0892B;line-height:1.1;margin-bottom:'+(p.ahorro?'4px':'14px')+'">'+pesos(p.precio)+'<span style="font-size:14px;font-weight:500;color:#9b9488">'+(p.periodo==='anual'?'/año':'/mes')+'</span></div>'
+          + ahorro
+          + '<ul style="list-style:none;padding:0;margin:0 0 18px;flex:1">'+feats+'</ul>'
+          + '<a class="btn btn-oro" href="https://caja.neronfix.com" style="justify-content:center">Empezar gratis</a>'
+          + '</div>';
+      }).join('');
+    }
+    if(toggle){ toggle.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; periodo=b.getAttribute('data-per');
+      toggle.querySelectorAll('button').forEach(function(x){ var on=x.getAttribute('data-per')===periodo; x.style.background=on?'#B0892B':'transparent'; x.style.color=on?'#fff':'#cfc7bb'; });
+      pinta(); }); }
+    fetch(API).then(function(r){ return r.json(); }).then(function(j){
+      if(!j || !j.planes || !j.planes.length) return;
+      TODOS = j.planes;
+      sec.style.display = '';
+      pinta();
+      // Actualiza el "Desde $X" de la tarjeta de Caja con el plan mensual más barato
+      var men = TODOS.filter(function(p){ return p.periodo==='mensual'; });
+      if(men.length){ var min = Math.min.apply(null, men.map(function(p){ return p.precio; })); var el=document.getElementById('caja-precio-min'); if(el) el.textContent = pesos(min); }
+      io && document.querySelectorAll('#planes-caja .reveal').forEach(function(el){ io.observe(el); });
+    }).catch(function(){ /* si falla, la sección queda oculta */ });
+  })();
 </script>
 
 </body>
