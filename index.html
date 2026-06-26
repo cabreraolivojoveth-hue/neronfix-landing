@@ -227,7 +227,7 @@
     </div>
 
     <!-- Planes de Neron Caja: dentro de la MISMA sección, se llenan solos -->
-    <div id="planes-caja" style="display:none; margin-top:60px; padding-top:46px; border-top:1px solid rgba(176,137,43,0.20)">
+    <div id="planes-caja" style="margin-top:60px; padding-top:46px; border-top:1px solid rgba(176,137,43,0.20)">
       <div class="titulo reveal" style="margin-bottom:26px">
         <div class="et">Planes de Neron Caja</div>
         <h2 style="font-size:clamp(26px,4.5vw,40px)">Planes claros, sin sorpresas</h2>
@@ -301,7 +301,14 @@
     var sec = document.getElementById('planes-caja');
     var toggle = document.getElementById('planes-toggle');
     if(!grid) return;
-    var TODOS = [];
+    // Respaldo: se muestra de inmediato; la consulta en vivo lo actualiza si funciona.
+    var TODOS = [
+      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, popular:false, desc:'Lo esencial para operar', feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
+      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, desc:'El más completo', feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
+      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, popular:false, desc:'Para negocios grandes', feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
+      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, popular:true, desc:'El más completo · 2 meses gratis', feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
+      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, popular:false, desc:'Para negocios grandes · 2 meses gratis', feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
+    ];
     var periodo = 'mensual';
     var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
     function pinta(){
@@ -324,6 +331,9 @@
     if(toggle){ toggle.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; periodo=b.getAttribute('data-per');
       toggle.querySelectorAll('button').forEach(function(x){ var on=x.getAttribute('data-per')===periodo; x.style.background=on?'#B0892B':'transparent'; x.style.color=on?'#fff':'#cfc7bb'; });
       pinta(); }); }
+    // Pinta de inmediato con el respaldo y muestra la sección
+    if(sec) sec.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    pinta();
     fetch(API).then(function(r){ return r.json(); }).then(function(j){
       if(!j || !j.planes || !j.planes.length) return;
       TODOS = j.planes;
