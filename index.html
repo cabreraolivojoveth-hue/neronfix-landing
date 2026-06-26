@@ -225,24 +225,22 @@
         <a class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Caja</a>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- PLANES DE NERON CAJA (se llenan solos desde caja.neronfix.com/api/planes) -->
-<section class="bloque" id="planes-caja" style="background:#0d0d0f; display:none">
-  <div class="wrap">
-    <div class="titulo reveal">
-      <div class="et">Planes de Neron Caja</div>
-      <h2>Elige el plan para tu negocio</h2>
-      <p>14 días gratis. Pago seguro con tarjeta. Cancela cuando quieras.</p>
-    </div>
-    <div style="display:flex; justify-content:center; margin-bottom:28px">
-      <div id="planes-toggle" style="display:inline-flex; background:#1a1a1d; border:1px solid #2a2a2e; border-radius:30px; padding:4px">
-        <button data-per="mensual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:#B0892B; color:#fff">Mensual</button>
-        <button data-per="anual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:transparent; color:#cfc7bb">Anual · 2 meses gratis</button>
+    <!-- Planes de Neron Caja: dentro de la MISMA sección, se llenan solos -->
+    <div id="planes-caja" style="display:none; margin-top:60px; padding-top:46px; border-top:1px solid rgba(176,137,43,0.20)">
+      <div class="titulo reveal" style="margin-bottom:26px">
+        <div class="et">Planes de Neron Caja</div>
+        <h2 style="font-size:clamp(26px,4.5vw,40px)">Planes claros, sin sorpresas</h2>
+        <p>14 días gratis. Pago seguro con tarjeta. Cancela cuando quieras.</p>
       </div>
+      <div class="reveal" style="display:flex; justify-content:center; margin-bottom:28px">
+        <div id="planes-toggle" style="display:inline-flex; background:#1a1a1d; border:1px solid #2a2a2e; border-radius:30px; padding:4px">
+          <button data-per="mensual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:#B0892B; color:#fff">Mensual</button>
+          <button data-per="anual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:transparent; color:#cfc7bb">Anual · 2 meses gratis</button>
+        </div>
+      </div>
+      <div id="planes-caja-grid" class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
     </div>
-    <div id="planes-caja-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
   </div>
 </section>
 
