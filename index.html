@@ -233,13 +233,13 @@
         <h2 style="font-size:clamp(26px,4.5vw,40px)">Planes claros, sin sorpresas</h2>
         <p>14 días gratis. Pago seguro con tarjeta. Cancela cuando quieras.</p>
       </div>
-      <div class="reveal" style="display:flex; justify-content:center; margin-bottom:28px">
+      <div style="display:flex; justify-content:center; margin-bottom:28px">
         <div id="planes-toggle" style="display:inline-flex; background:#1a1a1d; border:1px solid #2a2a2e; border-radius:30px; padding:4px">
           <button data-per="mensual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:#B0892B; color:#fff">Mensual</button>
           <button data-per="anual" style="border:none; border-radius:30px; padding:9px 18px; font-size:14px; font-weight:800; cursor:pointer; background:transparent; color:#cfc7bb">Anual · 2 meses gratis</button>
         </div>
       </div>
-      <div id="planes-caja-grid" class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
+      <div id="planes-caja-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; max-width:1000px; margin:0 auto"></div>
     </div>
   </div>
 </section>
@@ -328,11 +328,12 @@
       if(!j || !j.planes || !j.planes.length) return;
       TODOS = j.planes;
       sec.style.display = '';
+      // Mostrar de inmediato (sin depender de la animación de scroll)
+      sec.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
       pinta();
       // Actualiza el "Desde $X" de la tarjeta de Caja con el plan mensual más barato
       var men = TODOS.filter(function(p){ return p.periodo==='mensual'; });
       if(men.length){ var min = Math.min.apply(null, men.map(function(p){ return p.precio; })); var el=document.getElementById('caja-precio-min'); if(el) el.textContent = pesos(min); }
-      io && document.querySelectorAll('#planes-caja .reveal').forEach(function(el){ io.observe(el); });
     }).catch(function(){ /* si falla, la sección queda oculta */ });
   })();
 </script>
