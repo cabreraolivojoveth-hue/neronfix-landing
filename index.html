@@ -219,7 +219,7 @@
         <div style="font-size:12.5px;color:#B0892B;font-weight:800;letter-spacing:.3px;margin:-2px 0 10px">Desliza para ver los planes →</div>
         <div id="caja-planes" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;margin:0 0 12px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch"></div>
         <div id="caja-dots" style="display:flex;gap:6px;justify-content:center;margin-bottom:14px"></div>
-        <a class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Empezar gratis</a>
+        <a id="caja-btn" class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> <span id="caja-btn-txt">Empezar gratis</span></a>
       </div>
     </div>
   </div>
@@ -280,6 +280,9 @@
     var API = 'https://caja.neronfix.com/api/planes';
     var cont = document.getElementById('caja-planes');
     var dots = document.getElementById('caja-dots');
+    var btn = document.getElementById('caja-btn');
+    var btnTxt = document.getElementById('caja-btn-txt');
+    var CURRENT = [];
     if(!cont) return;
     // Respaldo: se muestra de inmediato; la consulta en vivo lo actualiza si funciona.
     var DEFAULT = [
@@ -290,8 +293,13 @@
       { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, prueba:false, feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
     ];
     var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
+    function actualizaBtn(i){
+      var p = CURRENT[i]; if(!p || !btn) return;
+      btnTxt.textContent = p.prueba ? 'Empezar gratis' : ('Contratar ' + p.nombre + (p.periodo==='anual'?' anual':''));
+      btn.href = 'https://caja.neronfix.com/?plan=' + p.id;
+    }
     function render(lista){
-      cont.innerHTML = lista.map(function(p){
+      CURRENT = lista;
         var per = p.periodo==='anual' ? '/año' : '/mes';
         var etiqueta = p.nombre + (p.periodo==='anual' ? ' · Anual' : '');
         var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;font-size:12.5px;color:#d7d2c8;line-height:1.35"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
@@ -307,8 +315,9 @@
           + '</div>';
       }).join('');
       dots.innerHTML = lista.map(function(_,i){ return '<span data-i="'+i+'" style="width:7px;height:7px;border-radius:50%;background:'+(i===0?'#B0892B':'#3a3a3e')+';cursor:pointer;transition:background .2s"></span>'; }).join('');
+      actualizaBtn(0);
     }
-    function syncDots(){ if(!cont.clientWidth) return; var i=Math.round(cont.scrollLeft/cont.clientWidth); dots.querySelectorAll('span').forEach(function(s,j){ s.style.background = j===i?'#B0892B':'#3a3a3e'; }); }
+    function syncDots(){ if(!cont.clientWidth) return; var i=Math.round(cont.scrollLeft/cont.clientWidth); dots.querySelectorAll('span').forEach(function(s,j){ s.style.background = j===i?'#B0892B':'#3a3a3e'; }); actualizaBtn(i); }
     render(DEFAULT);
     cont.addEventListener('scroll', function(){ window.requestAnimationFrame(syncDots); });
     dots.addEventListener('click', function(e){ var s=e.target.closest('span'); if(!s) return; var i=+s.getAttribute('data-i'); cont.scrollTo({ left:i*cont.clientWidth, behavior:'smooth' }); });
