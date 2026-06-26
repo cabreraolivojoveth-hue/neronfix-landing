@@ -283,11 +283,11 @@
     if(!cont) return;
     // Respaldo: se muestra de inmediato; la consulta en vivo lo actualiza si funciona.
     var DEFAULT = [
-      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
-      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
-      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
-      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
-      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
+      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, prueba:true, feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
+      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, prueba:true, feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
+      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, prueba:false, feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
+      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, prueba:false, feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
+      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, prueba:false, feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
     ];
     var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
     function render(lista){
@@ -297,10 +297,12 @@
         var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;font-size:12.5px;color:#d7d2c8;line-height:1.35"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
         var ahorro = p.ahorro ? '<div style="display:inline-block;background:#13301f;color:#5fd08a;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;margin-bottom:8px">Ahorras '+pesos(p.ahorro)+' al año</div>' : '';
         var pop = p.popular ? '<span style="display:inline-block;background:#B0892B;color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:6px">★ Popular</span>' : '';
+        var prueba = '<div style="font-size:11.5px;font-weight:700;margin-bottom:8px;color:'+(p.prueba?'#5fd08a':'#9b9488')+'">'+(p.prueba?'✓ 14 días gratis':'Sin prueba · pago directo')+'</div>';
         return '<div style="min-width:100%;scroll-snap-align:start;box-sizing:border-box;padding:2px 2px 0">'
           + '<div style="font-size:12px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">'+etiqueta+pop+'</div>'
           + '<div style="font-size:32px;font-weight:800;color:#B0892B;line-height:1.05;margin-bottom:'+(p.ahorro?'6px':'10px')+'">'+pesos(p.precio)+'<span style="font-size:14px;font-weight:500;color:#9b9488">'+per+'</span></div>'
           + ahorro
+          + prueba
           + '<ul style="list-style:none;padding:0;margin:0">'+feats+'</ul>'
           + '</div>';
       }).join('');
