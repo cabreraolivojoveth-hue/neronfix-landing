@@ -218,7 +218,11 @@
         <h3>Caja</h3>
         <div style="font-size:12.5px;color:#B0892B;font-weight:800;letter-spacing:.3px;margin:-2px 0 10px">Desliza para ver los planes →</div>
         <div id="caja-planes" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;margin:0 0 12px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch"></div>
-        <div id="caja-dots" style="display:flex;gap:6px;justify-content:center;margin-bottom:14px"></div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px">
+          <button id="caja-prev" type="button" aria-label="Anterior" style="width:34px;height:34px;border-radius:50%;border:1.5px solid #2a2a2e;background:#161618;color:#B0892B;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">‹</button>
+          <div id="caja-dots" style="display:flex;gap:6px"></div>
+          <button id="caja-next" type="button" aria-label="Siguiente" style="width:34px;height:34px;border-radius:50%;border:1.5px solid #2a2a2e;background:#161618;color:#B0892B;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">›</button>
+        </div>
         <a id="caja-btn" class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> <span id="caja-btn-txt">Empezar gratis</span></a>
       </div>
     </div>
@@ -322,6 +326,9 @@
     render(DEFAULT);
     cont.addEventListener('scroll', function(){ window.requestAnimationFrame(syncDots); });
     dots.addEventListener('click', function(e){ var s=e.target.closest('span'); if(!s) return; var i=+s.getAttribute('data-i'); cont.scrollTo({ left:i*cont.clientWidth, behavior:'smooth' }); });
+    var _prev=document.getElementById('caja-prev'), _next=document.getElementById('caja-next');
+    if(_prev) _prev.addEventListener('click', function(){ cont.scrollBy({ left:-cont.clientWidth, behavior:'smooth' }); });
+    if(_next) _next.addEventListener('click', function(){ cont.scrollBy({ left:cont.clientWidth, behavior:'smooth' }); });
     fetch(API).then(function(r){ return r.json(); }).then(function(j){ if(j && j.planes && j.planes.length){ render(j.planes); } }).catch(function(){ /* se queda el respaldo */ });
   })();
 </script>
