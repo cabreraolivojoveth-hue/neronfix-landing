@@ -117,7 +117,7 @@
   <div class="wrap">
     <span class="eyebrow eyebrow--rule">Soporte</span>
     <h1>Hablemos de tu <em class="mark">negocio</em></h1>
-    <p>Nuestros asesores están disponibles para cualquier consulta. Te ayudamos a elegir el sistema correcto y a dar de alta tu cuenta, sin compromiso.</p>
+    <p>Todo el servicio y soporte de Neron se atiende por WhatsApp. Te ayudamos a elegir el sistema correcto y a dar de alta tu cuenta, sin compromiso.</p>
   </div>
 </section>
 
@@ -125,30 +125,20 @@
   <div class="wrap">
 
     <div class="cstack">
-      <!-- WhatsApp: el enlace se genera desde CONTACT_CONFIG -->
-      <a class="crow rv" data-wa="Hola, quiero información sobre los sistemas Neron" href="#">
-        <span class="crow__l">
-          <span class="crow__ic wa"><svg class="ic"><use href="#i-whatsapp"></use></svg></span>
-          <span>
-            <h2>Escríbenos por WhatsApp</h2>
-            <p>La vía más rápida. Te responde una persona que conoce el sistema.</p>
-          </span>
+      <!-- WhatsApp: único canal de atención. El enlace se genera desde CONTACT_CONFIG -->
+      <a class="wa-panel rv" data-wa="Hola, quiero información sobre los sistemas Neron" href="#">
+        <span class="wa-panel__ic"><svg class="ic"><use href="#i-whatsapp"></use></svg></span>
+        <span class="wa-panel__body">
+          <span class="wa-panel__tag">Único canal de atención</span>
+          <h2>Escríbenos por WhatsApp</h2>
+          <span class="wa-panel__num" id="wa-numero"></span>
+          <p>Te responde una persona que conoce el sistema. Es la única vía de servicio: no damos soporte por correo, formulario ni redes sociales.</p>
         </span>
-        <span class="link-arrow">Abrir WhatsApp<svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
-      </a>
-
-      <!-- Correo: aparece sólo si CONTACT_CONFIG.email tiene valor -->
-      <a class="crow rv" id="card-email" href="#" hidden>
-        <span class="crow__l">
-          <span class="crow__ic"><svg class="ic"><use href="#i-mail"></use></svg></span>
-          <span>
-            <h2>Envíanos un correo</h2>
-            <p id="dato-email"></p>
-          </span>
-        </span>
-        <span class="link-arrow">Enviar correo<svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+        <span class="btn btn--wa">Abrir WhatsApp<svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
       </a>
     </div>
+
+    <p class="cnote rv">Instagram y YouTube son nuestros perfiles de marca, no canales de atención. Para servicio, escríbenos por WhatsApp.</p>
 
     <div class="cgrid">
       <a class="ccard rv" href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener noreferrer">
@@ -227,8 +217,10 @@
         <a href="faq.html">Centro de ayuda</a>
       </div>
       <div class="ftr__col">
-        <h4>Contacto</h4>
-        <a data-wa="Hola, quiero conocer más sobre Neron" href="#">WhatsApp</a>
+        <h4>Atención</h4>
+        <a data-wa="Hola, quiero conocer más sobre Neron" href="#">WhatsApp <span id="ftr-wa"></span></a>
+        <p class="ftr__hint">Único canal de servicio y soporte.</p>
+        <h4 class="ftr__h4--2">Síguenos</h4>
         <a href="https://www.instagram.com/neron_fix" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener noreferrer">YouTube</a>
       </div>
@@ -248,6 +240,5 @@
   <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
 </a>
 
-<script src="/assets/contacto.js" defer></script>
 </body>
 </html>

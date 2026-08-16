@@ -10,14 +10,19 @@
 
 /* --------------------------------------------------------------------------
    CONTACTO
+   --------------------------------------------------------------------------
+   WhatsApp es el ÚNICO canal de atención y servicio de Neron.
+   No se publican correo, formularios ni teléfono fijo como vía de soporte.
    -------------------------------------------------------------------------- */
 const CONTACT_CONFIG = {
-  /* Número en formato internacional, sólo dígitos (52 + 1 + 10 dígitos) */
-  whatsappNumber: '5216461213719',
+  /* Número en formato internacional, sólo dígitos (52 + 1 + 10 dígitos).
+     Número visible: 663 542 7493 */
+  whatsappNumber: '5216635427493',
   whatsappMessage: 'Hola, quiero conocer más sobre Neron',
-  /* Correo de contacto. Déjalo vacío ('') y la tarjeta de email se oculta sola. */
-  email: '',
-  /* Redes. Deja '' para ocultar el enlace correspondiente. */
+  /* Cómo se muestra el número en pantalla. */
+  whatsappDisplay: '663 542 7493',
+  /* Redes sociales: son perfiles de marca, NO canales de atención.
+     Deja '' para ocultar el enlace correspondiente. */
   instagram: 'https://www.instagram.com/neron_fix',
   youtube: 'https://www.youtube.com/@neronfix',
 };

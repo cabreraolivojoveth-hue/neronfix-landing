@@ -26,8 +26,8 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 
 | Quiero cambiar… | Edita en `config.js` |
 |---|---|
-| Número o mensaje de WhatsApp | `CONTACT_CONFIG.whatsappNumber` / `.whatsappMessage` |
-| Correo de contacto | `CONTACT_CONFIG.email` (vacío = la tarjeta se oculta sola) |
+| Mensaje precargado de WhatsApp | `CONTACT_CONFIG.whatsappMessage` |
+| Número de WhatsApp | `CONTACT_CONFIG.whatsappNumber` y `.whatsappDisplay` |
 | Precios de Autos y Celulares | `SYSTEMS[].price` |
 | Textos y beneficios de cada sistema | `SYSTEMS[]` |
 | Métricas de la franja de números | `STATS[]` |
@@ -50,6 +50,17 @@ de Neron Caja y a la métrica "Desde $X al mes".
 
 `ROUTES.terminos` y `ROUTES.privacidad` están vacíos, así que esos enlaces
 están ocultos en el footer. En cuanto pongas una URL aparecen solos.
+
+## Canal de atención
+
+**WhatsApp es el único canal de servicio y soporte** (663 542 7493). No se
+publica correo, formulario ni teléfono como vía de atención. Instagram y
+YouTube son perfiles de marca y así se indican en la página, para que nadie
+pida soporte por ahí.
+
+Para cambiar el número basta con editar `CONTACT_CONFIG.whatsappNumber`
+(formato internacional, sólo dígitos) y `whatsappDisplay` (cómo se muestra en
+pantalla). Los 17 enlaces de las tres páginas se regeneran solos.
 
 ## Reglas del contenido
 

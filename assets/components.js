@@ -492,23 +492,33 @@
     d.head.appendChild(ld);
   }
 
-  /* --- Contacto -------------------------------------------------------- */
+  /* --- Contacto --------------------------------------------------------
+     WhatsApp es el único canal de atención: se presenta como bloque
+     principal. El Centro de ayuda va aparte porque es autoservicio, no
+     una vía de contacto alternativa. */
   function renderContact() {
     var host = U.$('#contact');
     if (!host) return;
-    var cards = [
-      { icon: 'i-whatsapp', cls: 'wa', title: 'WhatsApp', text: 'La vía más rápida. Te atendemos personas que conocen el sistema y pueden darte de alta hoy mismo.', cta: 'Escribir por WhatsApp', href: C.waLink(), ev: 'whatsapp_click', ext: true },
-      { icon: 'i-help', title: 'Centro de ayuda', text: 'Guías por tema: facturación, inventario, ventas, clientes, configuración y dispositivos.', cta: 'Ir al Centro de ayuda', href: C.ROUTES.faq, ev: 'help_click' },
-      { icon: 'i-mail', title: 'Más formas de contacto', text: 'Consulta todos nuestros canales de atención y elige el que prefieras.', cta: 'Ver contacto', href: C.ROUTES.contacto, ev: 'contact_click' },
-    ];
-    host.innerHTML = cards.map(function (c, i) {
-      return '<a class="contact-card rv" style="--d:' + i + '" href="' + esc(c.href) + '"' +
-        (c.ext ? ' target="_blank" rel="noopener noreferrer"' : '') +
-        ' data-track="' + esc(c.ev) + '">' +
-        '<span class="contact-card__ic ' + (c.cls || '') + '">' + icon(c.icon) + '</span>' +
-        '<h3>' + esc(c.title) + '</h3><p>' + esc(c.text) + '</p>' +
-        '<span class="link-arrow">' + esc(c.cta) + icon('i-arrow') + '</span></a>';
-    }).join('');
+    var num = C.CONTACT_CONFIG.whatsappDisplay || '';
+    host.innerHTML =
+      '<a class="wa-panel rv" href="' + esc(C.waLink()) + '" target="_blank" rel="noopener noreferrer"' +
+        ' data-track="whatsapp_click" data-track-label="seccion contacto">' +
+        '<span class="wa-panel__ic">' + icon('i-whatsapp') + '</span>' +
+        '<span class="wa-panel__body">' +
+          '<span class="wa-panel__tag">Único canal de atención</span>' +
+          '<h3>Escríbenos por WhatsApp</h3>' +
+          (num ? '<span class="wa-panel__num">' + esc(num) + '</span>' : '') +
+          '<p>Todo el servicio y soporte de Neron se atiende por aquí. Te responde una ' +
+          'persona que conoce el sistema y puede dar de alta tu cuenta hoy mismo.</p>' +
+        '</span>' +
+        '<span class="btn btn--wa">Abrir WhatsApp' + icon('i-arrow') + '</span>' +
+      '</a>' +
+      '<a class="contact-card rv" style="--d:1" href="' + esc(C.ROUTES.faq) + '" data-track="help_click">' +
+        '<span class="contact-card__ic">' + icon('i-help') + '</span>' +
+        '<h3>Centro de ayuda</h3>' +
+        '<p>¿Prefieres resolverlo tú? Guías por tema: facturación, inventario, ventas, ' +
+        'clientes, configuración y dispositivos.</p>' +
+        '<span class="link-arrow">Ir al Centro de ayuda' + icon('i-arrow') + '</span></a>';
   }
 
   /* --- Modal de acceso -------------------------------------------------- */
@@ -540,6 +550,13 @@
       if (url) { a.href = url; a.hidden = false; }
       else { a.removeAttribute('href'); a.hidden = true; }
     });
+
+    /* Número de WhatsApp visible, desde la configuración. */
+    var disp = C.CONTACT_CONFIG.whatsappDisplay || '';
+    var num = U.$('#wa-numero');
+    if (num) num.textContent = disp;
+    var fnum = U.$('#ftr-wa');
+    if (fnum) fnum.textContent = disp ? '· ' + disp : '';
 
     var y = U.$('#year');
     if (y) y.textContent = new Date().getFullYear();
