@@ -2,339 +2,432 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Neron · Punto de venta para cualquier tipo de negocio en México</title>
-<meta name="description" content="Sistema de punto de venta para cualquier tipo de negocio en México: inventario, ventas de contado y a crédito, cobranza y reportes. También sistemas especializados: Neron Autos para agencias y lotes de autos, y Neron Celulares para tiendas de celulares. Prueba gratis." />
-<meta name="keywords" content="punto de venta para cualquier negocio, sistema de punto de venta, software punto de venta México, punto de venta general, software para agencias de autos, sistema para lotes de autos, software para tiendas de celulares, control de inventario, ventas a crédito, software de cobranza" />
-<meta property="og:title" content="Neron · Punto de venta para cualquier tipo de negocio en México" />
-<meta property="og:description" content="Un punto de venta para cualquier tipo de negocio en México: inventario, ventas a crédito, cobranza y reportes. También sistemas para agencias de autos y tiendas de celulares. Prueba gratis." />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Neron · Punto de venta y gestión para cualquier negocio en México</title>
+<meta name="description" content="Neron es la plataforma mexicana de gestión para tu negocio: punto de venta, control de inventario, ventas de contado y a crédito, cobranza, contratos y reportes. Sistemas para agencias de autos, tiendas de celulares y cualquier giro. Empieza gratis." />
+<meta name="theme-color" content="#7a1225" />
+<link rel="canonical" href="https://www.neronfix.com/" />
+
+<!-- Iconos -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<!-- Open Graph / Twitter -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://neronfix.com/" />
-<meta property="og:image" content="https://neronfix.com/logo-principal-full.png" />
 <meta property="og:site_name" content="Neron" />
+<meta property="og:locale" content="es_MX" />
+<meta property="og:url" content="https://www.neronfix.com/" />
+<meta property="og:title" content="Neron · El sistema que tu negocio merece" />
+<meta property="og:description" content="Punto de venta, inventario, créditos, cobranza y reportes. Sistemas para agencias de autos, tiendas de celulares y cualquier negocio en México." />
+<meta property="og:image" content="https://www.neronfix.com/logo-principal-full.png" />
+<meta property="og:image:alt" content="Neron" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Neron · Software premium para tu negocio" />
-<meta name="twitter:description" content="Sistemas para agencias de autos, tiendas de celulares y cualquier negocio. Prueba gratis." />
-<meta name="twitter:image" content="https://neronfix.com/logo-principal-full.png" />
-<link rel="canonical" href="https://neronfix.com/" />
+<meta name="twitter:title" content="Neron · El sistema que tu negocio merece" />
+<meta name="twitter:description" content="Punto de venta, inventario, créditos, cobranza y reportes para negocios en México. Empieza gratis." />
+<meta name="twitter:image" content="https://www.neronfix.com/logo-principal-full.png" />
+
+<!-- Tipografía -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" />
+
+<link rel="preload" as="image" href="/logo-header.png" />
+<link rel="stylesheet" href="/assets/neron.css" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Neron",
-  "alternateName": "Neron Fix",
-  "url": "https://neronfix.com",
-  "logo": "https://neronfix.com/logo-principal-full.png",
-  "description": "Neron crea sistemas premium para tu negocio: Neron Autos, Neron Celulares y Neron Caja. Ventas, inventario, créditos, cobranza y reportes.",
-  "sameAs": [
-    "https://www.instagram.com/neron_fix",
-    "https://wa.me/5216461213719"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.neronfix.com/#organization",
+      "name": "Neron",
+      "alternateName": "Neron Fix",
+      "url": "https://www.neronfix.com",
+      "logo": "https://www.neronfix.com/logo-principal-full.png",
+      "description": "Neron desarrolla sistemas de gestión para negocios en México: Neron Autos, Neron Celulares y Neron Caja. Ventas, inventario, créditos, cobranza y reportes.",
+      "areaServed": { "@type": "Country", "name": "México" },
+      "sameAs": [
+        "https://www.instagram.com/neron_fix",
+        "https://www.youtube.com/@neronfix"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "availableLanguage": ["Spanish"],
+        "url": "https://wa.me/5216461213719"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.neronfix.com/#website",
+      "url": "https://www.neronfix.com",
+      "name": "Neron",
+      "inLanguage": "es-MX",
+      "publisher": { "@id": "https://www.neronfix.com/#organization" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Neron Caja",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://caja.neronfix.com",
+      "description": "Punto de venta en la nube para tiendas, ferreterías, abarrotes y cualquier giro: tickets, inventario, corte de caja, créditos y reportes.",
+      "offers": {
+        "@type": "Offer",
+        "price": "220",
+        "priceCurrency": "MXN",
+        "url": "https://caja.neronfix.com"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Neron Autos",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://autos.neronfix.com",
+      "description": "Sistema para agencias y lotes de autos: inventario de unidades con fotos, contratos de compraventa en PDF, ventas a crédito y cobranza.",
+      "offers": {
+        "@type": "Offer",
+        "price": "850",
+        "priceCurrency": "MXN",
+        "url": "https://autos.neronfix.com"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Neron Celulares",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://celulares.neronfix.com",
+      "description": "Sistema para tiendas de celulares: punto de venta, inventario de equipos, créditos con contrato y pagaré, corte de caja y reportes.",
+      "offers": {
+        "@type": "Offer",
+        "price": "360",
+        "priceCurrency": "MXN",
+        "url": "https://celulares.neronfix.com"
+      }
+    }
   ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root{
-    --bg:#0b0b0d; --panel:#16161a; --panel2:#1d1d22; --linea:rgba(217,184,96,.16);
-    --oro:#D9B860; --oro2:#e7cd86; --texto:#f2f2f4; --suave:#a4a4ab; --tenue:#6c6c73;
-    --serif:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif; --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  }
-  *{box-sizing:border-box; margin:0; padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg); color:var(--texto); font-family:var(--sans); line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden}
-  a{color:inherit; text-decoration:none}
-  .wrap{max-width:1140px; margin:0 auto; padding:0 22px}
-  h1,h2,h3{font-family:var(--serif); font-weight:700; letter-spacing:-.3px; line-height:1.12}
-  svg.ic{width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none; vertical-align:-.14em}
 
-  #intro{position:fixed; inset:0; z-index:200; background:#000; display:flex; align-items:center; justify-content:center; transition:opacity .9s ease, visibility .9s}
-  #intro.hide{opacity:0; visibility:hidden}
-  .intro-logo{width:min(340px,70vw); opacity:0; animation:logoEnter 1.7s cubic-bezier(.16,.84,.3,1) forwards}
-  @keyframes logoEnter{0%{opacity:0; transform:translateY(22px) scale(.82); filter:blur(8px)}55%{opacity:1; filter:blur(0)}100%{opacity:1; transform:translateY(0) scale(1)}}
-
-  header{position:sticky; top:0; z-index:50; background:rgba(11,11,13,.8); backdrop-filter:blur(12px); border-bottom:1px solid var(--linea)}
-  .nav{display:flex; align-items:center; justify-content:space-between; height:70px}
-  .marca img{height:48px; width:auto; display:block}
-  .nav-cta{display:flex; align-items:center; gap:13px}
-  .btn{display:inline-flex; align-items:center; gap:8px; border-radius:999px; font-weight:600; cursor:pointer; border:none; font-size:15px; font-family:var(--sans); transition:.18s; white-space:nowrap}
-  .btn svg.ic{font-size:18px}
-  .btn-oro{background:linear-gradient(180deg,var(--oro2),var(--oro)); color:#231c08; padding:12px 22px}
-  .btn-oro:hover{filter:brightness(1.06); transform:translateY(-1px); box-shadow:0 8px 22px rgba(217,184,96,.22)}
-  .btn-ghost{background:transparent; color:var(--texto); border:1px solid rgba(255,255,255,.16); padding:11px 20px}
-  .btn-ghost:hover{border-color:var(--oro); color:var(--oro)}
-  .btn-wa{background:#1faa56; color:#fff; padding:12px 22px}
-  .btn-wa:hover{filter:brightness(1.08); transform:translateY(-1px)}
-
-  .reveal{opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
-  .reveal.visible{opacity:1; transform:none}
-  .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
-
-  .hero{position:relative; text-align:center; padding:96px 0 30px}
-  .aurora{position:absolute; inset:-200px 0 auto 0; height:560px; pointer-events:none; z-index:-1;
-    background:radial-gradient(50% 60% at 50% 30%, rgba(217,184,96,.16), transparent 70%),radial-gradient(40% 50% at 20% 10%, rgba(120,90,200,.08), transparent 70%); animation:deriva 16s ease-in-out infinite}
-  @keyframes deriva{0%,100%{transform:translateX(0) scale(1); opacity:1}50%{transform:translateX(16px) scale(1.05); opacity:.82}}
-  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:3px; text-transform:uppercase; color:var(--oro); border:1px solid var(--linea); border-radius:999px; padding:7px 18px; margin-bottom:26px; animation:pulso 3.6s ease-in-out infinite}
-  @keyframes pulso{0%,100%{box-shadow:0 0 0 0 rgba(217,184,96,0)}50%{box-shadow:0 0 22px 0 rgba(217,184,96,.2)}}
-  .eyebrow svg.ic{font-size:15px}
-  .hero h1{font-size:clamp(34px,6vw,60px); font-weight:700; letter-spacing:-.5px; margin-bottom:20px}
-  .hero h1 em{font-style:normal; color:var(--oro); animation:brillo 3s ease-in-out infinite}
-  @keyframes brillo{0%,100%{filter:brightness(1)}50%{filter:brightness(1.28)}}
-  .hero .lead{font-size:clamp(17px,2.3vw,21px); color:var(--suave); max-width:640px; margin:0 auto 30px}
-  .hero-cta{display:flex; flex-wrap:wrap; gap:13px; justify-content:center}
-  .hero-cta .btn{padding:15px 30px; font-size:16px}
-
-  /* Selector de negocio / productos */
-  .productos{display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:20px; max-width:1180px; margin:0 auto}
-  .producto{position:relative; display:flex; flex-direction:column; background:linear-gradient(180deg,var(--panel2),var(--panel)); border:1px solid var(--linea); border-radius:24px; padding:34px 30px; transition:.22s; overflow:hidden}
-  .producto:hover{transform:translateY(-6px); border-color:rgba(217,184,96,.5); box-shadow:0 26px 60px rgba(0,0,0,.45)}
-  .producto .pico{width:64px; height:64px; border-radius:18px; background:rgba(217,184,96,.12); color:var(--oro); display:flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:18px}
-  .producto h3{font-size:27px; margin-bottom:4px}
-  .producto .para{font-size:13px; color:var(--oro); letter-spacing:1px; text-transform:uppercase; font-weight:600; margin-bottom:16px}
-  .producto ul{list-style:none; display:grid; gap:9px; margin-bottom:20px}
-  .producto li{display:flex; align-items:flex-start; gap:9px; font-size:14.5px; color:var(--suave)}
-  .producto li svg.ic{font-size:18px; color:var(--oro); margin-top:1px; flex:none}
-  .producto .precio{font-size:14px; color:var(--tenue); margin-bottom:18px}
-  .producto .precio b{font-family:var(--serif); font-size:22px; color:var(--texto); font-weight:700}
-  .producto .btn{width:100%; justify-content:center; padding:14px; margin-top:auto}
-
-  section.bloque{padding:80px 0}
-  .titulo{text-align:center; margin-bottom:46px}
-  .titulo .et{font-size:12.5px; letter-spacing:3px; text-transform:uppercase; color:var(--oro); margin-bottom:12px}
-  .titulo h2{font-size:clamp(28px,4.2vw,42px); margin-bottom:12px}
-  .titulo p{color:var(--suave); font-size:17px; max-width:560px; margin:0 auto}
-
-  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px}
-  .card{background:var(--panel); border:1px solid var(--linea); border-radius:18px; padding:26px 24px; text-align:center; transition:.22s}
-  .card:hover{transform:translateY(-4px); border-color:rgba(217,184,96,.42)}
-  .card .ic-box{width:54px; height:54px; border-radius:14px; background:rgba(217,184,96,.1); color:var(--oro); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 16px}
-  .card h3{font-size:20px; margin-bottom:7px}
-  .card p{color:var(--suave); font-size:14.5px}
-
-  .cta-final{position:relative; text-align:center; padding:84px 0}
-  .cta-final h2{font-size:clamp(28px,4.4vw,44px); margin-bottom:16px}
-  .cta-final h2 em{font-style:normal; color:var(--oro)}
-  .cta-final p{color:var(--suave); font-size:18px; margin-bottom:28px}
-
-  footer{border-top:1px solid var(--linea); padding:42px 0; color:var(--tenue); font-size:14px}
-  .foot{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between}
-  .foot a{color:var(--suave)} .foot a:hover{color:var(--oro)}
-
-  .wa-float{position:fixed; right:20px; bottom:20px; z-index:80; background:#1faa56; color:#fff; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 8px 24px rgba(0,0,0,.45); transition:.2s}
-  .wa-float:hover{transform:scale(1.08)}
-  .wa-float::after{content:''; position:absolute; inset:0; border-radius:50%; pointer-events:none; animation:ring 2.2s ease-out infinite}
-  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(31,170,86,.5)}100%{box-shadow:0 0 0 18px rgba(31,170,86,0)}}
-  @media (prefers-reduced-motion: reduce){ .aurora,.eyebrow,.wa-float::after,.hero h1 em{animation:none} }
-</style>
+<script src="/assets/icons.js" defer></script>
+<script src="/assets/config.js" defer></script>
+<script src="/assets/ui.js" defer></script>
+<script src="/assets/components.js" defer></script>
+<script src="/assets/app.js" defer></script>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M4 20l1.4-3.5a7.5 7.5 0 1 1 3.1 2.7z"/><path d="M9 9.5c0 2.8 2.3 5 5 5a.7.7 0 0 0 .7-.7v-.9c0-.4-.3-.7-.7-.6l-1.1.2-1.6-1.6.2-1.1c.1-.4-.2-.7-.6-.7h-.9a.7.7 0 0 0-.7.7z"/></symbol>
-  <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V6z"/><path d="M9 12l2 2 4-4"/></symbol>
-  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13"/><rect x="3" y="13" width="18" height="5" rx="1"/><circle cx="7.5" cy="18" r="1.3"/><circle cx="16.5" cy="18" r="1.3"/></symbol>
-  <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
-  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/><path d="M3 4h2l2.2 11h10l1.8-7H6"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h5"/></symbol>
-  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.4"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 18a2 2 0 0 0 4 0"/></symbol>
-  <symbol id="i-pie" viewBox="0 0 24 24"><path d="M12 3v9h9a9 9 0 1 1-9-9z"/><path d="M14 3.3A9 9 0 0 1 20.7 10H14z"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
-  <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
-  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
-  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 4l1.7 4.3L18 10l-4.3 1.7L12 16l-1.7-4.3L6 10l4.3-1.7z"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></symbol>
-</svg>
+<a class="skip" href="#contenido">Saltar al contenido</a>
 
-<div id="intro"><img class="intro-logo" src="logo-principal-full.png" alt="Neron" /></div>
+<!-- ══════════════════════════ HEADER ══════════════════════════ -->
+<header class="hdr">
+  <div class="wrap hdr__inner">
+    <a class="brand" href="#inicio" aria-label="Neron · Inicio">
+      <img src="logo-header.png" alt="Neron" width="282" height="233" />
+    </a>
 
-<header>
-  <div class="wrap nav">
-    <a class="marca" href="#top" aria-label="Neron"><img src="logo-final.png" alt="Neron" /></a>
-    <div class="nav-cta">
-      <a class="btn btn-ghost" href="faq.html">Preguntas frecuentes</a>
-      <a class="btn btn-ghost" href="contacto.html">Contáctanos</a>
-      <a class="btn btn-oro" href="#productos">Ver los sistemas</a>
+    <nav class="nav" id="nav" aria-label="Navegación principal"></nav>
+
+    <div class="hdr__actions">
+      <button class="btn btn--ghost btn--sm" type="button" data-modal-open="modal-login">
+        <svg class="ic" aria-hidden="true"><use href="#i-lock"></use></svg>
+        Iniciar sesión
+      </button>
+      <a class="btn btn--primary btn--sm" href="#sistemas" data-track="hero_cta_click" data-track-label="header">
+        Ver los sistemas
+        <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
+      <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
 
-<a id="top"></a>
-<section class="hero">
-  <div class="aurora"></div>
-  <div class="wrap">
-    <span class="eyebrow reveal"><svg class="ic"><use href="#i-diamond"/></svg> Software premium para tu negocio</span>
-    <h1 class="reveal d1">El sistema que tu<br>negocio <em>merece</em></h1>
-    <p class="lead reveal d2">Un punto de venta para <em>cualquier tipo de negocio</em> en México: control de inventario, ventas de contado y a crédito, cobranza, contratos y reportes — todo en un solo lugar. Y si tu giro es especializado, también tenemos sistemas para agencias de autos y tiendas de celulares.</p>
-    <div class="hero-cta reveal d3">
-      <a class="btn btn-oro" href="#productos"><svg class="ic"><use href="#i-arrow"/></svg> ¿Cuál es tu negocio?</a>
-      <a class="btn btn-wa" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20sistemas%20Neron." target="_blank" rel="noreferrer"><svg class="ic"><use href="#i-whatsapp"/></svg> Habla con nosotros</a>
+<!-- ══════════════════════════ MENÚ MÓVIL ══════════════════════════ -->
+<div class="drawer" id="drawer" aria-hidden="true" aria-label="Menú">
+  <div class="drawer__head">
+    <a class="brand" href="#inicio" data-drawer-close aria-label="Neron · Inicio">
+      <img src="logo-header.png" alt="Neron" width="282" height="233" />
+    </a>
+    <button class="drawer__close" type="button" data-drawer-close aria-label="Cerrar menú">
+      <svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg>
+    </button>
+  </div>
+  <div class="drawer__body">
+    <nav id="drawer-links" aria-label="Navegación móvil"></nav>
+    <div class="drawer__cta">
+      <a class="btn btn--primary" href="#sistemas" data-track="hero_cta_click" data-track-label="drawer">
+        Ver los sistemas
+        <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
+      <a class="btn btn--wa" data-wa="Hola, quiero conocer más sobre Neron" href="#">
+        <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+        Habla con nosotros
+      </a>
+      <button class="btn btn--secondary" type="button" data-modal-open="modal-login">
+        <svg class="ic" aria-hidden="true"><use href="#i-lock"></use></svg>
+        Iniciar sesión
+      </button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- SELECTOR DE NEGOCIO -->
-<section class="bloque" id="productos">
-  <div class="wrap">
-    <div class="titulo reveal">
-      <div class="et">Elige tu sistema</div>
-      <h2>¿Cuál es tu negocio?</h2>
-      <p>Un punto de venta para cualquier tipo de negocio, y sistemas a la medida para giros especializados. Para todo México. Empieza gratis hoy.</p>
-    </div>
-    <div class="productos">
-      <div class="producto reveal d1">
-        <div class="pico"><svg class="ic"><use href="#i-car"/></svg></div>
-        <div class="para">Agencias y lotes de autos</div>
-        <h3>Autos</h3>
-        <ul>
-          <li><svg class="ic"><use href="#i-car"/></svg> Inventario de autos con fotos</li>
-          <li><svg class="ic"><use href="#i-file"/></svg> Contratos de compraventa en PDF</li>
-          <li><svg class="ic"><use href="#i-cash"/></svg> Ventas de contado y a crédito</li>
-          <li><svg class="ic"><use href="#i-bell"/></svg> Cobranza y recordatorios por WhatsApp</li>
-        </ul>
-        <div class="precio">Desde <b>$850</b> / mes · 14 días gratis</div>
-        <a class="btn btn-oro" href="https://autos.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Autos</a>
+<main id="contenido">
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<section class="hero" id="inicio">
+  <div class="deco" aria-hidden="true">
+    <div class="deco__glow deco__glow--gold" style="width:620px;height:620px;top:-220px;left:-160px"></div>
+    <div class="deco__glow deco__glow--wine" style="width:560px;height:560px;top:120px;right:-220px"></div>
+  </div>
+
+  <div class="wrap hero__grid">
+    <div>
+      <span class="hero__badge rv" data-enter>
+        <svg class="ic" aria-hidden="true"><use href="#i-diamond"></use></svg>
+        Software premium para tu negocio
+      </span>
+
+      <h1 class="h-display rv" data-enter>
+        El sistema que<br />tu negocio <em class="mark">merece</em>
+      </h1>
+
+      <p class="lead rv" data-enter>
+        La plataforma mexicana que ordena tu negocio en un solo lugar: punto de venta,
+        control de inventario, ventas de contado y a crédito, cobranza, contratos y reportes.
+        Y si tu giro es especializado, tenemos sistemas hechos a la medida para
+        <em>agencias de autos</em> y <em>tiendas de celulares</em>.
+      </p>
+
+      <div class="hero__cta rv" data-enter>
+        <a class="btn btn--primary btn--lg" href="#sistemas" data-track="hero_cta_click" data-track-label="cual es tu negocio">
+          ¿Cuál es tu negocio?
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+        </a>
+        <a class="btn btn--secondary btn--lg" data-wa="Hola, quiero conocer más sobre Neron" href="#">
+          <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+          Habla con nosotros
+        </a>
       </div>
 
-      <div class="producto reveal d2">
-        <div class="pico"><svg class="ic"><use href="#i-mobile"/></svg></div>
-        <div class="para">Tiendas de celulares</div>
-        <h3>Celulares</h3>
-        <ul>
-          <li><svg class="ic"><use href="#i-cart"/></svg> Punto de venta y tickets</li>
-          <li><svg class="ic"><use href="#i-mobile"/></svg> Inventario de equipos</li>
-          <li><svg class="ic"><use href="#i-file"/></svg> Créditos con contrato y pagaré</li>
-          <li><svg class="ic"><use href="#i-cash"/></svg> Corte de caja y reportes</li>
-        </ul>
-        <div class="precio">Desde <b>$360</b> / mes · prueba gratis</div>
-        <a class="btn btn-oro" href="https://celulares.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> Ver Celulares</a>
-      </div>
-
-      <style>#caja-planes::-webkit-scrollbar{display:none}</style>
-      <div class="producto reveal d3">
-        <div class="pico"><svg class="ic"><use href="#i-cart"/></svg></div>
-        <div class="para">Cualquier negocio</div>
-        <h3>Caja</h3>
-        <div style="font-size:12.5px;color:#B0892B;font-weight:800;letter-spacing:.3px;margin:-2px 0 10px">Desliza para ver los planes →</div>
-        <div id="caja-planes" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;margin:0 0 12px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch"></div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px">
-          <button id="caja-prev" type="button" aria-label="Anterior" style="width:34px;height:34px;border-radius:50%;border:1.5px solid #2a2a2e;background:#161618;color:#B0892B;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">‹</button>
-          <div id="caja-dots" style="display:flex;gap:6px"></div>
-          <button id="caja-next" type="button" aria-label="Siguiente" style="width:34px;height:34px;border-radius:50%;border:1.5px solid #2a2a2e;background:#161618;color:#B0892B;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">›</button>
-        </div>
-        <a id="caja-btn" class="btn btn-oro" href="https://caja.neronfix.com"><svg class="ic"><use href="#i-arrow"/></svg> <span id="caja-btn-txt">Empezar gratis</span></a>
-      </div>
     </div>
-  </div>
-</section>
 
-<!-- POR QUÉ NERON -->
-<section class="bloque" id="porque" style="background:#08080a">
+    <div class="mock rv rv--scale" id="mockup" data-enter></div>
+  </div>
+
   <div class="wrap">
-    <div class="titulo reveal">
-      <div class="et">Por qué Neron</div>
-      <h2>Hecho para que tu negocio crezca</h2>
-      <p>Sin importar tu giro, Neron te da orden, control de inventario y una imagen profesional. Software mexicano, con soporte directo incluido.</p>
+    <div class="trust" id="trust"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ MÉTRICAS ══════════════════════════ -->
+<section class="band" aria-label="Neron en números" style="padding-block:0">
+  <div class="wrap">
+    <div class="stats rv" id="stats" style="margin-top:calc(var(--s5) * -1)"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SISTEMAS ══════════════════════════ -->
+<section class="band" id="sistemas">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow eyebrow--rule">Elige tu sistema</span>
+      <h2 class="h-section">¿Cuál es tu <em class="mark">negocio</em>?</h2>
+      <p>
+        Neron se adapta a distintos tipos de negocio: un punto de venta para cualquier giro
+        y sistemas a la medida para sectores especializados. Para todo México.
+      </p>
     </div>
-    <div class="grid">
-      <div class="card reveal d1"><div class="ic-box"><svg class="ic"><use href="#i-sparkles"/></svg></div><h3>Fácil y elegante</h3><p>Diseñado para usarse sin capacitación, desde el primer día.</p></div>
-      <div class="card reveal d2"><div class="ic-box"><svg class="ic"><use href="#i-device"/></svg></div><h3>En cualquier dispositivo</h3><p>Compu, tablet o celular. Tu negocio siempre contigo.</p></div>
-      <div class="card reveal d3"><div class="ic-box"><svg class="ic"><use href="#i-lock"/></svg></div><h3>Seguro y privado</h3><p>Cada negocio ve solo sus datos, respaldados en la nube.</p></div>
-      <div class="card reveal d1"><div class="ic-box"><svg class="ic"><use href="#i-flag"/></svg></div><h3>Hecho en México</h3><p>Pensado para los negocios y las leyes de aquí. Soporte por WhatsApp.</p></div>
+    <div class="systems" id="systems"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ BENEFICIOS ══════════════════════════ -->
+<section class="band band--soft" id="beneficios">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow eyebrow--rule">Por qué Neron</span>
+      <h2 class="h-section">Hecho para que tu negocio <em class="mark">crezca</em></h2>
+      <p>
+        Sin importar tu giro, Neron te da orden, control de inventario y una imagen
+        profesional. Software mexicano, con soporte directo incluido.
+      </p>
+    </div>
+    <div class="benefits" id="benefits"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PRECIOS ══════════════════════════ -->
+<section class="band" id="precios">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow eyebrow--rule">Precios</span>
+      <h2 class="h-section">Un plan para cada etapa</h2>
+      <p>
+        Precios de Neron Caja, el punto de venta para cualquier giro.
+        Sin permanencia forzosa y con soporte incluido en todos los planes.
+      </p>
+    </div>
+
+    <div style="display:flex;justify-content:center">
+      <div class="toggle rv" id="plan-toggle" role="tablist" aria-label="Periodo de facturación">
+        <button class="toggle__btn" type="button" role="tab" data-period="mensual" aria-selected="true">Mensual</button>
+        <button class="toggle__btn" type="button" role="tab" data-period="anual" aria-selected="false">
+          Anual<span class="toggle__save">2 meses gratis</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="plans" id="plans"></div>
+
+    <p class="plans-note rv">
+      <svg class="ic" aria-hidden="true" style="color:var(--gold)"><use href="#i-diamond"></use></svg>
+      ¿Tienes agencia de autos o tienda de celulares? Estos son sus precios:
+    </p>
+    <div class="plans-other" id="plans-other"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CONTACTO ══════════════════════════ -->
+<section class="band band--soft" id="contacto">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow eyebrow--rule">Contacto</span>
+      <h2 class="h-section">Hablemos de tu negocio</h2>
+      <p>Te ayudamos a elegir el sistema correcto y a dar de alta tu cuenta. Sin compromiso.</p>
+    </div>
+    <div class="contact" id="contact"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FAQ ══════════════════════════ -->
+<section class="band" id="faq">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow eyebrow--rule">Preguntas frecuentes</span>
+      <h2 class="h-section">Resolvemos tus dudas</h2>
+      <p>Lo que más nos preguntan antes de empezar. Si te queda algo, escríbenos por WhatsApp.</p>
+    </div>
+    <div class="faq" id="faq-list"></div>
+    <p style="text-align:center;margin-top:var(--s7)">
+      <a class="link-arrow" href="faq.html" data-track="help_click">
+        Ver el Centro de ayuda completo
+        <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CTA FINAL ══════════════════════════ -->
+<section class="cta on-wine" id="cta-final">
+  <svg class="cta__deco" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M-40 300C220 200 420 360 720 260s520-140 800-60" fill="none" stroke="rgba(232,213,163,.22)" stroke-width="1"/>
+    <path d="M-40 340C240 250 460 400 760 300s500-130 780-50" fill="none" stroke="rgba(232,213,163,.14)" stroke-width="1"/>
+    <path d="M-40 100C260 20 400 180 760 80s480-120 760-40" fill="none" stroke="rgba(232,213,163,.10)" stroke-width="1"/>
+  </svg>
+  <div class="wrap">
+    <div class="rv">
+      <div class="cta__rule"></div>
+      <h2 class="h-section">Tu negocio merece <em class="mark">verse profesional</em></h2>
+      <p>Elige tu sistema y empieza gratis hoy.</p>
+      <div class="cta__btns">
+        <a class="btn btn--gold btn--lg" href="#sistemas" data-track="final_cta_click" data-track-label="ver sistemas">
+          Ver los sistemas
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+        </a>
+        <a class="btn btn--secondary btn--lg" data-wa="Hola, quiero conocer más sobre Neron" href="#">
+          <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+          Habla con nosotros
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="cta-final">
-  <div class="aurora"></div>
-  <div class="wrap reveal">
-    <h2>Tu negocio merece <em>verse profesional</em></h2>
-    <p>Elige tu sistema y empieza gratis hoy.</p>
-    <div class="hero-cta">
-      <a class="btn btn-oro" href="#productos"><svg class="ic"><use href="#i-arrow"/></svg> Ver los sistemas</a>
-      <a class="btn btn-wa" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20sistemas%20Neron." target="_blank" rel="noreferrer"><svg class="ic"><use href="#i-whatsapp"/></svg> Habla con nosotros</a>
-    </div>
-  </div>
-</section>
+</main>
 
-<footer>
-  <div class="wrap foot">
-    <div>© <span id="anio"></span> Neron</div>
-    <div style="display:flex; gap:20px; flex-wrap:wrap">
-      <a href="https://autos.neronfix.com">Neron Autos</a>
-      <a href="https://celulares.neronfix.com">Neron Celulares</a>
-      <a href="https://caja.neronfix.com">Neron Caja</a>
-      <a href="faq.html">Preguntas frecuentes</a>
-      <a href="https://wa.me/5216461213719" target="_blank" rel="noreferrer">WhatsApp</a>
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <img src="logo-header.png" alt="Neron" width="282" height="233" loading="lazy" decoding="async" />
+        <p>Sistemas de gestión para negocios en México. Punto de venta, inventario, créditos, cobranza y reportes.</p>
+      </div>
+
+      <div class="ftr__col">
+        <h4>Sistemas</h4>
+        <a href="https://autos.neronfix.com" data-track="system_autos_click" data-track-label="footer">Neron Autos</a>
+        <a href="https://celulares.neronfix.com" data-track="system_cellphones_click" data-track-label="footer">Neron Celulares</a>
+        <a href="https://caja.neronfix.com" data-track="system_pos_click" data-track-label="footer">Neron Caja</a>
+      </div>
+
+      <div class="ftr__col">
+        <h4>Recursos</h4>
+        <a href="#precios">Precios</a>
+        <a href="faq.html">Preguntas frecuentes</a>
+        <a href="contacto.html">Contáctanos</a>
+      </div>
+
+      <div class="ftr__col">
+        <h4>Contacto</h4>
+        <a data-wa="Hola, quiero conocer más sobre Neron" href="#">WhatsApp</a>
+        <a href="https://www.instagram.com/neron_fix" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </div>
+    </div>
+
+    <div class="ftr__bot">
+      <div>© <span id="year">2025</span> Neron. Hecho en México.</div>
+      <div class="ftr__legal">
+        <a data-route="terminos" href="#" hidden>Términos y condiciones</a>
+        <a data-route="privacidad" href="#" hidden>Aviso de privacidad</a>
+      </div>
     </div>
   </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/5216461213719?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20los%20sistemas%20Neron." target="_blank" rel="noreferrer" aria-label="WhatsApp"><svg class="ic"><use href="#i-whatsapp"/></svg></a>
+<!-- ══════════════════════════ WHATSAPP FLOTANTE ══════════════════════════ -->
+<a class="wa-float" data-wa="Hola, quiero conocer más sobre Neron" href="#" aria-label="Escríbenos por WhatsApp">
+  <span class="wa-float__tip" aria-hidden="true">¿Te ayudamos?</span>
+  <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+</a>
 
-<script>
-  document.getElementById('anio').textContent = new Date().getFullYear();
-  window.addEventListener('load', function(){ setTimeout(function(){ document.getElementById('intro').classList.add('hide'); }, 2000); });
-  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }); }, { threshold:.14 });
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-  setTimeout(function(){ document.querySelectorAll('.hero .reveal').forEach(function(el){ el.classList.add('visible'); }); }, 2050);
+<!-- ══════════════════════════ BARRA MÓVIL ══════════════════════════ -->
+<div class="mbar" id="mbar">
+  <a class="btn btn--primary" href="#sistemas" data-track="mobile_bar_click" data-track-label="sistemas">
+    Ver los sistemas
+    <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
+  </a>
+  <a class="btn btn--wa" data-wa="Hola, quiero conocer más sobre Neron" href="#" aria-label="Escríbenos por WhatsApp">
+    <svg class="ic" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+  </a>
+</div>
 
-  // ── Planes de Neron Caja: se cargan solos desde la fuente única ──
-  (function(){
-    var API = 'https://caja.neronfix.com/api/planes';
-    var cont = document.getElementById('caja-planes');
-    var dots = document.getElementById('caja-dots');
-    var btn = document.getElementById('caja-btn');
-    var btnTxt = document.getElementById('caja-btn-txt');
-    var CURRENT = [];
-    if(!cont) return;
-    // Respaldo: se muestra de inmediato; la consulta en vivo lo actualiza si funciona.
-    var DEFAULT = [
-      { id:'basico', periodo:'mensual', nombre:'Básico', precio:220, prueba:true, feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
-      { id:'normal', periodo:'mensual', nombre:'Normal', precio:350, popular:true, prueba:true, feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
-      { id:'avanzado', periodo:'mensual', nombre:'Avanzado', precio:580, prueba:false, feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
-      { id:'normal_anual', periodo:'anual', nombre:'Normal', precio:3500, ahorro:700, prueba:false, feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
-      { id:'avanzado_anual', periodo:'anual', nombre:'Avanzado', precio:5800, ahorro:1160, prueba:false, feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
-    ];
-    var pesos = function(n){ return '$' + Number(n||0).toLocaleString('es-MX'); };
-    function actualizaBtn(i){
-      var p = CURRENT[i]; if(!p || !btn) return;
-      btnTxt.textContent = p.prueba ? 'Empezar gratis' : ('Contratar ' + p.nombre + (p.periodo==='anual'?' anual':''));
-      btn.href = 'https://caja.neronfix.com/?plan=' + p.id;
-    }
-    function render(lista){
-      CURRENT = lista;
-      cont.innerHTML = lista.map(function(p){
-        var per = p.periodo==='anual' ? '/año' : '/mes';
-        var etiqueta = p.nombre + (p.periodo==='anual' ? ' · Anual' : '');
-        var feats = (p.feats||[]).map(function(t){ return '<li style="display:flex;gap:7px;align-items:flex-start;margin-bottom:6px;font-size:12.5px;color:#d7d2c8;line-height:1.35"><span style="color:#B0892B">✓</span>'+t+'</li>'; }).join('');
-        var ahorro = p.ahorro ? '<div style="display:inline-block;background:#13301f;color:#5fd08a;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;margin-bottom:8px">Ahorras '+pesos(p.ahorro)+' al año</div>' : '';
-        var pop = p.popular ? '<span style="display:inline-block;background:#B0892B;color:#fff;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:6px">★ Popular</span>' : '';
-        var prueba = '<div style="font-size:11.5px;font-weight:700;margin-bottom:8px;color:'+(p.prueba?'#5fd08a':'#9b9488')+'">'+(p.prueba?'✓ 14 días gratis':'Sin prueba · pago directo')+'</div>';
-        return '<div style="min-width:100%;scroll-snap-align:start;box-sizing:border-box;padding:2px 2px 0">'
-          + '<div style="font-size:12px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">'+etiqueta+pop+'</div>'
-          + '<div style="font-size:32px;font-weight:800;color:#B0892B;line-height:1.05;margin-bottom:'+(p.ahorro?'6px':'10px')+'">'+pesos(p.precio)+'<span style="font-size:14px;font-weight:500;color:#9b9488">'+per+'</span></div>'
-          + ahorro
-          + prueba
-          + '<ul style="list-style:none;padding:0;margin:0">'+feats+'</ul>'
-          + '</div>';
-      }).join('');
-      dots.innerHTML = lista.map(function(_,i){ return '<span data-i="'+i+'" style="width:7px;height:7px;border-radius:50%;background:'+(i===0?'#B0892B':'#3a3a3e')+';cursor:pointer;transition:background .2s"></span>'; }).join('');
-      actualizaBtn(0);
-    }
-    function syncDots(){ if(!cont.clientWidth) return; var i=Math.round(cont.scrollLeft/cont.clientWidth); dots.querySelectorAll('span').forEach(function(s,j){ s.style.background = j===i?'#B0892B':'#3a3a3e'; }); actualizaBtn(i); }
-    render(DEFAULT);
-    cont.addEventListener('scroll', function(){ window.requestAnimationFrame(syncDots); });
-    dots.addEventListener('click', function(e){ var s=e.target.closest('span'); if(!s) return; var i=+s.getAttribute('data-i'); cont.scrollTo({ left:i*cont.clientWidth, behavior:'smooth' }); });
-    var _prev=document.getElementById('caja-prev'), _next=document.getElementById('caja-next');
-    if(_prev) _prev.addEventListener('click', function(){ cont.scrollBy({ left:-cont.clientWidth, behavior:'smooth' }); });
-    if(_next) _next.addEventListener('click', function(){ cont.scrollBy({ left:cont.clientWidth, behavior:'smooth' }); });
-    fetch(API).then(function(r){ return r.json(); }).then(function(j){ if(j && j.planes && j.planes.length){ render(j.planes); } }).catch(function(){ /* se queda el respaldo */ });
-  })();
-</script>
+<!-- ══════════════════════════ MODAL: INICIAR SESIÓN ══════════════════════════ -->
+<div class="modal" id="modal-login" role="dialog" aria-modal="true" aria-labelledby="modal-login-title" aria-hidden="true">
+  <div class="modal__overlay"></div>
+  <div class="modal__panel">
+    <button class="modal__close" type="button" data-modal-close aria-label="Cerrar">
+      <svg class="ic" aria-hidden="true"><use href="#i-close"></use></svg>
+    </button>
+    <div class="modal__head">
+      <h2 id="modal-login-title">Iniciar sesión</h2>
+      <p>Cada sistema tiene su propio acceso. Entra al que ya usas en tu negocio.</p>
+    </div>
+    <div class="modal__list" id="login-options"></div>
+    <p class="modal__foot">
+      ¿Todavía no tienes cuenta?
+      <a class="link-arrow" data-wa="Hola, quiero abrir una cuenta en Neron" href="#" style="display:inline-flex">Escríbenos</a>
+    </p>
+  </div>
+</div>
 
 </body>
 </html>
