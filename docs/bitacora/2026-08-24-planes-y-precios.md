@@ -54,3 +54,20 @@ El anual siempre son diez mensualidades. El trimestral ronda el 10%.
 - Los planes se pueden vender, pero ningún sistema aplica todavía los límites
   de usuarios ni de módulos por plan. Eso se hace dentro de cada producto, no
   aquí.
+
+---
+
+## Ajuste del mismo día
+
+- **Las tarjetas de sistema repetían el precio.** Mostraban "Desde $349 / mes ·
+  Prueba gratis", que es exactamente lo que dice el plan Normal más abajo, y
+  nada avisaba de que hubiera tres planes. Ahora la tarjeta dice "Tres planes
+  desde $349 al mes" y lleva un enlace "Ver los tres planes de <sistema>" que
+  baja a Precios **con la pestaña de ese sistema ya elegida**. El precio
+  completo vive en un solo lugar.
+- Se quitaron de `SYSTEMS[]` los campos `period`, `priceNote` y `trial`, que ya
+  no usa nadie, y del CSS `.sys__price` y `.sys__note`.
+- **Fuera el agente de WhatsApp del plan Pro de Celulares.** Está construido y
+  funciona, pero todavía no se ofrece. En su lugar quedó el historial
+  automático del negocio, que también es del Pro. Cuando se quiera vender,
+  vuelve a entrar sin mover el precio.

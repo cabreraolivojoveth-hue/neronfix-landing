@@ -379,10 +379,12 @@
             '<h3>' + esc(s.name) + '</h3></span></div>' +
           '<p class="sys__desc">' + esc(s.desc) + '</p>' +
           '<ul class="sys__feats">' + feats + '</ul>' +
-          '<p class="sys__price">' +
-            esc(s.priceNote) + ' <b>' + money(s.price) + '</b><span class="per">/ ' + esc(s.period) + '</span>' +
-            (s.trial ? ' <span class="sys__note">' + icon('i-check') + esc(s.trial) + '</span>' : '') +
+          '<p class="sys__plans">' +
+            '<b>Tres planes</b> desde ' + money(s.price) + ' al mes' +
           '</p>' +
+          '<a class="sys__plans-link" href="#precios" data-plans-for="' + esc(s.id) + '"' +
+            ' data-track="plan_product_click" data-track-label="' + esc(s.id) + ' desde tarjeta">' +
+            'Ver los tres planes de ' + esc(s.name) + icon('i-arrow') + '</a>' +
           '<a class="btn btn--primary" href="' + esc(sysLink(s)) + '"' + sysAttrs(s) +
             ' data-track="' + esc(s.event) + '"' +
             ' data-track-label="' + esc(s.name) + '">' + esc(s.cta) + icon('i-arrow') + '</a>' +
@@ -496,12 +498,30 @@
     });
   }
 
+  /* Los enlaces "Ver los tres planes" de las tarjetas eligen la pestaña del
+     sistema antes de bajar, para que nadie llegue a precios y tenga que
+     volver a decir cuál es su giro. */
+  function wirePlanJumps() {
+    U.$$('[data-plans-for]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var id = a.getAttribute('data-plans-for');
+        if (!C.PLANS[id]) return;
+        product = id;
+        U.$$('#product-toggle .toggle__btn').forEach(function (x) {
+          x.setAttribute('aria-selected', String(x.getAttribute('data-product') === id));
+        });
+        renderPlans();
+      });
+    });
+  }
+
   function initPricing() {
     if (!U.$('#plans')) return;
     renderPricingToggles();
     wireToggle('#product-toggle', 'data-product', function (v) { product = v; });
     wireToggle('#plan-toggle', 'data-period', function (v) { period = v; });
     renderPlans();
+    wirePlanJumps();
   }
 
   /* --- FAQ ------------------------------------------------------------- */

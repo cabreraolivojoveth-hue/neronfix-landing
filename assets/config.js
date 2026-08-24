@@ -59,7 +59,9 @@ const ROUTES = {
 /* --------------------------------------------------------------------------
    SISTEMAS
    --------------------------------------------------------------------------
-   `price` es el precio del plan Normal de cada sistema (ver PLANS).
+   `price` es el precio del plan Normal de cada sistema (ver PLANS) y sólo
+   sirve para el gancho "Tres planes desde $X al mes" de la tarjeta. El precio
+   completo NO se repite aquí: la tarjeta manda a la sección de precios.
    Si un sistema no tiene `url`, su botón lleva a WhatsApp.
    -------------------------------------------------------------------------- */
 const SYSTEMS = [
@@ -76,9 +78,6 @@ const SYSTEMS = [
       'Reparaciones, garantías y tienda en línea',
     ],
     price: 349,
-    period: 'mes',
-    priceNote: 'Desde',
-    trial: 'Prueba gratis',
     cta: 'Ver sistema de Celulares',
     url: ROUTES.celulares,
     event: 'system_cellphones_click',
@@ -97,9 +96,6 @@ const SYSTEMS = [
       'Cobranza, mora y recordatorios por WhatsApp',
     ],
     price: 849,
-    period: 'mes',
-    priceNote: 'Desde',
-    trial: 'Prueba gratis',
     cta: 'Ver sistema de Autos',
     url: ROUTES.autos,
     event: 'system_autos_click',
@@ -118,9 +114,6 @@ const SYSTEMS = [
       'Punto de venta, caja y reportes',
     ],
     price: 299,
-    period: 'mes',
-    priceNote: 'Desde',
-    trial: 'Prueba gratis',
     cta: 'Pregunta por Terapias',
     url: ROUTES.terapias,
     event: 'system_therapies_click',
@@ -181,7 +174,7 @@ const PLANS = {
         'Todo lo del Premium',
         'Socios y comisionistas con inventario compartido',
         'Auditoría: quién cambió qué y cuándo',
-        'Agente de WhatsApp que contesta solo',
+        'Historial del negocio, fotografiado solo por periodo',
         'Dominio propio y roles a la medida',
         'Soporte prioritario',
       ],

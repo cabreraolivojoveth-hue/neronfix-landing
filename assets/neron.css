@@ -523,18 +523,20 @@ section{scroll-margin-top:calc(var(--header-h-sticky) + var(--s4))}
 .sys__feats{display:grid;gap:9px;margin-bottom:var(--s5)}
 .sys__feats li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--ink-2);line-height:1.5}
 .sys__feats .ic{font-size:16px;color:var(--gold);margin-top:3px;stroke-width:2.2}
-.sys__price{
-  display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;
+/* La tarjeta no repite el precio del plan Normal: sólo avisa que hay tres
+   planes y manda a verlos. El precio completo vive una sola vez, en Precios. */
+.sys__plans{
   margin-top:auto;padding-top:var(--s4);border-top:1px solid var(--line);
-  margin-bottom:var(--s4);font-size:13px;color:var(--ink-3);
+  font-size:14.5px;color:var(--ink-2);
 }
-.sys__price b{font-family:var(--display);font-size:29px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
-.sys__price .per{font-size:13.5px;color:var(--ink-3)}
-.sys__note{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:11.5px;font-weight:600;color:var(--wa-700);
-  background:rgba(31,170,86,.09);padding:2px 9px;border-radius:var(--r-full);
+.sys__plans b{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.sys__plans-link{
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  margin:var(--s2) 0 var(--s4);
+  font-size:13.5px;font-weight:700;color:var(--wine);
 }
+.sys__plans-link .ic{font-size:15px;transition:transform var(--t-hover) var(--ease)}
+.sys__plans-link:hover .ic{transform:translateX(3px)}
 .sys .btn{width:100%}
 .sys:hover .btn--primary{background:var(--wine-700)}
 

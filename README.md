@@ -53,9 +53,14 @@ diez mensualidades** (dos meses gratis) y **el trimestral ronda el 10% de
 descuento** sobre tres meses. Las tarjetas calculan solas el "te sale en $X al
 mes"; no se escribe a mano.
 
-El `price` de `SYSTEMS[]` es el precio del plan Normal y sólo alimenta la
-tarjeta del sistema y la métrica "Desde $X al mes". Si cambias el Normal,
-cámbialo también ahí.
+El `price` de `SYSTEMS[]` es el precio del plan Normal y sólo alimenta el
+gancho "Tres planes desde $X al mes" de la tarjeta y la métrica "Desde $X al
+mes". Si cambias el Normal, cámbialo también ahí.
+
+La tarjeta del sistema **no repite el precio completo**: anuncia que hay tres
+planes y lleva a la sección de precios con la pestaña de ese sistema ya
+elegida (`data-plans-for`). Si el precio vuelve a aparecer entero en la
+tarjeta, la misma información queda en dos lugares y se desincroniza.
 
 Los precios se publican **con IVA incluido**.
 
