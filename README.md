@@ -17,7 +17,6 @@ assets/
   components.js     Render de cada sección a partir de config.js
   app.js            Arranque: header, menú, scrollspy, barra móvil
   faq-search.js     Buscador del Centro de ayuda
-  contacto.js       Tarjeta de correo de la página de contacto
 ```
 
 ## Dónde cambiar cada cosa
@@ -28,7 +27,9 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 |---|---|
 | Mensaje precargado de WhatsApp | `CONTACT_CONFIG.whatsappMessage` |
 | Número de WhatsApp | `CONTACT_CONFIG.whatsappNumber` y `.whatsappDisplay` |
-| Precios de Autos y Celulares | `SYSTEMS[].price` |
+| Precios de los tres planes de un sistema | `PLANS.<sistema>[].precios` |
+| Precio "Desde" de la tarjeta de un sistema | `SYSTEMS[].price` |
+| Formas de pago y su etiqueta | `PERIODS[]` |
 | Textos y beneficios de cada sistema | `SYSTEMS[]` |
 | Métricas de la franja de números | `STATS[]` |
 | Tarjetas de "Por qué Neron" | `BENEFITS[]` |
@@ -37,14 +38,26 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 | Enlaces del menú | `NAV[]` |
 | Términos y Aviso de privacidad | `ROUTES.terminos` / `ROUTES.privacidad` |
 
-### Precios de Neron Caja
+### Precios
 
-**No se editan aquí.** La sección de precios consulta la API real
-`https://caja.neronfix.com/api/planes` y se sincroniza sola. `PLANS_FALLBACK`
-es únicamente el respaldo que se muestra si la API no responde.
+Los tres sistemas tienen tres planes (Normal, Premium y Pro) y tres formas de
+pago (mensual, trimestral y anual). Todo vive en `PLANS` dentro de
+`assets/config.js`; la sección de precios no consulta ninguna API.
 
-El precio más bajo que devuelve la API se propaga automáticamente a la tarjeta
-de Neron Caja y a la métrica "Desde $X al mes".
+El visitante elige primero su sistema y después la forma de pago, así que
+nunca ve nueve tarjetas al mismo tiempo. Las pestañas se generan solas de
+`SYSTEMS` y de `PERIODS`.
+
+Al cambiar un precio hay que respetar la regla de la escalera: **el anual son
+diez mensualidades** (dos meses gratis) y **el trimestral ronda el 10% de
+descuento** sobre tres meses. Las tarjetas calculan solas el "te sale en $X al
+mes"; no se escribe a mano.
+
+El `price` de `SYSTEMS[]` es el precio del plan Normal y sólo alimenta la
+tarjeta del sistema y la métrica "Desde $X al mes". Si cambias el Normal,
+cámbialo también ahí.
+
+Los precios se publican **con IVA incluido**.
 
 ### Enlaces legales
 
@@ -111,7 +124,10 @@ Para verlos en consola durante pruebas: `ANALYTICS_CONFIG.debug = true`.
 
 No existe una ruta de login unificada en `neronfix.com`. El botón "Iniciar
 sesión" abre un modal que lleva al sistema real que el negocio ya contrató
-(`autos.`, `celulares.` o `caja.neronfix.com`). Si algún día hay un acceso
+(`storephone.neronfix.com` para Celulares, `autos.neronfix.com` para Autos).
+Un sistema sin `url` en `SYSTEMS[]` no aparece en el modal y su botón de la
+tarjeta va a WhatsApp, para no dejar un enlace que no abre: es el caso de
+Terapias mientras no tenga subdominio propio. Si algún día hay un acceso
 único, se cambia en `SYSTEMS[].url` o se añade un `loginUrl`.
 
 ## Probar en local

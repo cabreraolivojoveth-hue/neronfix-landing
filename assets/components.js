@@ -251,37 +251,43 @@
       '<text x="366" y="196" font-size="8" font-family="Inter,sans-serif" font-weight="700" fill="#7a1225" text-anchor="end">$20,550</text>' +
       '</svg>',
 
-    /* Caja: terminal de punto de venta */
-    'mk-caja': '<svg viewBox="0 0 400 225" role="img" aria-label="Pantalla de cobro de Neron Caja con productos y total">' +
+    /* Terapias: agenda del día con expediente */
+    'mk-terapias': '<svg viewBox="0 0 400 225" role="img" aria-label="Agenda del día en Neron Terapias con citas y expediente del paciente">' +
       '<rect width="400" height="225" fill="#f6f1ec"/>' +
-      '<rect x="20" y="18" width="200" height="186" rx="10" fill="#fff" stroke="#e6ded7"/>' +
-      '<text x="34" y="40" font-size="10" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Venta en curso</text>' +
-      '<text x="206" y="40" font-size="7.5" font-family="Inter,sans-serif" fill="#837976" text-anchor="end">Ticket #1842</text>' +
-      /* Renglones de productos */
+      '<rect x="20" y="18" width="222" height="186" rx="10" fill="#fff" stroke="#e6ded7"/>' +
+      '<text x="34" y="40" font-size="10" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Agenda de hoy</text>' +
+      '<text x="228" y="40" font-size="7.5" font-family="Inter,sans-serif" fill="#837976" text-anchor="end">8 citas</text>' +
       '<g font-family="Inter,sans-serif">' +
-      '<rect x="34" y="52" width="172" height="1" fill="#f2ece7"/>' +
-      '<text x="34" y="70" font-size="8" fill="#14100f">Refresco 600 ml × 3</text><text x="206" y="70" font-size="8" font-weight="600" fill="#14100f" text-anchor="end">$66.00</text>' +
-      '<text x="34" y="90" font-size="8" fill="#14100f">Pan de caja</text><text x="206" y="90" font-size="8" font-weight="600" fill="#14100f" text-anchor="end">$48.50</text>' +
-      '<text x="34" y="110" font-size="8" fill="#14100f">Detergente 1 kg</text><text x="206" y="110" font-size="8" font-weight="600" fill="#14100f" text-anchor="end">$54.00</text>' +
-      '<text x="34" y="130" font-size="8" fill="#14100f">Café soluble</text><text x="206" y="130" font-size="8" font-weight="600" fill="#14100f" text-anchor="end">$92.00</text>' +
-      '<rect x="34" y="142" width="172" height="1" fill="#f2ece7"/>' +
-      '<text x="34" y="162" font-size="8" fill="#837976">Subtotal</text><text x="206" y="162" font-size="8" fill="#514845" text-anchor="end">$260.50</text>' +
-      '<text x="34" y="186" font-size="10" font-weight="600" fill="#7a1225">Total</text>' +
-      '<text x="206" y="188" font-size="17" font-weight="700" fill="#7a1225" text-anchor="end">$260.50</text>' +
+      '<rect x="34" y="52" width="194" height="34" rx="8" fill="#fbf9f7"/>' +
+      '<rect x="34" y="52" width="3.5" height="34" rx="2" fill="#7a1225"/>' +
+      '<text x="48" y="68" font-size="8" font-weight="600" fill="#14100f">Masaje profundo · 60 min</text>' +
+      '<text x="48" y="80" font-size="7" fill="#837976">10:00 · Terapeuta 1</text>' +
+      '<rect x="34" y="92" width="194" height="34" rx="8" fill="#fbf9f7"/>' +
+      '<rect x="34" y="92" width="3.5" height="34" rx="2" fill="#b8933f"/>' +
+      '<text x="48" y="108" font-size="8" font-weight="600" fill="#14100f">Reflexología · 45 min</text>' +
+      '<text x="48" y="120" font-size="7" fill="#837976">11:15 · Terapeuta 2</text>' +
+      '<rect x="34" y="132" width="194" height="34" rx="8" fill="#fbf9f7"/>' +
+      '<rect x="34" y="132" width="3.5" height="34" rx="2" fill="#c48a96"/>' +
+      '<text x="48" y="148" font-size="8" font-weight="600" fill="#14100f">Taller de aromaterapia</text>' +
+      '<text x="48" y="160" font-size="7" fill="#837976">17:00 · 9 de 12 lugares</text>' +
+      '<line x1="34" y1="176" x2="228" y2="176" stroke="#ece5df"/>' +
+      '<text x="34" y="192" font-size="8" fill="#837976">Vendido hoy</text>' +
+      '<text x="228" y="194" font-size="13" font-weight="700" fill="#7a1225" text-anchor="end">$4,860</text>' +
       '</g>' +
-      /* Teclado de cobro */
-      '<rect x="232" y="18" width="148" height="90" rx="10" fill="#fff" stroke="#e6ded7"/>' +
-      '<text x="246" y="38" font-size="8" font-family="Inter,sans-serif" fill="#837976">Recibido</text>' +
-      '<text x="246" y="60" font-size="16" font-family="Inter,sans-serif" font-weight="700" fill="#14100f">$300.00</text>' +
-      '<rect x="246" y="70" width="120" height="24" rx="8" fill="#fcf7ea" stroke="#e8d5a3"/>' +
-      '<text x="258" y="86" font-size="8" font-family="Inter,sans-serif" fill="#8a6820">Cambio</text>' +
-      '<text x="354" y="86" font-size="9" font-family="Inter,sans-serif" font-weight="700" fill="#8a6820" text-anchor="end">$39.50</text>' +
-      '<rect x="232" y="118" width="70" height="38" rx="9" fill="#fbf9f7" stroke="#ece5df"/>' +
-      '<text x="267" y="142" font-size="8.5" font-family="Inter,sans-serif" font-weight="600" fill="#514845" text-anchor="middle">Efectivo</text>' +
-      '<rect x="310" y="118" width="70" height="38" rx="9" fill="#fbf9f7" stroke="#ece5df"/>' +
-      '<text x="345" y="142" font-size="8.5" font-family="Inter,sans-serif" font-weight="600" fill="#514845" text-anchor="middle">Tarjeta</text>' +
-      '<rect x="232" y="166" width="148" height="38" rx="9" fill="#7a1225"/>' +
-      '<text x="306" y="190" font-size="10" font-family="Inter,sans-serif" font-weight="700" fill="#fff" text-anchor="middle">Cobrar e imprimir</text>' +
+      /* Panel derecho: aviso clínico y expediente */
+      '<rect x="254" y="18" width="126" height="82" rx="10" fill="#fcf7ea" stroke="#e8d5a3"/>' +
+      '<text x="268" y="38" font-size="7.5" font-family="Inter,sans-serif" font-weight="600" fill="#8a6820">Aviso del expediente</text>' +
+      '<text x="268" y="56" font-size="8" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Alergia a lavanda</text>' +
+      '<text x="268" y="70" font-size="7" font-family="Inter,sans-serif" fill="#8a6820">Evitar presión en zona lumbar</text>' +
+      '<text x="268" y="86" font-size="7" font-family="Inter,sans-serif" fill="#8a6820">Se muestra en cada cita</text>' +
+      '<rect x="254" y="110" width="126" height="94" rx="10" fill="#fff" stroke="#e6ded7"/>' +
+      '<text x="268" y="130" font-size="8.5" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Expediente</text>' +
+      '<text x="268" y="148" font-size="7.5" font-family="Inter,sans-serif" fill="#837976">Sesiones</text>' +
+      '<text x="366" y="148" font-size="7.5" font-family="Inter,sans-serif" font-weight="600" fill="#14100f" text-anchor="end">14</text>' +
+      '<text x="268" y="165" font-size="7.5" font-family="Inter,sans-serif" fill="#837976">Cursos</text>' +
+      '<text x="366" y="165" font-size="7.5" font-family="Inter,sans-serif" font-weight="600" fill="#14100f" text-anchor="end">2</text>' +
+      '<line x1="268" y1="174" x2="366" y2="174" stroke="#ece5df"/>' +
+      '<text x="268" y="190" font-size="8" font-family="Inter,sans-serif" font-weight="600" fill="#7a1225">Notas por sesión</text>' +
       '</svg>',
   };
 
@@ -339,7 +345,7 @@
       var num = s.text
         ? '<span class="stat__n">' + esc(s.text) + '</span>'
         : '<span class="stat__n" data-count="' + s.count + '" data-prefix="' + esc(s.prefix || '') + '"' +
-          ' data-suffix="' + esc(s.suffix || '') + '"' + (s.live ? ' data-live="' + esc(s.live) + '"' : '') + '>' +
+          ' data-suffix="' + esc(s.suffix || '') + '">' +
           esc(s.prefix || '') + '0' + esc(s.suffix || '') + '</span>';
       return '<div class="stat rv" style="--d:' + i + '">' +
         '<span class="stat__ic">' + icon(s.icon) + '</span>' +
@@ -348,6 +354,16 @@
   }
 
   /* --- Sistemas -------------------------------------------------------- */
+  /* Un sistema sin dirección propia todavía no tiene subdominio publicado:
+     su botón va a WhatsApp en vez de dejar un enlace que no abre. */
+  function sysLink(s) {
+    return s.url ? s.url : C.waLink('Hola, quiero información de Neron ' + s.name);
+  }
+  function sysAttrs(s) {
+    return s.url ? '' : ' target="_blank" rel="noopener noreferrer"';
+  }
+
+
   function renderSystems() {
     var host = U.$('#systems');
     if (!host) return;
@@ -363,11 +379,12 @@
             '<h3>' + esc(s.name) + '</h3></span></div>' +
           '<p class="sys__desc">' + esc(s.desc) + '</p>' +
           '<ul class="sys__feats">' + feats + '</ul>' +
-          '<p class="sys__price" data-price-for="' + esc(s.id) + '">' +
+          '<p class="sys__price">' +
             esc(s.priceNote) + ' <b>' + money(s.price) + '</b><span class="per">/ ' + esc(s.period) + '</span>' +
             (s.trial ? ' <span class="sys__note">' + icon('i-check') + esc(s.trial) + '</span>' : '') +
           '</p>' +
-          '<a class="btn btn--primary" href="' + esc(s.url) + '" data-track="' + esc(s.event) + '"' +
+          '<a class="btn btn--primary" href="' + esc(sysLink(s)) + '"' + sysAttrs(s) +
+            ' data-track="' + esc(s.event) + '"' +
             ' data-track-label="' + esc(s.name) + '">' + esc(s.cta) + icon('i-arrow') + '</a>' +
         '</div></article>';
     }).join('');
@@ -384,86 +401,107 @@
     }).join('');
   }
 
-  /* --- Precios --------------------------------------------------------- */
-  var PLANS = C.PLANS_FALLBACK.slice();
+  /* --- Precios ---------------------------------------------------------
+     Tres sistemas, tres planes cada uno, tres formas de pago. El visitante
+     elige primero su giro y después cómo quiere pagar; así nunca ve nueve
+     tarjetas al mismo tiempo. Los precios viven en config.js. */
+  var product = C.SYSTEMS[0].id;
   var period = 'mensual';
 
-  function planCard(p) {
+  function periodBy(id) {
+    for (var i = 0; i < C.PERIODS.length; i++) if (C.PERIODS[i].id === id) return C.PERIODS[i];
+    return C.PERIODS[0];
+  }
+
+  function planCard(p, sys) {
+    var per = periodBy(period);
+    var precio = p.precios[period];
+    var mensualizado = period === 'trimestral' ? Math.round(precio / 3)
+                     : period === 'anual' ? Math.round(precio / 12) : null;
     var feats = (p.feats || []).map(function (f) {
       return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
     }).join('');
+    var msg = 'Hola, quiero el plan ' + p.nombre + ' de Neron ' + sys.name +
+              ' (' + per.label.toLowerCase() + ', ' + money(precio) + ')';
     return '<article class="plan' + (p.popular ? ' plan--featured' : '') + ' rv">' +
       (p.popular ? '<span class="plan__tag">' + icon('i-star') + 'Más elegido</span>' : '') +
       '<h3 class="plan__name">' + esc(p.nombre) + '</h3>' +
       '<p class="plan__desc">' + esc(p.desc || '') + '</p>' +
-      '<p class="plan__price"><b>' + money(p.precio) + '</b><span>/ ' + (p.periodo === 'anual' ? 'año' : 'mes') + '</span></p>' +
-      (p.ahorro ? '<span class="plan__save">' + icon('i-check') + 'Ahorras ' + money(p.ahorro) + ' al año</span>' : '') +
-      '<p class="plan__trial' + (p.prueba ? ' yes' : '') + '">' + (p.prueba ? '14 días gratis, sin tarjeta' : 'Sin prueba · contratación directa') + '</p>' +
+      '<p class="plan__price"><b>' + money(precio) + '</b><span>/ ' + esc(per.unidad) + '</span></p>' +
+      (mensualizado
+        ? '<span class="plan__save">' + icon('i-check') + 'Te sale en ' + money(mensualizado) + ' al mes</span>'
+        : '') +
+      '<p class="plan__trial yes">Prueba gratis, sin tarjeta</p>' +
       '<ul class="plan__feats">' + feats + '</ul>' +
-      '<a class="btn ' + (p.popular ? 'btn--primary' : 'btn--secondary') + '" href="' + esc(C.ROUTES.caja) + '/?plan=' + encodeURIComponent(p.id) + '"' +
-        ' data-track="plan_click" data-track-label="' + esc(p.id) + '">' +
-        (p.prueba ? 'Empezar gratis' : 'Contratar ' + esc(p.nombre)) + icon('i-arrow') + '</a>' +
+      (p.limite ? '<p class="plan__limit">' + esc(p.limite) + '</p>' : '') +
+      '<a class="btn ' + (p.popular ? 'btn--primary' : 'btn--secondary') + '"' +
+        ' href="' + esc(C.waLink(msg)) + '" target="_blank" rel="noopener noreferrer"' +
+        ' data-track="plan_click" data-track-label="' + esc(p.id + ' ' + period) + '">' +
+        'Quiero el ' + esc(p.nombre) + icon('i-arrow') + '</a>' +
       '</article>';
+  }
+
+  function systemById(id) {
+    for (var i = 0; i < C.SYSTEMS.length; i++) if (C.SYSTEMS[i].id === id) return C.SYSTEMS[i];
+    return C.SYSTEMS[0];
   }
 
   function renderPlans() {
     var host = U.$('#plans');
     if (!host) return;
-    var list = PLANS.filter(function (p) { return (p.periodo || 'mensual') === period; });
-    host.innerHTML = list.map(planCard).join('');
+    var sys = systemById(product);
+    var list = (C.PLANS[product] || []);
+    host.innerHTML = list.map(function (p) { return planCard(p, sys); }).join('');
     U.initReveal(host);
     /* Sin animación de entrada al cambiar de pestaña: ya están en pantalla. */
     U.$$('.rv', host).forEach(function (n) { n.classList.add('is-in'); });
+
+    var cap = U.$('#plans-for');
+    if (cap) {
+      cap.innerHTML = icon(sys.icon) + '<span>Planes de <b>Neron ' + esc(sys.name) +
+        '</b> · ' + esc(sys.cat.toLowerCase()) + '</span>';
+    }
   }
 
-  function renderPricingExtras() {
-    var host = U.$('#plans-other');
-    if (!host) return;
-    host.innerHTML = C.SYSTEMS.filter(function (s) { return !s.livePricing; }).map(function (s) {
-      return '<a class="price-mini rv" href="' + esc(s.url) + '" data-track="' + esc(s.event) + '" data-track-label="precios">' +
-        '<span class="price-mini__l"><span class="price-mini__ic">' + icon(s.icon) + '</span>' +
-        '<span><h3>Neron ' + esc(s.name) + '</h3><p>' + esc(s.cat) + '</p></span></span>' +
-        '<span class="price-mini__r"><span class="price-mini__p">' + money(s.price) +
-        '<small> / ' + esc(s.period) + '</small></span>' +
-        '<span class="link-arrow">Ver sistema' + icon('i-arrow') + '</span></span></a>';
-    }).join('');
+  /* Pestañas de sistema y de forma de pago, generadas de config.js. */
+  function renderPricingToggles() {
+    var ph = U.$('#product-toggle');
+    if (ph) {
+      ph.innerHTML = C.SYSTEMS.map(function (s) {
+        return '<button class="toggle__btn" type="button" role="tab" data-product="' + esc(s.id) + '"' +
+          ' aria-selected="' + (s.id === product) + '">' + esc(s.name) + '</button>';
+      }).join('');
+    }
+    var th = U.$('#plan-toggle');
+    if (th) {
+      th.innerHTML = C.PERIODS.map(function (t) {
+        return '<button class="toggle__btn" type="button" role="tab" data-period="' + esc(t.id) + '"' +
+          ' aria-selected="' + (t.id === period) + '">' + esc(t.label) +
+          (t.nota ? '<span class="toggle__save">' + esc(t.nota) + '</span>' : '') + '</button>';
+      }).join('');
+    }
+  }
+
+  function wireToggle(sel, attr, onPick) {
+    var el = U.$(sel);
+    if (!el) return;
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('.toggle__btn');
+      if (!b) return;
+      onPick(b.getAttribute(attr));
+      U.$$('.toggle__btn', el).forEach(function (x) {
+        x.setAttribute('aria-selected', String(x === b));
+      });
+      renderPlans();
+    });
   }
 
   function initPricing() {
-    var toggle = U.$('#plan-toggle');
-    if (toggle) {
-      toggle.addEventListener('click', function (e) {
-        var b = e.target.closest('.toggle__btn');
-        if (!b) return;
-        period = b.getAttribute('data-period');
-        U.$$('.toggle__btn', toggle).forEach(function (x) {
-          x.setAttribute('aria-selected', String(x === b));
-        });
-        renderPlans();
-      });
-    }
+    if (!U.$('#plans')) return;
+    renderPricingToggles();
+    wireToggle('#product-toggle', 'data-product', function (v) { product = v; });
+    wireToggle('#plan-toggle', 'data-period', function (v) { period = v; });
     renderPlans();
-    renderPricingExtras();
-
-    /* Sincroniza con la API real de Neron Caja (fuente única de precios).
-       Sólo se consulta en la página que muestra precios. */
-    if (!w.fetch || !U.$('#plans')) return;
-    fetch(C.ROUTES.planesApi, { credentials: 'omit' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        if (!j || !j.planes || !j.planes.length) return;
-        PLANS = j.planes;
-        renderPlans();
-        /* Propaga el precio más bajo a la tarjeta y a la métrica de Caja. */
-        var mens = PLANS.filter(function (p) { return (p.periodo || 'mensual') === 'mensual'; });
-        if (!mens.length) return;
-        var min = Math.min.apply(null, mens.map(function (p) { return p.precio; }));
-        var card = U.$('[data-price-for="caja"] b');
-        if (card) card.textContent = money(min);
-        var stat = U.$('.stat__n[data-live="caja"]');
-        if (stat) { stat.setAttribute('data-count', min); if (stat.__cu) stat.textContent = '$' + min.toLocaleString('es-MX'); }
-      })
-      .catch(function () { /* se conserva el respaldo local */ });
   }
 
   /* --- FAQ ------------------------------------------------------------- */
@@ -527,7 +565,7 @@
   function renderLoginModal() {
     var host = U.$('#login-options');
     if (!host) return;
-    host.innerHTML = C.SYSTEMS.map(function (s) {
+    host.innerHTML = C.SYSTEMS.filter(function (s) { return !!s.url; }).map(function (s) {
       return '<a class="modal__opt" href="' + esc(s.url) + '" data-track="login_click" data-track-label="' + esc(s.id) + '">' +
         icon(s.icon) + '<span><b>Neron ' + esc(s.name) + '</b><span>' + esc(s.cat) + '</span></span>' +
         '<span class="link-arrow">' + icon('i-arrow') + '</span></a>';

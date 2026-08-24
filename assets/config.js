@@ -36,17 +36,20 @@ function waLink(message) {
 
 /* --------------------------------------------------------------------------
    RUTAS REALES
-   Verificadas contra los sistemas en producción. No inventar rutas nuevas.
+   --------------------------------------------------------------------------
+   Verificadas contra los sistemas en producción el 24/08/2026. No inventar
+   rutas nuevas. El sistema de celulares vive en `storephone`, no en
+   `celulares`: ese subdominio contestaba 404 y dejaba el botón muerto.
+   Terapias todavía no tiene subdominio propio, así que su acceso se atiende
+   por WhatsApp en lugar de dejar un enlace que no abre.
    -------------------------------------------------------------------------- */
 const ROUTES = {
   home: 'index.html',
   faq: 'faq.html',
   contacto: 'contacto.html',
   autos: 'https://autos.neronfix.com',
-  celulares: 'https://celulares.neronfix.com',
-  caja: 'https://caja.neronfix.com',
-  /* API real de planes de Neron Caja (fuente única de precios de Caja). */
-  planesApi: 'https://caja.neronfix.com/api/planes',
+  celulares: 'https://storephone.neronfix.com',
+  terapias: '',
   /* Documentos legales. Cuando existan, pon aquí su URL y aparecerán
      automáticamente en el footer. */
   terminos: '',
@@ -55,42 +58,24 @@ const ROUTES = {
 
 /* --------------------------------------------------------------------------
    SISTEMAS
+   --------------------------------------------------------------------------
+   `price` es el precio del plan Normal de cada sistema (ver PLANS).
+   Si un sistema no tiene `url`, su botón lleva a WhatsApp.
    -------------------------------------------------------------------------- */
 const SYSTEMS = [
-  {
-    id: 'autos',
-    icon: 'i-car',
-    cat: 'Agencias y lotes de autos',
-    name: 'Autos',
-    desc: 'Controla tu inventario de unidades, genera contratos y da seguimiento a la cobranza de cada crédito.',
-    feats: [
-      'Inventario de autos con fotos',
-      'Contratos de compraventa en PDF',
-      'Ventas de contado y a crédito',
-      'Cobranza y recordatorios por WhatsApp',
-    ],
-    price: 850,
-    period: 'mes',
-    priceNote: 'Desde',
-    trial: '14 días gratis',
-    cta: 'Ver sistema de Autos',
-    url: ROUTES.autos,
-    event: 'system_autos_click',
-    mockup: 'mk-autos',
-  },
   {
     id: 'celulares',
     icon: 'i-mobile',
     cat: 'Tiendas de celulares',
     name: 'Celulares',
-    desc: 'Punto de venta, inventario de equipos y créditos con contrato y pagaré, en un solo sistema.',
+    desc: 'Punto de venta con IMEI, créditos con enganche, reparaciones, garantías y tu tienda en línea, en un solo sistema.',
     feats: [
-      'Punto de venta y tickets',
-      'Inventario de equipos y accesorios',
-      'Créditos con contrato y pagaré',
-      'Corte de caja y reportes',
+      'Punto de venta, tickets y corte de caja',
+      'Inventario de equipos por IMEI y accesorios',
+      'Créditos con enganche, recargo y abonos',
+      'Reparaciones, garantías y tienda en línea',
     ],
-    price: 360,
+    price: 349,
     period: 'mes',
     priceNote: 'Desde',
     trial: 'Prueba gratis',
@@ -100,53 +85,220 @@ const SYSTEMS = [
     mockup: 'mk-celulares',
   },
   {
-    id: 'caja',
-    icon: 'i-cart',
-    cat: 'Cualquier negocio',
-    name: 'Caja',
-    desc: 'El punto de venta para tiendas, ferreterías, abarrotes y cualquier giro. Empieza en minutos.',
+    id: 'autos',
+    icon: 'i-car',
+    cat: 'Agencias y lotes de autos',
+    name: 'Autos',
+    desc: 'Controla tu inventario de unidades, genera contratos y da seguimiento a la cobranza de cada crédito.',
     feats: [
-      'Punto de venta y tickets',
-      'Inventario y control de stock',
-      'Corte de caja, gastos y clientes',
-      'Créditos, apartados y garantías',
+      'Inventario de autos con fotos y gastos',
+      'Contratos de compraventa en PDF',
+      'Ventas de contado y a crédito con pagarés',
+      'Cobranza, mora y recordatorios por WhatsApp',
     ],
-    /* El precio de Caja se sincroniza con la API real; este valor es el
-       respaldo que se muestra mientras carga o si la API no responde. */
-    price: 220,
+    price: 849,
     period: 'mes',
     priceNote: 'Desde',
-    trial: '14 días gratis',
-    cta: 'Empezar gratis',
-    url: ROUTES.caja,
-    event: 'system_pos_click',
-    mockup: 'mk-caja',
-    livePricing: true,
+    trial: 'Prueba gratis',
+    cta: 'Ver sistema de Autos',
+    url: ROUTES.autos,
+    event: 'system_autos_click',
+    mockup: 'mk-autos',
+  },
+  {
+    id: 'terapias',
+    icon: 'i-sparkles',
+    cat: 'Centros de terapias y spa',
+    name: 'Terapias',
+    desc: 'Agenda sin empalmes, expediente de cada paciente, cursos con cupo, punto de venta y caja, para centros de terapias y masajes.',
+    feats: [
+      'Agenda por terapeuta, sin citas encimadas',
+      'Expediente con alergias y contraindicaciones',
+      'Cursos y talleres con cupo e inscripciones',
+      'Punto de venta, caja y reportes',
+    ],
+    price: 299,
+    period: 'mes',
+    priceNote: 'Desde',
+    trial: 'Prueba gratis',
+    cta: 'Pregunta por Terapias',
+    url: ROUTES.terapias,
+    event: 'system_therapies_click',
+    mockup: 'mk-terapias',
   },
 ];
 
 /* --------------------------------------------------------------------------
-   PLANES DE NERON CAJA — respaldo local
-   La sección de precios consulta ROUTES.planesApi y, si responde, reemplaza
-   estos valores. Si la API falla, se muestra este respaldo.
+   PLANES · tres por sistema, tres formas de pago
+   --------------------------------------------------------------------------
+   El anual siempre equivale a 10 mensualidades (dos meses gratis).
+   El trimestral ronda el 10% de descuento sobre tres meses.
+   Precios en pesos mexicanos, IVA incluido.
+
+   Las funciones listadas están verificadas una por una contra el código de
+   cada sistema. No agregar aquí nada que el sistema no haga todavía.
    -------------------------------------------------------------------------- */
-const PLANS_FALLBACK = [
-  { id:'basico',        periodo:'mensual', nombre:'Básico',   precio:220,  prueba:true,  desc:'Lo esencial para operar',
-    feats:['Punto de venta y tickets','Inventario','Corte de caja','Gastos y clientes','1 usuario'] },
-  { id:'normal',        periodo:'mensual', nombre:'Normal',   precio:350,  prueba:true,  popular:true, desc:'El más completo',
-    feats:['Todo lo del Básico','Tu logo en tickets','Créditos y apartados','Cajeros y garantías','Compras + catálogo en línea'] },
-  { id:'avanzado',      periodo:'mensual', nombre:'Avanzado', precio:580,  prueba:false, desc:'Para negocios grandes',
-    feats:['Todo lo del Normal','Multisucursal','Almacenes','Reportes avanzados','Listas de precios por cliente'] },
-  { id:'normal_anual',  periodo:'anual',   nombre:'Normal',   precio:3500, prueba:false, popular:true, ahorro:700,  desc:'El más completo · 2 meses gratis',
-    feats:['Todo lo del plan Normal','Pagas 10 meses, usas 12','Ahorras $700 al año'] },
-  { id:'avanzado_anual',periodo:'anual',   nombre:'Avanzado', precio:5800, prueba:false, ahorro:1160, desc:'Para negocios grandes · 2 meses gratis',
-    feats:['Todo lo del plan Avanzado','Pagas 10 meses, usas 12','Ahorras $1,160 al año'] },
+const PLANS = {
+  celulares: [
+    {
+      id: 'celulares_normal',
+      nombre: 'Normal',
+      desc: 'Vender, cobrar y saber cuánto ganaste',
+      precios: { mensual: 349, trimestral: 939, anual: 3490 },
+      limite: '2 usuarios · 1 sucursal',
+      feats: [
+        'Punto de venta con IMEI y código de barras',
+        'Corte de caja con conteo de billetes',
+        'Créditos con enganche, recargo y abonos',
+        'Inventario con costo real y utilidad por pieza',
+        'Garantías, gastos e ingresos',
+        'Tablero con 11 indicadores y su desglose',
+      ],
+    },
+    {
+      id: 'celulares_premium',
+      nombre: 'Premium',
+      popular: true,
+      desc: 'La tienda completa, dentro y fuera',
+      precios: { mensual: 649, trimestral: 1749, anual: 6490 },
+      limite: '5 usuarios',
+      feats: [
+        'Todo lo del Normal',
+        'Tienda en línea con apartados y cupones',
+        'Reparaciones con firmas de recepción y entrega',
+        'Incidencias postventa y devoluciones',
+        'Compras, proveedores y comisiones',
+        'Metas por vendedor y respaldo diario',
+      ],
+    },
+    {
+      id: 'celulares_pro',
+      nombre: 'Pro',
+      desc: 'Varias manos, un solo control',
+      precios: { mensual: 1099, trimestral: 2949, anual: 10990 },
+      limite: 'Usuarios y sucursales sin límite',
+      feats: [
+        'Todo lo del Premium',
+        'Socios y comisionistas con inventario compartido',
+        'Auditoría: quién cambió qué y cuándo',
+        'Agente de WhatsApp que contesta solo',
+        'Dominio propio y roles a la medida',
+        'Soporte prioritario',
+      ],
+    },
+  ],
+
+  autos: [
+    {
+      id: 'autos_normal',
+      nombre: 'Normal',
+      desc: 'El lote ordenado',
+      precios: { mensual: 849, trimestral: 2290, anual: 8490 },
+      limite: '1 usuario',
+      feats: [
+        'Inventario de unidades con fotos y gastos',
+        'Clientes con aval y semáforo de cobranza',
+        'Venta de contado y a crédito con enganche',
+        'Pagarés automáticos o con pagos irregulares',
+        'Estado de cuenta en PDF con folio',
+        'Reportes de crédito y vencimientos',
+      ],
+    },
+    {
+      id: 'autos_premium',
+      nombre: 'Premium',
+      popular: true,
+      desc: 'Cobrar sin perseguir',
+      precios: { mensual: 1390, trimestral: 3749, anual: 13900 },
+      limite: '3 usuarios',
+      feats: [
+        'Todo lo del Normal',
+        'Los 8 reportes, con ganancia por unidad',
+        'Contratos editables sin programar',
+        'Mora automática por día de atraso',
+        'Recordatorios de cobranza por WhatsApp',
+        'Catálogo público compartible por auto',
+      ],
+    },
+    {
+      id: 'autos_pro',
+      nombre: 'Pro',
+      desc: 'Con inteligencia artificial',
+      precios: { mensual: 2190, trimestral: 5890, anual: 21900 },
+      limite: 'Usuarios sin límite',
+      feats: [
+        'Todo lo del Premium',
+        'Dicta gastos y abonos por voz',
+        'Escanea la INE y llena la ficha sola',
+        'Escanea el documento del auto',
+        'Tu logo en el sistema y en todos los PDFs',
+        'Cuatro roles, pesos y dólares, soporte prioritario',
+      ],
+    },
+  ],
+
+  terapias: [
+    {
+      id: 'terapias_normal',
+      nombre: 'Normal',
+      desc: 'Tu agenda en orden',
+      precios: { mensual: 299, trimestral: 799, anual: 2990 },
+      limite: '2 profesionales',
+      feats: [
+        'Agenda en día, semana y mes, sin empalmes',
+        'La hora de fin se calcula sola',
+        'Ficha del paciente y contacto de emergencia',
+        'Servicios con precio y promoción vigente',
+        'Cobro de servicios y productos, pago mixto',
+        'Caja con corte de efectivo',
+      ],
+    },
+    {
+      id: 'terapias_premium',
+      nombre: 'Premium',
+      popular: true,
+      desc: 'El centro completo',
+      precios: { mensual: 649, trimestral: 1749, anual: 6490 },
+      limite: '6 profesionales',
+      feats: [
+        'Todo lo del Normal',
+        'Expediente clínico con aviso de alergias',
+        'Notas de cada sesión',
+        'Cursos y talleres con cupo y material',
+        'Productos con existencias y proveedores',
+        'Reportes en nueve pestañas y cotizaciones',
+      ],
+    },
+    {
+      id: 'terapias_pro',
+      nombre: 'Pro',
+      desc: 'Varias terapeutas, un solo centro',
+      precios: { mensual: 1290, trimestral: 3490, anual: 12900 },
+      limite: 'Profesionales sin límite',
+      feats: [
+        'Todo lo del Premium',
+        'Mensajes por paciente con plantillas',
+        'Recepción no lee lo clínico',
+        'Roles y permisos a la medida',
+        'Bitácora de auditoría y respaldos',
+        'Verificación en dos pasos, soporte prioritario',
+      ],
+    },
+  ],
+};
+
+/* Formas de pago que ofrece la landing. `factor` sólo se usa para el texto
+   de ahorro; el precio real sale de PLANS. */
+const PERIODS = [
+  { id: 'mensual',    label: 'Mensual',    unidad: 'mes' },
+  { id: 'trimestral', label: 'Trimestral', unidad: '3 meses', nota: 'Ahorra 10%' },
+  { id: 'anual',      label: 'Anual',      unidad: 'año',     nota: '2 meses gratis' },
 ];
 
 /* --------------------------------------------------------------------------
    MÉTRICAS
    --------------------------------------------------------------------------
-   Sólo se publican datos verificables contra el producto o la API.
+   Sólo se publican datos verificables contra el producto.
    `value` puede llevar sufijo/prefijo; `count` es el número que anima.
 
    PLACEHOLDERS (desactivados a propósito): cuando tengas las cifras reales
@@ -154,9 +306,9 @@ const PLANS_FALLBACK = [
    NO las publiques con números inventados.
    -------------------------------------------------------------------------- */
 const STATS = [
-  { enabled:true,  icon:'i-grid',   count:3,   prefix:'',  suffix:'',      label:'Sistemas: Autos, Celulares y Caja' },
-  { enabled:true,  icon:'i-gift',   count:14,  prefix:'',  suffix:' días', label:'De prueba gratis para empezar' },
-  { enabled:true,  icon:'i-cash',   count:220, prefix:'$', suffix:'',      label:'Desde, al mes, con Neron Caja', live:'caja' },
+  { enabled:true,  icon:'i-grid',   count:3,   prefix:'',  suffix:'',      label:'Sistemas: Celulares, Autos y Terapias' },
+  { enabled:true,  icon:'i-cash',   count:299, prefix:'$', suffix:'',      label:'Desde, al mes, con IVA incluido' },
+  { enabled:true,  icon:'i-gift',   count:3,   prefix:'',  suffix:'',      label:'Formas de pago: mensual, trimestral y anual' },
   { enabled:true,  icon:'i-cloud',  count:0,   text:'24/7', label:'Tu negocio en la nube, siempre disponible' },
 
   /* --- PLACEHOLDERS · requieren datos reales antes de activarse --- */
@@ -192,11 +344,15 @@ const TRUST = [
 const FAQS = [
   {
     q: '¿Qué es Neron exactamente?',
-    a: 'Neron es una plataforma mexicana de gestión para negocios. Incluye Neron Caja, un punto de venta para cualquier giro (tiendas, ferreterías, abarrotes), y dos sistemas especializados: Neron Autos para agencias y lotes de autos, y Neron Celulares para tiendas de celulares. Todos manejan inventario, ventas, cobranza y reportes.',
+    a: 'Neron es una plataforma mexicana de gestión para negocios, con tres sistemas hechos cada uno para un giro: Neron Celulares para tiendas de celulares, Neron Autos para agencias y lotes de autos, y Neron Terapias para centros de terapias y masajes. Los tres manejan inventario o agenda, ventas, cobranza y reportes.',
+  },
+  {
+    q: '¿Cuánto cuesta y qué formas de pago hay?',
+    a: 'Cada sistema tiene tres planes: Normal, Premium y Pro. Puedes pagarlos al mes, cada tres meses con 10% de descuento, o al año con dos meses gratis. Los precios que ves en la sección de precios ya llevan IVA incluido y no hay permanencia forzosa.',
   },
   {
     q: '¿Puedo probarlo gratis antes de pagar?',
-    a: 'Sí. Los planes Básico y Normal de Neron Caja incluyen 14 días gratis, y Neron Autos también cuenta con periodo de prueba. No necesitas tarjeta para empezar: escríbenos por WhatsApp y te damos de alta.',
+    a: 'Sí. Escríbenos por WhatsApp, te damos de alta con tu periodo de prueba y no necesitas tarjeta para empezar.',
   },
   {
     q: '¿Necesito instalar algún programa?',
@@ -208,7 +364,7 @@ const FAQS = [
   },
   {
     q: '¿Qué sistema me conviene para mi negocio?',
-    a: 'Si vendes productos en mostrador de cualquier giro, Neron Caja es la opción. Si vendes autos y necesitas contratos y cobranza de créditos, Neron Autos. Si tienes tienda de celulares con equipos, accesorios y créditos con pagaré, Neron Celulares. Si tienes dudas, escríbenos y te orientamos sin compromiso.',
+    a: 'Si tienes tienda de celulares con equipos, accesorios, reparaciones y créditos, Neron Celulares. Si vendes autos y necesitas contratos y cobranza de créditos, Neron Autos. Si das masajes o terapias y trabajas con citas, expedientes y cursos, Neron Terapias. Si tienes dudas, escríbenos y te orientamos sin compromiso.',
   },
   {
     q: '¿Puedo cambiar de plan más adelante?',
@@ -256,10 +412,10 @@ const ANALYTICS_CONFIG = {
 
 /* Eventos que emite la landing (referencia para quien conecte la analítica):
    hero_cta_click · whatsapp_click · system_autos_click · system_cellphones_click
-   system_pos_click · plan_click · faq_open · login_click · nav_click
-   final_cta_click · mobile_bar_click                                        */
+   system_therapies_click · plan_click · plan_product_click · plan_period_click
+   faq_open · login_click · nav_click · final_cta_click · mobile_bar_click      */
 
 window.NERON_CONFIG = {
-  CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS_FALLBACK, STATS,
+  CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS, PERIODS, STATS,
   BENEFITS, TRUST, FAQS, NAV, ANALYTICS_CONFIG, waLink,
 };

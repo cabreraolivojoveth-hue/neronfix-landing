@@ -34,8 +34,12 @@ No hace falta abrir pull request ni esperar aprobación.
   testimonios ni certificaciones sin respaldo real. Lo que no exista se deja
   como placeholder desactivado en `assets/config.js`.
 - **El contenido se edita en `assets/config.js`**, no en el HTML.
-- Los precios de Neron Caja vienen de la API real
-  `https://caja.neronfix.com/api/planes`; no se escriben a mano.
+- **Los precios viven en `PLANS` de `assets/config.js`**, no en una API. La
+  escalera no se rompe: el anual son diez mensualidades y el trimestral ronda
+  el 10% de descuento sobre tres meses. Se publican con IVA incluido.
+- **Un sistema sin `url` va a WhatsApp**, nunca a un subdominio que no exista.
+  Ya pasó con `celulares.neronfix.com`, que contestaba 404 y dejaba muerto el
+  botón principal de la tarjeta; el sistema real vive en `storephone`.
 
 ## Después de desplegar
 
