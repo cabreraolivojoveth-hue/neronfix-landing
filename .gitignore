@@ -1,4 +1,16 @@
 node_modules/
-package.json
-package-lock.json
 .DS_Store
+
+# Secretos. Ninguno de estos se sube NUNCA.
+#
+# Se agregaron el 29/08/2026, en la revision de seguridad. Hoy este sitio no
+# tiene backend y no hay nada que filtrar — se comprobo objeto por objeto en
+# todo el historial y esta limpio. Se ponen ahora justamente por eso: el dia
+# que alguien agregue una funcion de servidor o un formulario, el primer
+# "git add ." subiria la llave sin que nadie lo note, y para entonces ya no
+# bastaria con borrarla (habria que rotarla).
+.env
+.env.*
+!.env.example
+*.pem
+*.key
