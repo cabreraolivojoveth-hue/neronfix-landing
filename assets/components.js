@@ -251,7 +251,40 @@
       '<text x="366" y="196" font-size="8" font-family="Inter,sans-serif" font-weight="700" fill="#7a1225" text-anchor="end">$20,550</text>' +
       '</svg>',
 
-    /* Terapias: agenda del día con expediente */
+    /* Neron One: el panorama financiero (datos ilustrativos) */
+    'mk-one': '<svg viewBox="0 0 400 225" role="img" aria-label="Vista de Neron One con capital disponible, movimientos del mes y pendientes">' +
+      '<rect width="400" height="225" fill="#f6f1ec"/>' +
+      '<rect x="20" y="18" width="222" height="80" rx="10" fill="#231f1a"/>' +
+      '<text x="34" y="40" font-size="8" font-family="Inter,sans-serif" fill="#cfc6bb">Capital disponible</text>' +
+      '<text x="34" y="66" font-size="19" font-family="Inter,sans-serif" font-weight="700" fill="#fff">$84,320</text>' +
+      '<text x="34" y="84" font-size="7" font-family="Inter,sans-serif" fill="#a5842f">$91,000 si se cumple lo programado</text>' +
+      '<path d="M170 92c20-26 40-8 58-30" fill="none" stroke="#a5842f" stroke-width="2" stroke-linecap="round" opacity=".8"/>' +
+      '<rect x="20" y="108" width="222" height="96" rx="10" fill="#fff" stroke="#e6ded7"/>' +
+      '<text x="34" y="128" font-size="8.5" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Este mes</text>' +
+      '<g font-family="Inter,sans-serif">' +
+      '<text x="34" y="148" font-size="7.5" fill="#837976">Ingresos</text>' +
+      '<text x="228" y="148" font-size="7.5" font-weight="600" fill="#1a7a44" text-anchor="end">$52,400</text>' +
+      '<text x="34" y="166" font-size="7.5" fill="#837976">Gastos</text>' +
+      '<text x="228" y="166" font-size="7.5" font-weight="600" fill="#b02a21" text-anchor="end">$31,950</text>' +
+      '<line x1="34" y1="176" x2="228" y2="176" stroke="#ece5df"/>' +
+      '<text x="34" y="192" font-size="8" font-weight="600" fill="#7a1225">Balance</text>' +
+      '<text x="228" y="192" font-size="8" font-weight="700" fill="#7a1225" text-anchor="end">$20,450</text>' +
+      '</g>' +
+      '<rect x="254" y="18" width="126" height="186" rx="10" fill="#fff" stroke="#e6ded7"/>' +
+      '<text x="268" y="38" font-size="8.5" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Pendientes de hoy</text>' +
+      '<g font-family="Inter,sans-serif" font-size="7.5" fill="#514845">' +
+      '<rect x="268" y="52" width="9" height="9" rx="3" fill="#a5842f"/><text x="283" y="60">Pagar la renta</text>' +
+      '<rect x="268" y="72" width="9" height="9" rx="3" fill="none" stroke="#c9bfb4"/><text x="283" y="80">Llamar a proveedor</text>' +
+      '<rect x="268" y="92" width="9" height="9" rx="3" fill="none" stroke="#c9bfb4"/><text x="283" y="100">Revisar el corte</text>' +
+      '</g>' +
+      '<line x1="268" y1="116" x2="366" y2="116" stroke="#ece5df"/>' +
+      '<text x="268" y="134" font-size="7.5" font-family="Inter,sans-serif" fill="#837976">Programado</text>' +
+      '<text x="268" y="152" font-size="8" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Luz · día 15</text>' +
+      '<text x="268" y="168" font-size="8" font-family="Inter,sans-serif" font-weight="600" fill="#14100f">Internet · día 20</text>' +
+      '<text x="268" y="192" font-size="7" font-family="Inter,sans-serif" fill="#8a6820">1 de 3 hechos</text>' +
+      '</svg>',
+
+    /* Terapias (archivado: ya no se pinta; ver ARCHIVO_TERAPIAS en config.js) */
     'mk-terapias': '<svg viewBox="0 0 400 225" role="img" aria-label="Agenda del día en Neron Terapias con citas y expediente del paciente">' +
       '<rect width="400" height="225" fill="#f6f1ec"/>' +
       '<rect x="20" y="18" width="222" height="186" rx="10" fill="#fff" stroke="#e6ded7"/>' +
@@ -364,6 +397,12 @@
   }
 
 
+  /* El "desde" de un sistema sale de su plan Normal en PLANS: una sola fuente. */
+  function desdeDe(s) {
+    var planes = C.PLANS[s.id];
+    return planes && planes[0] ? planes[0].precios.mensual : null;
+  }
+
   function renderSystems() {
     var host = U.$('#systems');
     if (!host) return;
@@ -371,7 +410,16 @@
       var feats = s.feats.map(function (f) {
         return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
       }).join('');
-      return '<article class="sys rv rv--scale" style="--d:' + i + '">' +
+      /* Neron One (tipo app) no es un sistema por giro: no tiene "tres
+         planes" ni pestaña de precios. Su botón baja a su propia sección. */
+      var planes = s.tipo === 'app' ? '' :
+          '<p class="sys__plans">' +
+            '<b>Tres planes</b> desde ' + money(desdeDe(s)) + ' al mes' +
+          '</p>' +
+          '<a class="sys__plans-link" href="#precios" data-plans-for="' + esc(s.id) + '"' +
+            ' data-track="plan_product_click" data-track-label="' + esc(s.id) + ' desde tarjeta">' +
+            'Ver los tres planes de ' + esc(s.name) + icon('i-arrow') + '</a>';
+      return '<article class="sys' + (s.tipo === 'app' ? ' sys--app' : '') + ' rv rv--scale" id="sistema-' + esc(s.id) + '" style="--d:' + i + '">' +
         '<div class="sys__media">' + (CARD_MOCKUPS[s.mockup] || '') + '</div>' +
         '<div class="sys__body">' +
           '<div class="sys__top"><span class="sys__ic">' + icon(s.icon) + '</span>' +
@@ -379,17 +427,48 @@
             '<h3>' + esc(s.name) + '</h3></span></div>' +
           '<p class="sys__desc">' + esc(s.desc) + '</p>' +
           '<ul class="sys__feats">' + feats + '</ul>' +
-          '<p class="sys__plans">' +
-            '<b>Tres planes</b> desde ' + money(s.price) + ' al mes' +
-          '</p>' +
-          '<a class="sys__plans-link" href="#precios" data-plans-for="' + esc(s.id) + '"' +
-            ' data-track="plan_product_click" data-track-label="' + esc(s.id) + ' desde tarjeta">' +
-            'Ver los tres planes de ' + esc(s.name) + icon('i-arrow') + '</a>' +
+          planes +
           '<a class="btn btn--primary" href="' + esc(sysLink(s)) + '"' + sysAttrs(s) +
             ' data-track="' + esc(s.event) + '"' +
             ' data-track-label="' + esc(s.name) + '">' + esc(s.cta) + icon('i-arrow') + '</a>' +
         '</div></article>';
     }).join('');
+  }
+
+  /* --- Ecosistema · Neron One -------------------------------------------
+     Un esquema sencillo, no un diagrama técnico: los productos de arriba,
+     Neron One en medio, tu visión financiera abajo. La `nota` dice con
+     todas sus letras qué conexión existe HOY (ver ECOSISTEMA en config.js). */
+  function renderEcosistema() {
+    var host = U.$('#ecosistema');
+    var E = C.ECOSISTEMA;
+    if (!host || !E) return;
+    var origenes = E.origenes.map(function (o) {
+      return '<a class="eco__nodo" href="' + esc(o.ancla) + '">' + icon(o.icon) + '<span>' + esc(o.name) + '</span></a>';
+    }).join('');
+    var hoy = E.hoy.map(function (h) {
+      return '<li>' + icon('i-check') + '<span>' + esc(h) + '</span></li>';
+    }).join('');
+    host.innerHTML =
+      '<div class="eco__grid">' +
+        '<div class="eco__texto rv">' +
+          '<span class="eyebrow eyebrow--rule">' + esc(E.eyebrow) + '</span>' +
+          '<h2 class="h-section">' + esc(E.titulo) + ' <em class="mark">' + esc(E.tituloMarca) + '</em></h2>' +
+          '<p class="eco__lead">' + esc(E.texto) + '</p>' +
+          '<ul class="eco__hoy">' + hoy + '</ul>' +
+          '<p class="eco__nota">' + icon('i-help') + '<span>' + esc(E.nota) + '</span></p>' +
+          '<a class="btn btn--primary" href="' + esc(C.waLink(E.ctaMensaje)) + '" target="_blank" rel="noopener noreferrer"' +
+            ' data-track="system_one_click" data-track-label="seccion neron one">' + esc(E.ctaTexto) + icon('i-arrow') + '</a>' +
+        '</div>' +
+        '<div class="eco__mapa rv rv--scale" aria-label="Cada producto Neron hace su trabajo y Neron One reúne tu información financiera">' +
+          '<span class="eco__marca">NERON</span>' +
+          '<div class="eco__origenes">' + origenes + '</div>' +
+          '<span class="eco__linea" aria-hidden="true"></span>' +
+          '<div class="eco__centro">' + icon(E.centro.icon) + '<b>' + esc(E.centro.name) + '</b></div>' +
+          '<span class="eco__linea" aria-hidden="true"></span>' +
+          '<div class="eco__destino">' + esc(E.destino) + '</div>' +
+        '</div>' +
+      '</div>';
   }
 
   /* --- Beneficios ------------------------------------------------------ */
@@ -418,8 +497,10 @@
   function planCard(p, sys) {
     var per = periodBy(period);
     var precio = p.precios[period];
-    var mensualizado = period === 'trimestral' ? Math.round(precio / 3)
-                     : period === 'anual' ? Math.round(precio / 12) : null;
+    /* "Te sale en $X al mes", a centavo exacto y sin redondear a favor:
+       $5,500 al año son $458.33 al mes, no $458 ni $459. */
+    var mensualizado = period === 'trimestral' ? Math.round(precio / 3 * 100) / 100
+                     : period === 'anual' ? Math.round(precio / 12 * 100) / 100 : null;
     var feats = (p.feats || []).map(function (f) {
       return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
     }).join('');
@@ -433,13 +514,21 @@
       (mensualizado
         ? '<span class="plan__save">' + icon('i-check') + 'Te sale en ' + money(mensualizado) + ' al mes</span>'
         : '') +
-      '<p class="plan__trial yes">Prueba gratis, sin tarjeta</p>' +
+      (p.alta ? '' : '<p class="plan__trial yes">Prueba gratis, sin tarjeta</p>') +
       '<ul class="plan__feats">' + feats + '</ul>' +
       (p.limite ? '<p class="plan__limit">' + esc(p.limite) + '</p>' : '') +
-      '<a class="btn ' + (p.popular ? 'btn--primary' : 'btn--secondary') + '"' +
-        ' href="' + esc(C.waLink(msg)) + '" target="_blank" rel="noopener noreferrer"' +
-        ' data-track="plan_click" data-track-label="' + esc(p.id + ' ' + period) + '">' +
-        'Quiero el ' + esc(p.nombre) + icon('i-arrow') + '</a>' +
+      /* Un plan con `alta` se contrata solo: el botón lleva a crear la cuenta
+         en el sistema, no a WhatsApp. Los demás siguen yendo a WhatsApp. */
+      (p.alta
+        ? '<a class="btn btn--primary" href="' + esc(p.alta.url) + '"' +
+            ' data-track="plan_signup_click" data-track-label="' + esc(p.id + ' ' + period) + '">' +
+            esc(p.alta.texto) + icon('i-arrow') + '</a>' +
+          '<p class="plan__alta">' + icon('i-gift') + '<span>' + esc(p.alta.nota) + '</span></p>' +
+          (p.alta.como ? '<p class="plan__alta-como">' + esc(p.alta.como) + '</p>' : '')
+        : '<a class="btn ' + (p.popular ? 'btn--primary' : 'btn--secondary') + '"' +
+            ' href="' + esc(C.waLink(msg)) + '" target="_blank" rel="noopener noreferrer"' +
+            ' data-track="plan_click" data-track-label="' + esc(p.id + ' ' + period) + '">' +
+            'Quiero el ' + esc(p.nombre) + icon('i-arrow') + '</a>') +
       '</article>';
   }
 
@@ -469,7 +558,7 @@
   function renderPricingToggles() {
     var ph = U.$('#product-toggle');
     if (ph) {
-      ph.innerHTML = C.SYSTEMS.map(function (s) {
+      ph.innerHTML = C.SYSTEMS.filter(function (s) { return !!C.PLANS[s.id]; }).map(function (s) {
         return '<button class="toggle__btn" type="button" role="tab" data-product="' + esc(s.id) + '"' +
           ' aria-selected="' + (s.id === product) + '">' + esc(s.name) + '</button>';
       }).join('');
@@ -585,7 +674,7 @@
   function renderLoginModal() {
     var host = U.$('#login-options');
     if (!host) return;
-    host.innerHTML = C.SYSTEMS.filter(function (s) { return !!s.url; }).map(function (s) {
+    host.innerHTML = C.SYSTEMS.filter(function (s) { return !!s.url && s.tipo !== 'app'; }).map(function (s) {
       return '<a class="modal__opt" href="' + esc(s.url) + '" data-track="login_click" data-track-label="' + esc(s.id) + '">' +
         icon(s.icon) + '<span><b>Neron ' + esc(s.name) + '</b><span>' + esc(s.cat) + '</span></span>' +
         '<span class="link-arrow">' + icon('i-arrow') + '</span></a>';
@@ -622,7 +711,7 @@
 
   w.NeronComponents = {
     renderNav: renderNav, renderMockup: renderMockup, renderTrust: renderTrust,
-    renderStats: renderStats, renderSystems: renderSystems, renderBenefits: renderBenefits,
+    renderStats: renderStats, renderSystems: renderSystems, renderEcosistema: renderEcosistema, renderBenefits: renderBenefits,
     initPricing: initPricing, renderFaq: renderFaq, renderContact: renderContact,
     renderLoginModal: renderLoginModal, wireLinks: wireLinks,
   };

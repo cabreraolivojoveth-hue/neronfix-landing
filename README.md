@@ -28,7 +28,8 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 | Mensaje precargado de WhatsApp | `CONTACT_CONFIG.whatsappMessage` |
 | Número de WhatsApp | `CONTACT_CONFIG.whatsappNumber` y `.whatsappDisplay` |
 | Precios de los tres planes de un sistema | `PLANS.<sistema>[].precios` |
-| Precio "Desde" de la tarjeta de un sistema | `SYSTEMS[].price` |
+| Precio "Desde" de la tarjeta de un sistema | Sale solo del plan Normal de `PLANS` |
+| Sección del ecosistema / Neron One | `ECOSISTEMA` |
 | Formas de pago y su etiqueta | `PERIODS[]` |
 | Textos y beneficios de cada sistema | `SYSTEMS[]` |
 | Métricas de la franja de números | `STATS[]` |
@@ -40,22 +41,30 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 
 ### Precios
 
-Los tres sistemas tienen tres planes (Normal, Premium y Pro) y tres formas de
-pago (mensual, trimestral y anual). Todo vive en `PLANS` dentro de
+Neron Celulares y Neron Autos tienen tres planes cada uno (Normal, Premium y
+Pro) y tres formas de pago (mensual, trimestral y anual). Neron One no tiene
+precio publicado: su tarjeta (`tipo: 'app'`) no sale en las pestañas de
+precios. Todo vive en `PLANS` dentro de
 `assets/config.js`; la sección de precios no consulta ninguna API.
 
 El visitante elige primero su sistema y después la forma de pago, así que
 nunca ve nueve tarjetas al mismo tiempo. Las pestañas se generan solas de
 `SYSTEMS` y de `PERIODS`.
 
-Al cambiar un precio hay que respetar la regla de la escalera: **el anual son
-diez mensualidades** (dos meses gratis) y **el trimestral ronda el 10% de
-descuento** sobre tres meses. Las tarjetas calculan solas el "te sale en $X al
-mes"; no se escribe a mano.
+La regla de la escalera: **el anual son diez mensualidades** (dos meses
+gratis) y **el trimestral es tres meses con 10% de descuento**. Autos la
+calcula sola con `escalera(mensual)`: se cambia el mensual y lo demás se
+recalcula. Celulares conserva sus tres cifras escritas a mano porque son sus
+precios publicados (el trimestral está redondeado a números cerrados). Las
+tarjetas calculan solas el "te sale en $X al mes", a centavo exacto.
 
-El `price` de `SYSTEMS[]` es el precio del plan Normal y sólo alimenta el
-gancho "Tres planes desde $X al mes" de la tarjeta y la métrica "Desde $X al
-mes". Si cambias el Normal, cámbialo también ahí.
+El "Tres planes desde $X al mes" de cada tarjeta y la métrica "Desde $X al
+mes" salen solos del plan Normal de `PLANS`: ya no hay un `price` que
+actualizar aparte.
+
+Un plan con `alta` (hoy, el Normal de Celulares) no va a WhatsApp: su botón
+lleva a crear la cuenta en el sistema y debajo dice su nota ("1 mes gratis ·
+Sin tarjeta").
 
 La tarjeta del sistema **no repite el precio completo**: anuncia que hay tres
 planes y lleva a la sección de precios con la pestaña de ese sistema ya
@@ -131,8 +140,9 @@ No existe una ruta de login unificada en `neronfix.com`. El botón "Iniciar
 sesión" abre un modal que lleva al sistema real que el negocio ya contrató
 (`storephone.neronfix.com` para Celulares, `autos.neronfix.com` para Autos).
 Un sistema sin `url` en `SYSTEMS[]` no aparece en el modal y su botón de la
-tarjeta va a WhatsApp, para no dejar un enlace que no abre: es el caso de
-Terapias mientras no tenga subdominio propio. Si algún día hay un acceso
+tarjeta va a WhatsApp, para no dejar un enlace que no abre. Neron One
+(`tipo: 'app'`) tampoco aparece: no tiene alta pública. Neron Terapias salió de
+la oferta el 25/09/2026 y su contenido quedó en `ARCHIVO_TERAPIAS`. Si algún día hay un acceso
 único, se cambia en `SYSTEMS[].url` o se añade un `loginUrl`.
 
 ## Probar en local

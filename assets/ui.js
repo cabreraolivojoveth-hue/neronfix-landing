@@ -24,8 +24,14 @@
     return '<svg class="ic ' + (cls || '') + '" aria-hidden="true"><use href="#' + id + '"></use></svg>';
   }
 
+  /* Pesos cerrados se escriben sin centavos ($1,485); con centavos, los dos
+     ($458.33). Nunca se redondea a pesos enteros: eso cambiaría el precio. */
   function money(n) {
-    return '$' + Number(n || 0).toLocaleString('es-MX');
+    var v = Number(n || 0);
+    var conCentavos = Math.round(v * 100) % 100 !== 0;
+    return '$' + v.toLocaleString('es-MX', {
+      minimumFractionDigits: conCentavos ? 2 : 0, maximumFractionDigits: 2,
+    });
   }
 
   /* ---------------------------------------------------------- ANALÍTICA -- */

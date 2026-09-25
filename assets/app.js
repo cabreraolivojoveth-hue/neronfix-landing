@@ -79,8 +79,12 @@
 
     /* Se ordena por posición en la página, no por orden del menú: así el
        enlace activo es siempre correcto aunque ambos órdenes difieran. */
+    /* Posición REAL en la página. `offsetTop` es relativo al contenedor
+       posicionado más cercano, y desde que el menú apunta también a tarjetas
+       (Celulares, Autos) eso daba posiciones de juguete. */
+    function top(el) { return el.getBoundingClientRect().top + w.scrollY; }
     function sortByPosition() {
-      targets.sort(function (a, b) { return a.el.offsetTop - b.el.offsetTop; });
+      targets.sort(function (a, b) { return top(a.el) - top(b.el); });
     }
     sortByPosition();
 
@@ -90,7 +94,7 @@
       var offset = w.scrollY + (parseInt(getComputedStyle(d.documentElement).getPropertyValue('--header-h-sticky'), 10) || 64) + 40;
       var active = targets[0].href;
       targets.forEach(function (t) {
-        if (t.el.offsetTop <= offset) active = t.href;
+        if (top(t.el) <= offset) active = t.href;
       });
       /* Al final de la página gana la última sección visible. */
       if (w.innerHeight + w.scrollY >= d.body.offsetHeight - 4) {
@@ -170,6 +174,7 @@
     K.renderTrust();
     K.renderStats();
     K.renderSystems();
+    K.renderEcosistema();
     K.renderBenefits();
     K.initPricing();
     K.renderFaq();
