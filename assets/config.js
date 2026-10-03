@@ -133,8 +133,8 @@ const SYSTEMS = [
 /* --------------------------------------------------------------------------
    PLANES · tres por sistema, tres formas de pago
    --------------------------------------------------------------------------
-   El anual siempre equivale a 10 mensualidades (dos meses gratis).
-   El trimestral es tres meses con 10% de descuento.
+   Desde el 02/10/2026 solo se cobra mes con mes (ver PERIODS): el trimestral
+   y el anual de `escalera` ya no se enseñan.
    Precios en pesos mexicanos, IVA incluido.
 
    Autos usa `escalera(mensual)`. Celulares conserva sus tres cifras escritas
@@ -164,7 +164,7 @@ const PLANS = {
       id: 'celulares_normal',
       nombre: 'Normal',
       desc: 'Vender, cobrar y saber cuánto ganaste',
-      precios: { mensual: 349, trimestral: 939, anual: 3490 },
+      precios: { mensual: 450 },
       limite: '2 usuarios · 1 sucursal',
       /* Se contrata solo: crea la cuenta en Neron POS sin pasar por WhatsApp.
          Verificado el 25/09/2026: el alta está abierta, pide correo, código
@@ -189,8 +189,8 @@ const PLANS = {
       nombre: 'Premium',
       popular: true,
       desc: 'La tienda completa, dentro y fuera',
-      precios: { mensual: 649, trimestral: 1749, anual: 6490 },
-      limite: '5 usuarios',
+      precios: { mensual: 750 },
+      limite: '5 usuarios · 1 sucursal',
       feats: [
         'Todo lo del Normal',
         'Tienda en línea con apartados y cupones',
@@ -204,8 +204,9 @@ const PLANS = {
       id: 'celulares_pro',
       nombre: 'Pro',
       desc: 'Varias manos, un solo control',
-      precios: { mensual: 1099, trimestral: 2949, anual: 10990 },
-      limite: 'Usuarios y sucursales sin límite',
+      precios: { mensual: 1250 },
+      desde: true,
+      limite: 'Usuarios ilimitados · 1 sucursal incluida',
       feats: [
         'Todo lo del Premium',
         'Socios y comisionistas con inventario compartido',
@@ -345,11 +346,47 @@ void ARCHIVO_TERAPIAS;
 
 /* Formas de pago que ofrece la landing. `factor` sólo se usa para el texto
    de ahorro; el precio real sale de PLANS. */
+/* Desde el 02/10/2026 solo se cobra mes con mes (decisión de Joveth). Con un
+   solo periodo, la página no enseña el selector de forma de pago. */
 const PERIODS = [
   { id: 'mensual',    label: 'Mensual',    unidad: 'mes' },
-  { id: 'trimestral', label: 'Trimestral', unidad: '3 meses', nota: 'Ahorra 10%' },
-  { id: 'anual',      label: 'Anual',      unidad: 'año',     nota: '2 meses gratis' },
 ];
+
+/* --------------------------------------------------------------------------
+   DESPUÉS DE LOS PLANES · tarjetas extra por sistema (02/10/2026)
+   --------------------------------------------------------------------------
+   `precio` es el número que se pinta (con `prefijo` +, o sin número si es a la
+   medida); `boton` va a WhatsApp con el mensaje del plan. */
+const PLAN_EXTRAS = {
+  celulares: [
+    {
+      id: 'celulares_sucursal',
+      eyebrow: '¿Tienes varias sucursales?',
+      nombre: 'Sucursal adicional',
+      desc: 'Agrega las que necesites al plan Pro.',
+      precio: 280, prefijo: '+', unidad: 'mes', etiquetaPrecio: 'Cada sucursal adicional',
+      feats: [
+        'Inventario de cada sucursal por separado',
+        'Traspasos entre sucursales con ticket y confirmación de recibido',
+        'Controla todas tus sucursales desde tu celular',
+      ],
+      boton: 'Agregar sucursales',
+    },
+    {
+      id: 'celulares_empresarial',
+      nombre: 'Empresarial',
+      desc: 'Para cadenas y operaciones grandes',
+      precioTexto: 'Precio a la medida de tu operación',
+      feats: [
+        'Todo lo del Pro',
+        'Muchas sucursales con un precio especial',
+        'Configuración y mejoras pensadas para tu negocio',
+        'Atención directa con el fundador',
+      ],
+      boton: 'Hablemos por WhatsApp',
+    },
+  ],
+};
 
 /* --------------------------------------------------------------------------
    MÉTRICAS
@@ -366,7 +403,8 @@ const STATS = [
   /* El "desde" sale del plan Normal más barato de PLANS, no se escribe a mano. */
   { enabled:true,  icon:'i-cash',   count:Math.min.apply(null, Object.keys(PLANS).map(function (k) { return PLANS[k][0].precios.mensual; })),
     prefix:'$', suffix:'', label:'Sistemas desde, al mes, con IVA incluido' },
-  { enabled:true,  icon:'i-gift',   count:3,   prefix:'',  suffix:'',      label:'Formas de pago: mensual, trimestral y anual' },
+  /* Apagada el 02/10/2026: ya solo hay pago mensual. */
+  { enabled:false, icon:'i-gift',   count:3,   prefix:'',  suffix:'',      label:'Formas de pago: mensual, trimestral y anual' },
   { enabled:true,  icon:'i-cloud',  count:0,   text:'24/7', label:'Tu negocio en la nube, siempre disponible' },
 
   /* --- PLACEHOLDERS · requieren datos reales antes de activarse --- */
@@ -406,7 +444,7 @@ const FAQS = [
   },
   {
     q: '¿Cuánto cuesta y qué formas de pago hay?',
-    a: 'Neron Celulares y Neron Autos tienen tres planes cada uno: Normal, Premium y Pro. Puedes pagarlos al mes, cada tres meses con 10% de descuento, o al año con dos meses gratis. Los precios que ves en la sección de precios ya llevan IVA incluido y no hay permanencia forzosa. Por Neron One pregúntanos por WhatsApp.',
+    a: 'Neron Celulares y Neron Autos tienen tres planes cada uno: Normal, Premium y Pro. En Celulares puedes sumar sucursales al Pro, y para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Por Neron One pregúntanos por WhatsApp.',
   },
   {
     q: '¿Puedo probarlo gratis antes de pagar?',
@@ -507,6 +545,6 @@ const ANALYTICS_CONFIG = {
    faq_open · login_click · nav_click · final_cta_click · mobile_bar_click      */
 
 window.NERON_CONFIG = {
-  CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS, PERIODS, STATS,
+  CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS, PLAN_EXTRAS, PERIODS, STATS,
   BENEFITS, TRUST, FAQS, NAV, ECOSISTEMA, ANALYTICS_CONFIG, waLink,
 };

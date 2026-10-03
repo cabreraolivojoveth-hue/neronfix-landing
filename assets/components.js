@@ -505,12 +505,13 @@
       return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
     }).join('');
     var msg = 'Hola, quiero el plan ' + p.nombre + ' de Neron ' + sys.name +
-              ' (' + per.label.toLowerCase() + ', ' + money(precio) + ')';
+              ' (' + per.label.toLowerCase() + ', ' + (p.desde ? 'desde ' : '') + money(precio) + ')';
     return '<article class="plan' + (p.popular ? ' plan--featured' : '') + ' rv">' +
       (p.popular ? '<span class="plan__tag">' + icon('i-star') + 'Más elegido</span>' : '') +
       '<h3 class="plan__name">' + esc(p.nombre) + '</h3>' +
       '<p class="plan__desc">' + esc(p.desc || '') + '</p>' +
-      '<p class="plan__price"><b>' + money(precio) + '</b><span>/ ' + esc(per.unidad) + '</span></p>' +
+      '<p class="plan__price">' + (p.desde ? '<em class="plan__from">Desde</em>' : '') +
+        '<b>' + money(precio) + '</b><span>/ ' + esc(per.unidad) + '</span></p>' +
       (mensualizado
         ? '<span class="plan__save">' + icon('i-check') + 'Te sale en ' + money(mensualizado) + ' al mes</span>'
         : '') +
@@ -532,6 +533,30 @@
       '</article>';
   }
 
+  /* Tarjetas después de los planes (sucursal adicional, Empresarial): van a
+     WhatsApp con su mensaje. Precio con prefijo (+$280) o a la medida. */
+  function extraCard(x, sys) {
+    var feats = (x.feats || []).map(function (f) {
+      return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
+    }).join('');
+    var precio = x.precioTexto
+      ? '<p class="plan__custom">' + esc(x.precioTexto) + '</p>'
+      : (x.etiquetaPrecio ? '<p class="plan__price-label">' + esc(x.etiquetaPrecio) + '</p>' : '') +
+        '<p class="plan__price"><b>' + esc(x.prefijo || '') + money(x.precio) + '</b><span>/ ' + esc(x.unidad || 'mes') + '</span></p>';
+    var msg = x.precioTexto
+      ? 'Hola, me interesa el plan ' + x.nombre + ' de Neron ' + sys.name
+      : 'Hola, quiero agregar sucursales a mi plan Pro de Neron ' + sys.name + ' (' + (x.prefijo || '') + money(x.precio) + ' al mes cada una)';
+    return '<article class="plan plan--extra rv">' +
+      (x.eyebrow ? '<p class="plan__eyebrow">' + esc(x.eyebrow) + '</p>' : '') +
+      '<h3 class="plan__name">' + esc(x.nombre) + '</h3>' +
+      '<p class="plan__desc">' + esc(x.desc || '') + '</p>' +
+      precio +
+      '<ul class="plan__feats">' + feats + '</ul>' +
+      '<a class="btn btn--secondary" href="' + esc(C.waLink(msg)) + '" target="_blank" rel="noopener noreferrer"' +
+        ' data-track="plan_click" data-track-label="' + esc(x.id) + '">' + esc(x.boton) + icon('i-arrow') + '</a>' +
+      '</article>';
+  }
+
   function systemById(id) {
     for (var i = 0; i < C.SYSTEMS.length; i++) if (C.SYSTEMS[i].id === id) return C.SYSTEMS[i];
     return C.SYSTEMS[0];
@@ -543,6 +568,13 @@
     var sys = systemById(product);
     var list = (C.PLANS[product] || []);
     host.innerHTML = list.map(function (p) { return planCard(p, sys); }).join('');
+    var extraHost = U.$('#plans-extra');
+    if (extraHost) {
+      var extras = (C.PLAN_EXTRAS && C.PLAN_EXTRAS[product]) || [];
+      extraHost.innerHTML = extras.map(function (x) { return extraCard(x, sys); }).join('');
+      extraHost.hidden = extras.length === 0;
+      U.$$('.rv', extraHost).forEach(function (n) { n.classList.add('is-in'); });
+    }
     U.initReveal(host);
     /* Sin animación de entrada al cambiar de pestaña: ya están en pantalla. */
     U.$$('.rv', host).forEach(function (n) { n.classList.add('is-in'); });
@@ -564,6 +596,8 @@
       }).join('');
     }
     var th = U.$('#plan-toggle');
+    /* Con una sola forma de pago no hay nada que escoger: no se enseña. */
+    if (th && C.PERIODS.length < 2) { th.hidden = true; th = null; }
     if (th) {
       th.innerHTML = C.PERIODS.map(function (t) {
         return '<button class="toggle__btn" type="button" role="tab" data-period="' + esc(t.id) + '"' +
