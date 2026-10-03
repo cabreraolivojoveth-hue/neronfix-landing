@@ -206,7 +206,9 @@ const PLANS = {
       desc: 'Varias manos, un solo control',
       precios: { mensual: 1250 },
       desde: true,
-      limite: 'Usuarios ilimitados · 1 sucursal incluida',
+      /* 02/10/2026 (Joveth): el Pro trae 2 sucursales; cada una más, +$280. */
+      nota: '+$280 al mes por cada sucursal extra',
+      limite: 'Usuarios ilimitados · 2 sucursales incluidas',
       feats: [
         'Todo lo del Premium',
         'Socios y comisionistas con inventario compartido',
@@ -360,19 +362,6 @@ const PERIODS = [
 const PLAN_EXTRAS = {
   celulares: [
     {
-      id: 'celulares_sucursal',
-      eyebrow: '¿Tienes varias sucursales?',
-      nombre: 'Sucursal adicional',
-      desc: 'Agrega las que necesites al plan Pro.',
-      precio: 280, prefijo: '+', unidad: 'mes', etiquetaPrecio: 'Cada sucursal adicional',
-      feats: [
-        'Inventario de cada sucursal por separado',
-        'Traspasos entre sucursales con ticket y confirmación de recibido',
-        'Controla todas tus sucursales desde tu celular',
-      ],
-      boton: 'Agregar sucursales',
-    },
-    {
       id: 'celulares_empresarial',
       nombre: 'Empresarial',
       desc: 'Para cadenas y operaciones grandes',
@@ -444,7 +433,7 @@ const FAQS = [
   },
   {
     q: '¿Cuánto cuesta y qué formas de pago hay?',
-    a: 'Neron Celulares y Neron Autos tienen tres planes cada uno: Normal, Premium y Pro. En Celulares puedes sumar sucursales al Pro, y para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Por Neron One pregúntanos por WhatsApp.',
+    a: 'Neron Celulares y Neron Autos tienen tres planes cada uno: Normal, Premium y Pro. En Celulares el Pro incluye 2 sucursales y cada una extra cuesta $280 al mes; para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Por Neron One pregúntanos por WhatsApp.',
   },
   {
     q: '¿Puedo probarlo gratis antes de pagar?',

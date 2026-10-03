@@ -515,6 +515,7 @@
       (mensualizado
         ? '<span class="plan__save">' + icon('i-check') + 'Te sale en ' + money(mensualizado) + ' al mes</span>'
         : '') +
+      (p.nota ? '<p class="plan__note">' + esc(p.nota) + '</p>' : '') +
       (p.alta ? '' : '<p class="plan__trial yes">Prueba gratis, sin tarjeta</p>') +
       '<ul class="plan__feats">' + feats + '</ul>' +
       (p.limite ? '<p class="plan__limit">' + esc(p.limite) + '</p>' : '') +
