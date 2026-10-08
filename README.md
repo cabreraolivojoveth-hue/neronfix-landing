@@ -80,7 +80,7 @@ están ocultos en el footer. En cuanto pongas una URL aparecen solos.
 
 ## Canal de atención
 
-**WhatsApp es el único canal de servicio y soporte** (663 542 7493). No se
+**WhatsApp es el único canal de servicio y soporte** (646 287 5283). No se
 publica correo, formulario ni teléfono como vía de atención. Instagram y
 YouTube son perfiles de marca y así se indican en la página, para que nadie
 pida soporte por ahí.

@@ -31,7 +31,7 @@
   }
 
   g.registerPlugin(ST);
-  ST.config({ ignoreMobileResize: true, limitCallbacks: true });
+  ST.config({ ignoreMobileResize: true });
   root.classList.add('has-motion');
 
   /* Si algo no termina de montarse, todo vuelve a verse (nunca se queda oculto). */
@@ -83,6 +83,28 @@
     });
   }
 
+  /* Revelados "una sola vez" que NO se pierden si alguien salta con el menú o
+     recarga a mitad de página: se disparan al entrar, al rebasar, o al medir. */
+  function once(trigger, start, fn) {
+    var fired = false;
+    function fire() { if (fired) return; fired = true; fn(); }
+    ST.create({
+      trigger: trigger, start: start,
+      onEnter: fire, onLeave: fire,
+      onUpdate: function (s) { if (s.progress > 0) fire(); },
+      onRefresh: function (s) { if (s.progress > 0 || s.scroll() > s.start) fire(); },
+    });
+  }
+  function batchReveal(items, start, run) {
+    var queue = [], timer = 0;
+    items.forEach(function (el) {
+      once(el, start, function () {
+        queue.push(el);
+        if (!timer) timer = setTimeout(function () { var q = queue; queue = []; timer = 0; run(q); }, 30);
+      });
+    });
+  }
+
   /* ------------------------------------------------------ PROGRESO ------ */
   function buildProgress() {
     var bar = d.createElement('div');
@@ -123,7 +145,7 @@
     g.set([badge, lead], { opacity: 0, y: 22 });
     g.set(ctas, { opacity: 0, y: 26 });
     g.set(mock, { opacity: 0, y: 70, scale: 0.9, transformOrigin: '50% 60%' });
-    g.set(fx, { opacity: 0, y: 34, scale: 0.8 });
+    g.set(fx, { opacity: 0, y: 34, scale: 0.8, z: function (i) { return [70, 110, 60, 90][i] || 60; } });
 
     /* Entrada cinematográfica al cargar */
     var tl = g.timeline({ defaults: { ease: EASE }, delay: 0.1 });
@@ -210,14 +232,11 @@
       mo(h2); rest.forEach(mo);
       g.set(words, { yPercent: 118, rotation: 4, transformOrigin: '0% 100%' });
       g.set(rest, { opacity: 0, y: 20 });
-      ST.create({
-        trigger: head, start: 'top 88%', once: true,
-        onEnter: function () {
-          g.timeline({ defaults: { ease: EASE } })
-            .to(eyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0)
-            .to(words, { yPercent: 0, rotation: 0, duration: 1.05, stagger: 0.07, ease: 'expo.out' }, 0.05)
-            .to(p, { opacity: 1, y: 0, duration: 0.8 }, 0.4);
-        },
+      once(head, 'top 88%', function () {
+        g.timeline({ defaults: { ease: EASE } })
+          .to(eyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0)
+          .to(words, { yPercent: 0, rotation: 0, duration: 1.05, stagger: 0.07, ease: 'expo.out' }, 0.05)
+          .to(p, { opacity: 1, y: 0, duration: 0.8 }, 0.4);
       });
     });
   }
@@ -279,17 +298,14 @@
       if (svg) g.set(svg, { scale: 1.2, transformOrigin: '50% 50%' });
     });
 
-    ST.batch(cards, {
-      start: 'top 92%', once: true,
-      onEnter: function (batch) {
-        g.to(batch, {
-          opacity: 1, y: 0, rotationX: 0, duration: 1.15, stagger: 0.16, ease: 'expo.out', clearProps: 'opacity,transform',
-        });
-        batch.forEach(function (card, i) {
-          var svg = $('.sys__media svg', card);
-          if (svg) g.to(svg, { scale: 1.12, duration: 1.8, delay: i * 0.16, ease: 'expo.out' });
-        });
-      },
+    batchReveal(cards, 'top 92%', function (batch) {
+      g.to(batch, {
+        opacity: 1, y: 0, rotationX: 0, duration: 1.15, stagger: 0.16, ease: 'expo.out', clearProps: 'opacity,transform',
+      });
+      batch.forEach(function (card, i) {
+        var svg = $('.sys__media svg', card);
+        if (svg) g.to(svg, { scale: 1.12, duration: 1.8, delay: i * 0.16, ease: 'expo.out' });
+      });
     });
 
     cards.forEach(function (card) {
@@ -355,19 +371,16 @@
     if (!map || U.reduced) return;
     var nodes = $$('.eco__nodo', map), lines = $$('.eco__linea', map), core = $('.eco__centro', map), dest = $('.eco__destino', map);
     var parts = nodes.concat([core, dest]);
-    mo(map);
+    unrv(map); mo(map);
     g.set(parts, { opacity: 0, y: 28 });
     g.set(lines, { scaleY: 0, transformOrigin: '50% 0%' });
-    ST.create({
-      trigger: map, start: 'top 82%', once: true,
-      onEnter: function () {
-        g.timeline({ defaults: { ease: EASE } })
-          .to(nodes, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12 }, 0)
-          .to(lines[0], { scaleY: 1, duration: 0.6 }, 0.45)
-          .to(core, { opacity: 1, y: 0, duration: 0.8 }, 0.7)
-          .to(lines[1], { scaleY: 1, duration: 0.6 }, 1.0)
-          .to(dest, { opacity: 1, y: 0, duration: 0.8 }, 1.25);
-      },
+    once(map, 'top 82%', function () {
+      g.timeline({ defaults: { ease: EASE } })
+        .to(nodes, { opacity: 1, y: 0, duration: 0.8, stagger: 0.12 }, 0)
+        .to(lines[0], { scaleY: 1, duration: 0.6 }, 0.45)
+        .to(core, { opacity: 1, y: 0, duration: 0.8 }, 0.7)
+        .to(lines[1], { scaleY: 1, duration: 0.6 }, 1.0)
+        .to(dest, { opacity: 1, y: 0, duration: 0.8 }, 1.25);
     });
   }
 
@@ -399,10 +412,12 @@
     function build() {
       var step = rows.length > 1 ? rows[1].offsetTop - rows[0].offsetTop : 32;
       var chaos = [
-        { xPercent: -14, yPercent: -10, rotation: -8 }, { xPercent: 15, yPercent: -6, rotation: 7 },
-        { xPercent: -8, yPercent: 14, rotation: 6 }, { xPercent: 12, yPercent: 10, rotation: -7 },
+        { xPercent: -14, yPercent: -10, rotation: -8, rotationY: -32, rotationX: 16, z: -190 },
+        { xPercent: 15, yPercent: -6, rotation: 7, rotationY: 34, rotationX: 12, z: -150 },
+        { xPercent: -8, yPercent: 14, rotation: 6, rotationY: -26, rotationX: -14, z: -170 },
+        { xPercent: 12, yPercent: 10, rotation: -7, rotationY: 30, rotationX: -12, z: -210 },
       ];
-      mods.forEach(function (m, i) { g.set(m, Object.assign({ scale: 0.92, opacity: 0.9 }, chaos[i])); });
+      mods.forEach(function (m, i) { g.set(m, Object.assign({ scale: 0.92, opacity: 0.9, transformPerspective: 1100 }, chaos[i])); });
       g.set(chips, { opacity: 1, rotation: function (i) { return [-8, 7, 6, -5][i]; } });
       g.set(lines, { strokeDashoffset: 1 });
       g.set(hub, { opacity: 0, scale: 0.7 });
@@ -421,7 +436,7 @@
         y: function (i, el) { var s = stage.getBoundingClientRect(), r = el.getBoundingClientRect(); return (s.top + s.height / 2) - (r.top + r.height / 2); },
         scale: 0.3, opacity: 0, rotation: 0, duration: 0.42, stagger: 0.04, ease: 'power3.in',
       }, 0);
-      asm.to(mods, { xPercent: 0, yPercent: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.42, stagger: 0.05, ease: 'power3.out' }, 0.14);
+      asm.to(mods, { xPercent: 0, yPercent: 0, rotation: 0, rotationX: 0, rotationY: 0, z: 0, scale: 1, opacity: 1, duration: 0.42, stagger: 0.05, ease: 'power3.out' }, 0.14);
       asm.to(lines, { strokeDashoffset: 0, duration: 0.2, stagger: 0.03 }, 0.5);
       asm.to(hub, { opacity: 1, scale: 1, duration: 0.16, ease: 'back.out(2)' }, 0.56);
       asm.to(skels, { scaleX: 1, duration: 0.14, stagger: 0.04 }, 0.6);
@@ -438,7 +453,9 @@
     function focusTo(tl, i, at, dur) {
       tl.to(mods, {
         opacity: function (j) { return j === i ? 1 : 0.38; },
-        scale: function (j) { return j === i ? 1.07 : 0.965; },
+        scale: function (j) { return j === i ? 1.04 : 0.97; },
+        z: function (j) { return j === i ? 70 : -30; },
+        rotationY: function (j) { return j === i ? 0 : (j % 2 ? 7 : -7); },
         duration: dur, ease: 'power2.out',
       }, at);
     }
@@ -463,7 +480,7 @@
         focusTo(focus, i, at, 0.35);
         pulse(focus, i, at + 0.1);
       }
-      focus.to(mods, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.inOut' }, T0 + 4 * SPAN);
+      focus.to(mods, { opacity: 1, scale: 1, z: 0, rotationY: 0, duration: 0.4, ease: 'power2.inOut' }, T0 + 4 * SPAN);
       master.add(focus, 0);
       ST.create({
         trigger: sec, start: 'top top', end: 'bottom bottom', scrub: 0.7, animation: master, invalidateOnRefresh: true,
@@ -489,9 +506,9 @@
           pulse(loop, k, at + 0.15);
         })(i);
       }
-      loop.to(mods, { opacity: 1, scale: 1, duration: 0.4 }, 6);
+      loop.to(mods, { opacity: 1, scale: 1, z: 0, rotationY: 0, duration: 0.4 }, 6);
       loop.duration(6.6);
-      ST.create({ trigger: stage, start: 'top 75%', once: true, onEnter: function () { asm.play(0); asm.eventCallback('onComplete', function () { loop.play(0); }); } });
+      once(stage, 'top 75%', function () { asm.play(0); asm.eventCallback('onComplete', function () { loop.play(0); }); });
       ST.create({
         trigger: stage, start: 'top 90%', end: 'bottom 5%',
         onToggle: function (s) { if (!asm.isActive() && asm.progress() === 1) { if (s.isActive) loop.play(); else loop.pause(); } },
@@ -538,7 +555,7 @@
     }
 
     hidePrepare();
-    ST.create({ trigger: host, start: 'top 86%', once: true, onEnter: function () { seen = true; reveal(); } });
+    once(host, 'top 86%', function () { seen = true; reveal(); });
 
     /* Al cambiar de sistema o de forma de pago se vuelven a dibujar: entrada breve */
     new MutationObserver(function () {
@@ -555,10 +572,7 @@
     var items = $$('.faq__item', host);
     items.forEach(function (n) { unrv(n); mo(n); });
     g.set(items, { opacity: 0, x: -24 });
-    ST.batch(items, {
-      start: 'top 92%', once: true,
-      onEnter: function (b) { g.to(b, { opacity: 1, x: 0, duration: 0.8, stagger: 0.07, ease: EASE, clearProps: 'opacity,transform' }); },
-    });
+    batchReveal(items, 'top 92%', function (b) { g.to(b, { opacity: 1, x: 0, duration: 0.8, stagger: 0.07, ease: EASE, clearProps: 'opacity,transform' }); });
     host.addEventListener('click', function (e) {
       var q = e.target.closest('.faq__q');
       if (!q || q.getAttribute('aria-expanded') !== 'true') return;
@@ -585,6 +599,7 @@
     eco.className = 'cta__eco'; eco.setAttribute('aria-hidden', 'true');
     eco.innerHTML =
       '<svg class="ce__svg" focusable="false"></svg>' +
+      '<span class="ce__orbit"></span><span class="ce__orbit ce__orbit--2"></span>' +
       '<span class="ce__core"><i class="ce__pulse"></i><i class="ce__pulse ce__pulse--2"></i><img src="/logo-header.png" alt="" width="282" height="233" loading="lazy" decoding="async" /></span>' +
       '<span class="ce ce--c">' + U.icon('i-mobile') + 'Celulares</span>' +
       '<span class="ce ce--a">' + U.icon('i-car') + 'Autos</span>' +
@@ -654,9 +669,7 @@
       });
     }
 
-    ST.create({
-      trigger: sec, start: 'top 70%', once: true,
-      onEnter: function () {
+    once(sec, 'top 70%', function () {
         shown = true;
         g.timeline({ defaults: { ease: EASE } })
           .to(core, { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.6)' }, 0)
@@ -667,7 +680,6 @@
           .to(p, { opacity: 1, y: 0, duration: 0.8 }, 1.2)
           .to(btns, { opacity: 1, y: 0, duration: 0.85, stagger: 0.12 }, 1.35)
           .call(startIdle, null, 1.8);
-      },
     });
     w.addEventListener('resize', function () { if (!shown) layout(); });
   }
@@ -678,15 +690,19 @@
     var items = $$('.benefit');
     if (items.length) {
       items.forEach(function (n) { unrv(n); mo(n); });
-      g.set(items, { opacity: 0, y: 48 });
+      g.set(items, { opacity: 0, y: 48, rotationY: -38, transformPerspective: 900, transformOrigin: '0% 50%' });
       g.set($$('.benefit__ic', items[0].parentNode), { scale: 0.4, rotation: -18 });
-      ST.batch(items, {
-        start: 'top 92%', once: true,
-        onEnter: function (b) {
-          g.to(b, { opacity: 1, y: 0, duration: 1, stagger: 0.12, ease: 'expo.out', clearProps: 'opacity,transform' });
-          g.to(b.map(function (n) { return $('.benefit__ic', n); }), { scale: 1, rotation: 0, duration: 0.9, stagger: 0.12, delay: 0.25, ease: 'back.out(2.2)' });
-        },
+      batchReveal(items, 'top 92%', function (b) {
+        g.to(b, { opacity: 1, y: 0, rotationY: 0, duration: 1.1, stagger: 0.12, ease: 'expo.out', clearProps: 'opacity,transform' });
+        g.to(b.map(function (n) { return $('.benefit__ic', n); }), { scale: 1, rotation: 0, duration: 0.9, stagger: 0.12, delay: 0.25, ease: 'back.out(2.2)' });
       });
+    }
+
+    /* Inclinación 3D al pasar el cursor (sólo escritorio, con la propiedad `rotate`) */
+    if (fine) {
+      tiltGroup($('#systems'), '.sys', 5);
+      tiltGroup($('#plans'), '.plan', 6);
+      tiltGroup($('#benefits'), '.benefit', 8);
     }
 
     /* Botones grandes: atracción magnética hacia el cursor (sólo escritorio) */
@@ -702,6 +718,33 @@
         btn.addEventListener('pointerleave', function () { qx(0); qy(0); });
       });
     }
+  }
+
+  /* Inclinación hacia el cursor con un solo bucle por tarjeta activa. */
+  function tiltGroup(host, sel, max) {
+    if (!host) return;
+    var state = new WeakMap();
+    function st(el) { if (!state.has(el)) state.set(el, { x: 0, y: 0, cx: 0, cy: 0, raf: 0 }); return state.get(el); }
+    function loop(el, s) {
+      s.cx += (s.x - s.cx) * 0.13; s.cy += (s.y - s.cy) * 0.13;
+      var a = -s.cy * max, b = s.cx * max, m = Math.hypot(a, b);
+      var rest = Math.abs(s.x - s.cx) + Math.abs(s.y - s.cy) < 0.002;
+      el.style.rotate = (rest && !s.x && !s.y) || m < 0.02 ? '' : a.toFixed(2) + ' ' + b.toFixed(2) + ' 0 ' + m.toFixed(2) + 'deg';
+      s.raf = rest ? 0 : requestAnimationFrame(function () { loop(el, s); });
+    }
+    host.addEventListener('pointermove', function (e) {
+      var el = e.target.closest(sel);
+      if (!el || !host.contains(el)) return;
+      var s = st(el), r = el.getBoundingClientRect();
+      s.x = (e.clientX - r.left) / r.width - 0.5; s.y = (e.clientY - r.top) / r.height - 0.5;
+      if (!s.raf) s.raf = requestAnimationFrame(function () { loop(el, s); });
+    });
+    host.addEventListener('pointerout', function (e) {
+      var el = e.target.closest(sel);
+      if (!el || el.contains(e.relatedTarget)) return;
+      var s = st(el); s.x = 0; s.y = 0;
+      if (!s.raf) s.raf = requestAnimationFrame(function () { loop(el, s); });
+    });
   }
 
   /* -------------------------------------------------------------- INIT ---- */

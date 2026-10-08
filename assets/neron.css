@@ -683,7 +683,14 @@ section{scroll-margin-top:calc(var(--header-h-sticky) + var(--s4))}
    15. CONTACTO (sección en la landing)
    WhatsApp es el único canal de atención: ocupa el bloque principal.
    -------------------------------------------------------------------------- */
-.contact{display:grid;grid-template-columns:1.6fr 1fr;gap:var(--s5);align-items:stretch}
+.contact{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto auto;gap:var(--s5);align-items:stretch}
+.contact .wa-panel{grid-row:span 2;align-content:center}
+.contact-card__ic.ig{background:linear-gradient(135deg,#8a3ab9,#e1306c,#f7a14a);color:#fff}
+.contact-card__handle{display:block;font-size:16px;font-weight:700;color:var(--wine);margin-bottom:6px}
+.cta__ig{display:inline-flex;align-items:center;gap:8px;margin-top:var(--s5);font-size:14.5px;color:rgba(255,255,255,.82);border-bottom:1px solid rgba(232,213,163,.45);padding-bottom:2px;transition:color var(--t-hover) var(--ease),border-color var(--t-hover) var(--ease)}
+.cta__ig b{color:var(--gold-soft);font-weight:700}
+.cta__ig .ic{font-size:17px;color:var(--gold-soft)}
+.cta__ig:hover{color:#fff;border-color:var(--gold-soft)}
 
 .wa-panel{
   position:relative;

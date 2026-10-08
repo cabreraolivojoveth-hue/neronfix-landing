@@ -16,11 +16,11 @@
    -------------------------------------------------------------------------- */
 const CONTACT_CONFIG = {
   /* Número en formato internacional, sólo dígitos (52 + 1 + 10 dígitos).
-     Número visible: 663 542 7493 */
-  whatsappNumber: '5216635427493',
+     Número visible: 646 287 5283 */
+  whatsappNumber: '5216462875283',
   whatsappMessage: 'Hola, quiero conocer más sobre Neron',
   /* Cómo se muestra el número en pantalla. */
-  whatsappDisplay: '663 542 7493',
+  whatsappDisplay: '646 287 5283',
   /* Redes sociales: son perfiles de marca, NO canales de atención.
      Deja '' para ocultar el enlace correspondiente. */
   instagram: 'https://www.instagram.com/neron_fix',
@@ -461,11 +461,11 @@ const FAQS = [
   },
   {
     q: '¿Cómo recibo soporte si tengo un problema?',
-    a: 'El soporte es directo por WhatsApp, con personas que conocen el sistema. También tienes el Centro de ayuda con guías por tema: facturación, inventario, ventas, configuración y más.',
+    a: 'El soporte es directo por WhatsApp, con personas que conocen el sistema. También tienes el Centro de ayuda con guías por tema: facturación, inventario, ventas, configuración y más. Nuestro Instagram, @neron_fix, es el perfil de la marca: para servicio, escríbenos por WhatsApp.',
   },
   {
     q: '¿Neron funciona en todo México?',
-    a: 'Sí. Al ser un sistema en la nube puedes usarlo desde cualquier parte del país, y está pensado para la forma de operar y las leyes de aquí.',
+    a: 'Sí. Al ser un sistema en la nube puedes usarlo desde cualquier parte del país.',
   },
 ];
 
@@ -531,7 +531,7 @@ const ANALYTICS_CONFIG = {
 /* Eventos que emite la landing (referencia para quien conecte la analítica):
    hero_cta_click · whatsapp_click · system_autos_click · system_cellphones_click
    system_one_click · plan_click · plan_signup_click · plan_product_click · plan_period_click
-   faq_open · login_click · nav_click · final_cta_click · mobile_bar_click      */
+   faq_open · instagram_click · login_click · nav_click · final_cta_click · mobile_bar_click      */
 
 /* --------------------------------------------------------------------------
    MOVIMIENTO · textos de las piezas animadas

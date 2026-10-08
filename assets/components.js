@@ -732,6 +732,20 @@
      WhatsApp es el único canal de atención: se presenta como bloque
      principal. El Centro de ayuda va aparte porque es autoservicio, no
      una vía de contacto alternativa. */
+  /* Tarjeta de Instagram: perfil de marca (no es canal de atención). */
+  function igCard() {
+    var url = C.CONTACT_CONFIG.instagram;
+    if (!url) return '';
+    var handle = '@' + url.replace(/\/+$/, '').split('/').pop();
+    return '<a class="contact-card contact-card--ig rv" style="--d:1" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"' +
+      ' data-track="instagram_click" data-track-label="seccion contacto">' +
+      '<span class="contact-card__ic ig">' + icon('i-instagram') + '</span>' +
+      '<h3>Síguenos en Instagram</h3>' +
+      '<span class="contact-card__handle">' + esc(handle) + '</span>' +
+      '<p>Es el perfil de la marca. Para servicio y soporte, escríbenos por WhatsApp.</p>' +
+      '<span class="link-arrow">Ir a Instagram' + icon('i-arrow') + '</span></a>';
+  }
+
   function renderContact() {
     var host = U.$('#contact');
     if (!host) return;
@@ -749,7 +763,8 @@
         '</span>' +
         '<span class="btn btn--wa">Abrir WhatsApp' + icon('i-arrow') + '</span>' +
       '</a>' +
-      '<a class="contact-card rv" style="--d:1" href="' + esc(C.ROUTES.faq) + '" data-track="help_click">' +
+      igCard() +
+      '<a class="contact-card rv" style="--d:2" href="' + esc(C.ROUTES.faq) + '" data-track="help_click">' +
         '<span class="contact-card__ic">' + icon('i-help') + '</span>' +
         '<h3>Centro de ayuda</h3>' +
         '<p>¿Prefieres resolverlo tú? Guías por tema: facturación, inventario, ventas, ' +

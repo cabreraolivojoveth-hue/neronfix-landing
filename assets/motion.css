@@ -203,6 +203,17 @@
 
 /* ---------------------------------------------------------- CTA final -- */
 .cta__eco{position:relative;height:236px;max-width:430px;margin:0 auto var(--s6)}
+.cta__eco{perspective:760px}
+.ce__orbit{
+  position:absolute;left:0;right:0;margin-inline:auto;top:-70px;width:236px;height:236px;border-radius:50%;
+  border:1px solid rgba(232,213,163,.38);z-index:1;pointer-events:none;
+  transform:rotateX(74deg) rotateZ(0deg);animation:ceOrbit 14s linear infinite;
+}
+.ce__orbit::after{content:'';position:absolute;left:50%;top:-5px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--gold-soft);box-shadow:0 0 12px var(--gold-soft)}
+.ce__orbit--2{top:-96px;width:288px;height:288px;border-color:rgba(232,213,163,.2);transform:rotateX(74deg) rotateY(16deg) rotateZ(0deg);animation:ceOrbit2 23s linear infinite reverse}
+@keyframes ceOrbit{to{transform:rotateX(74deg) rotateZ(360deg)}}
+@keyframes ceOrbit2{to{transform:rotateX(74deg) rotateY(16deg) rotateZ(360deg)}}
+@media (max-width:420px){.ce__orbit{width:210px;height:210px;top:-57px}.ce__orbit--2{width:262px;height:262px;top:-83px}}
 .ce__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:0}
 .ce__svg path{fill:none;stroke:rgba(232,213,163,.6);stroke-width:1.4;stroke-dasharray:1;stroke-dashoffset:0}
 .ce__svg circle{fill:var(--gold-soft);filter:drop-shadow(0 0 5px rgba(232,213,163,.9))}
@@ -265,6 +276,10 @@
 .sys__body{position:relative;z-index:2}
 
 
+/* ---------------------------------------------- Profundidad 3D (hover) -- */
+.has-motion .systems,.has-motion .plans,.has-motion .benefits{perspective:1400px}
+.has-motion .sys,.has-motion .plan,.has-motion .benefit{transform-style:flat}
+
 /* ------------------------------------------------------ Rendimiento -- */
 /* Nada de filtros (blur / drop-shadow) sobre piezas que se mueven: repintan
    en cada cuadro. Las mismas sombras y luces se logran con box-shadow y
@@ -290,6 +305,7 @@
   .fx__in{animation:none}
   .btn::after{display:none}
   .mprog{display:none}
-  .mock__ring,.ce__pulse{animation:none;opacity:0}
+  .mock__ring,.ce__pulse,.ce__orbit{animation:none}
+  .mock__ring,.ce__pulse{opacity:0}
   .mq__t{animation:none}
 }
