@@ -554,6 +554,8 @@ const MOTION = {
     autos:     ['Unidad', 'Financiamiento', 'Expediente', 'Venta', 'Seguimiento'],
     one:       ['Dinero', 'Flujo', 'Control', 'Organización'],
   },
+  /* Franja tipografica gigante que se desliza con el scroll (decorativa) */
+  marquee: ['Orden', 'Control', 'Imagen profesional', 'Crecimiento'],
   /* Seccion "del desorden al control" */
   orden: {
     eyebrow: 'Todo en un solo lugar',
