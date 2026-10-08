@@ -18,7 +18,7 @@
 
 /* --------------------------------------------- Texto revelado por máscara -- */
 .mw{display:inline-block;overflow:hidden;vertical-align:top;padding:.1em .03em .16em;margin:-.1em -.03em -.16em}
-.mw__i{display:inline-block;will-change:transform}
+.mw__i{display:inline-block}
 
 /* ------------------------------------------------ Hero · piezas flotantes -- */
 .fx{position:absolute;z-index:3;left:var(--l);top:var(--t);pointer-events:none}
@@ -26,7 +26,6 @@
   display:flex;align-items:center;gap:10px;padding:9px 15px 9px 9px;
   background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:15px;
   box-shadow:var(--sh-3);white-space:nowrap;
-  translate:var(--tx,0) var(--ty,0);
   animation:fxFloat 6.5s var(--ease-soft) var(--fd,0s) infinite;
 }
 .fx__ic{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--wine);color:var(--gold-soft);font-size:16px}
@@ -38,8 +37,6 @@
 .fx--b{--l:63%;--t:-3%}
 .fx--c{--l:-6%;--t:71%}
 .fx--d{--l:40%;--t:90%}
-.has-motion .mock__laptop,.has-motion .mock__phone,.has-motion .mock__halo{translate:var(--tx,0) var(--ty,0)}
-.has-motion #mockup{translate:0 var(--sy,0);scale:var(--ss,1)}
 @media (max-width:640px){
   .fx__in{padding:7px 11px 7px 7px;gap:8px;border-radius:13px}
   .fx__ic{width:26px;height:26px;border-radius:8px;font-size:14px}
@@ -85,7 +82,7 @@
 /* ----------------------------------------------- Del desorden al control -- */
 .orden{position:relative;padding-block:0 !important;background:transparent;margin-block:clamp(8px,2vw,28px)}
 .orden__bg{
-  position:absolute;inset:0;z-index:0;border-radius:clamp(28px,4vw,56px);overflow:hidden;
+  position:absolute;inset:0;z-index:0;border-radius:clamp(24px,4vw,48px);overflow:hidden;
   background:
     radial-gradient(900px 600px at 85% 8%,rgba(232,213,163,.14),transparent 60%),
     radial-gradient(800px 700px at 8% 92%,rgba(196,138,150,.20),transparent 60%),
@@ -97,7 +94,7 @@
   background-size:72px 72px;
 }
 .orden__sticky{position:relative;z-index:1;padding-block:clamp(64px,8vw,var(--s10))}
-.orden__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,5vw,var(--s9));align-items:center}
+.orden__grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,5vw,var(--s9));align-items:center}
 .orden__txt .eyebrow{color:var(--gold-soft)}
 .orden__txt .h-section{margin:var(--s3) 0 var(--s4);color:#fff}
 .orden__txt .h-section .mark{color:var(--gold-soft)}
@@ -237,12 +234,13 @@
 
 /* ------------------------------------------- Franja tipográfica gigante -- */
 .mq{position:relative;overflow:hidden;padding:clamp(28px,5vw,64px) 0;background:#fff;user-select:none}
-.mq__row{display:flex;width:max-content;will-change:transform;margin:clamp(-6px,-.6vw,0px) 0}
+.mq__row{display:flex;width:max-content;margin:clamp(-6px,-.6vw,0px) 0}
+.mq.is-off .mq__t{animation-play-state:paused}
 .mq__t{display:flex;align-items:center;gap:clamp(18px,3vw,44px);padding-right:clamp(18px,3vw,44px);animation:mqDrift 60s linear infinite;white-space:nowrap}
 .mq__row--b .mq__t{animation-direction:reverse;animation-duration:75s}
-@keyframes mqDrift{to{transform:translateX(-25%)}}
+@keyframes mqDrift{to{transform:translateX(-50%)}}
 .mq__w{
-  font-family:var(--display);font-weight:700;font-size:clamp(64px,13.5vw,176px);line-height:1;letter-spacing:-.03em;
+  font-family:var(--display);font-weight:700;font-size:clamp(52px,10vw,136px);line-height:1;letter-spacing:-.03em;
   color:transparent;-webkit-text-stroke:1.5px var(--wine);
 }
 .mq__w--fill{color:var(--wine);-webkit-text-stroke:0}
@@ -257,15 +255,35 @@
 .mock__ring{position:absolute;left:50%;top:50%;width:70%;aspect-ratio:1;margin:-35% 0 0 -35%;border-radius:50%;border:1px solid rgba(122,18,37,.28);pointer-events:none;z-index:0;animation:ringPulse 5.5s var(--ease-soft) infinite}
 .mock__ring--2{animation-delay:2.75s;border-color:rgba(184,147,63,.4)}
 @keyframes ringPulse{0%{transform:scale(.8);opacity:.9}100%{transform:scale(1.55);opacity:0}}
-.has-motion .mock__laptop{will-change:rotate}
 
 /* --------------------------------------- Sistemas · haz de luz con cursor -- */
-.sys::before{
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 320ms var(--ease);
-  background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(184,147,63,.16),transparent 62%);
+.sys__glow{
+  position:absolute;left:0;top:0;width:380px;height:380px;margin:-190px 0 0 -190px;z-index:1;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,rgba(184,147,63,.2),transparent 62%);transition:opacity 320ms var(--ease);
 }
-.sys:hover::before{opacity:1}
+.sys:hover .sys__glow{opacity:1}
 .sys__body{position:relative;z-index:2}
+
+
+/* ------------------------------------------------------ Rendimiento -- */
+/* Nada de filtros (blur / drop-shadow) sobre piezas que se mueven: repintan
+   en cada cuadro. Las mismas sombras y luces se logran con box-shadow y
+   degradados, que se pintan una sola vez y se mueven en la GPU. */
+.has-motion .deco__glow{filter:none}
+.has-motion .deco__glow--wine{background:radial-gradient(circle,rgba(122,18,37,.16),transparent 66%)}
+.has-motion .deco__glow--gold{background:radial-gradient(circle,rgba(184,147,63,.2),transparent 66%)}
+.has-motion .mock__halo{filter:none;background:radial-gradient(circle,rgba(184,147,63,.18),rgba(122,18,37,.07) 40%,transparent 66%)}
+.has-motion .mock__laptop{filter:none}
+.has-motion .mock__lid{box-shadow:0 38px 50px -26px rgba(20,16,15,.38)}
+.has-motion .mock__phone{filter:none}
+.has-motion .mock__phone svg{border-radius:16%/8%;box-shadow:0 28px 40px -20px rgba(20,16,15,.42)}
+.has-motion #mockup,.has-motion .fx{will-change:transform}
+/* Las barras fijas (cabecera y barra móvil) desenfocaban lo que hay detrás en
+   cada cuadro de scroll: en el celular eso cuesta más que toda la animación.
+   Se sustituye por un fondo casi opaco, que se ve igual de limpio. */
+.has-motion .hdr.is-stuck{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.97)}
+.has-motion .mbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.97)}
+
 
 /* ------------------------------------------------- Movimiento reducido -- */
 @media (prefers-reduced-motion:reduce){

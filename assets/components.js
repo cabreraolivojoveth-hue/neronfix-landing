@@ -487,8 +487,7 @@
     }).join('');
     var skel = function (w) { return '<i class="sk" style="width:' + w + '%"></i>'; };
     host.innerHTML =
-      '<div class="orden__bg" aria-hidden="true"></div>' +
-      '<div class="orden__sticky"><div class="wrap orden__grid">' +
+      '<div class="orden__sticky"><div class="orden__bg" aria-hidden="true"></div><div class="wrap orden__grid">' +
         '<div class="orden__txt">' +
           '<span class="eyebrow eyebrow--rule">' + esc(M.eyebrow) + '</span>' +
           '<h2 class="h-section">' + esc(M.titulo) + ' <em class="mark">' + esc(M.tituloMarca) + '</em></h2>' +

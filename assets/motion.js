@@ -31,7 +31,7 @@
   }
 
   g.registerPlugin(ST);
-  ST.config({ ignoreMobileResize: true });
+  ST.config({ ignoreMobileResize: true, limitCallbacks: true });
   root.classList.add('has-motion');
 
   /* Si algo no termina de montarse, todo vuelve a verse (nunca se queda oculto). */
@@ -145,12 +145,11 @@
     var lap = $('.mock__laptop', hero), ph = $('.mock__phone', hero);
     var layers = [
       { el: $('.mock__halo', hero), d: 12 },
-      { el: lap, d: 20 },
-      { el: ph, d: 42 },
+      { el: ph, d: 30 },
     ].concat($$('.fx__in', hero).map(function (el, i) { return { el: el, d: 26 + i * 10 }; }))
       .filter(function (l) { return l.el; });
     var tx = 0, ty = 0, cx = 0, cy = 0, t0 = performance.now();
-    var scrollTilt = 0;
+    var scrollTilt = 0, lastKey = '';
 
     if (fine) {
       hero.addEventListener('pointermove', function (e) {
@@ -162,16 +161,21 @@
     }
     function tiltStr(ax, ay) {
       var m = Math.hypot(ax, ay);
-      return m < 0.01 ? '1 0 0 0deg' : ax.toFixed(3) + ' ' + ay.toFixed(3) + ' 0 ' + m.toFixed(3) + 'deg';
+      return m < 0.01 ? '1 0 0 0deg' : ax.toFixed(2) + ' ' + ay.toFixed(2) + ' 0 ' + m.toFixed(2) + 'deg';
     }
+    /* Sin variables CSS (recalcularían el estilo de todo el mockup en cada cuadro):
+       se escriben directamente translate y rotate de sólo 2 + 4 elementos. */
     function heroTick() {
       var t = (performance.now() - t0) / 1000;
       if (!fine) { tx = Math.sin(t * 0.8) * 0.5; ty = Math.cos(t * 0.6) * 0.4; }
       cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07;
-      layers.forEach(function (l) {
-        l.el.style.setProperty('--tx', (-cx * l.d).toFixed(2) + 'px');
-        l.el.style.setProperty('--ty', (-cy * l.d).toFixed(2) + 'px');
-      });
+      var key = cx.toFixed(3) + cy.toFixed(3) + scrollTilt.toFixed(1);
+      if (key === lastKey) return;                              /* nada cambió: no se toca el DOM */
+      lastKey = key;
+      for (var i = 0; i < layers.length; i++) {
+        var l = layers[i];
+        l.el.style.translate = (-cx * l.d).toFixed(1) + 'px ' + (-cy * l.d).toFixed(1) + 'px';
+      }
       if (lap) lap.style.rotate = tiltStr(cy * -9 + scrollTilt, cx * 13);
       if (ph) ph.style.rotate = tiltStr(cy * 8, cx * -16);
     }
@@ -186,7 +190,7 @@
       },
     });
     scrub.to(textCol, { y: -60, opacity: 0.12 }, 0)
-      .to(mock, { '--sy': '-40px', '--ss': 0.9 }, 0)
+      .to(mock, { yPercent: -7 }, 0)
       .to(rings, { scale: 1.8, opacity: 0 }, 0)
       .to(fx, {
         x: function (i, el) { var m = mock.getBoundingClientRect(), r = el.getBoundingClientRect(); return (m.left + m.width / 2) - (r.left + r.width / 2); },
@@ -227,14 +231,15 @@
       return '<span class="mq__w' + (i % 2 ? ' mq__w--fill' : '') + '">' + U.esc(w0) + '</span><i class="mq__d"></i>';
     }).join('');
     var row = function (cls) {
-      return '<div class="mq__row ' + cls + '"><div class="mq__t">' + unit + unit + unit + unit + '</div></div>';
+      return '<div class="mq__row ' + cls + '"><div class="mq__t">' + unit + unit + '</div></div>';
     };
     var sec = d.createElement('section');
-    sec.className = 'mq'; sec.setAttribute('aria-hidden', 'true');
+    sec.className = 'mq is-off'; sec.setAttribute('aria-hidden', 'true');
     sec.innerHTML = row('mq__row--a') + row('mq__row--b');
     anchor.parentNode.insertBefore(sec, anchor);
     if (U.reduced) return;
 
+    ST.create({ trigger: sec, start: 'top bottom', end: 'bottom top', onToggle: function (s) { sec.classList.toggle('is-off', !s.isActive); } });
     var rowA = $('.mq__row--a', sec), rowB = $('.mq__row--b', sec);
     g.fromTo(rowA, { xPercent: 4 }, { xPercent: -26, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true } });
     g.fromTo(rowB, { xPercent: -26 }, { xPercent: 4, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'bottom top', scrub: true } });
@@ -297,10 +302,13 @@
 
       /* Haz de luz que sigue al cursor (sólo con mouse) */
       if (fine) {
+        var glow = d.createElement('i');
+        glow.className = 'sys__glow'; glow.setAttribute('aria-hidden', 'true');
+        card.appendChild(glow);
+        var gx = g.quickSetter(glow, 'x', 'px'), gy = g.quickSetter(glow, 'y', 'px');
         card.addEventListener('pointermove', function (e) {
           var r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
-          card.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
+          gx(e.clientX - r.left); gy(e.clientY - r.top);
         });
       }
 
@@ -376,8 +384,11 @@
 
     /* El panel oscuro "crece" desde los lados al entrar a la sección */
     if (bg) {
-      g.set(bg, { scaleX: 0.86, transformOrigin: '50% 50%' });
-      g.to(bg, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: sec, start: 'top 95%', end: 'top 25%', scrub: 0.5 } });
+      var pinned = wide();
+      g.fromTo(bg, { scaleX: 0.86, borderRadius: 48 }, {
+        scaleX: 1, borderRadius: pinned ? 0 : 24, ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'top 95%', end: 'top 25%', scrub: 0.5 },
+      });
     }
 
     function setActive(i) {
@@ -712,8 +723,9 @@
       if (w.console) w.console.warn('[neron:motion]', err);
     }
     /* Las fuentes cambian las medidas: se recalculan las posiciones. */
-    if (d.fonts && d.fonts.ready) d.fonts.ready.then(function () { ST.refresh(); });
-    w.addEventListener('load', function () { ST.refresh(); });
+    var loaded = new Promise(function (ok) { if (d.readyState === 'complete') ok(); else w.addEventListener('load', ok); });
+    var fonts = (d.fonts && d.fonts.ready) ? d.fonts.ready : Promise.resolve();
+    Promise.all([loaded, fonts]).then(function () { g.delayedCall(0.25, function () { ST.refresh(); }); });
   }
 
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', init);
