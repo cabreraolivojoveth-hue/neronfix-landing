@@ -35,7 +35,7 @@ Casi todo se edita en **`assets/config.js`**. No hace falta tocar el HTML.
 | Métricas de la franja de números | `STATS[]` |
 | Tarjetas de "Por qué Neron" | `BENEFITS[]` |
 | Fila de confianza bajo el hero | `TRUST[]` |
-| Preguntas frecuentes | `FAQS[]` |
+| Preguntas frecuentes | `FAQS` (los precios y límites salen de `PLANS`; no se escriben a mano) |
 | Enlaces del menú | `NAV[]` |
 | Términos y Aviso de privacidad | `ROUTES.terminos` / `ROUTES.privacidad` |
 

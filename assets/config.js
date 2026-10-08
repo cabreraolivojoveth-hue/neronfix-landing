@@ -163,6 +163,10 @@ function escalera(mensual) {
   return { mensual, trimestral, anual };
 }
 
+/* Cifras que se repiten en varios textos: se escriben UNA vez. */
+const SUCURSAL_EXTRA = 280;                                  // Pro de Celulares: cada sucursal después de las 2 incluidas
+function mxn(n) { return '$' + Number(n).toLocaleString('es-MX'); }
+
 const PLANS = {
   celulares: [
     {
@@ -212,7 +216,7 @@ const PLANS = {
       precios: { mensual: 1250 },
       desde: true,
       /* 02/10/2026 (Joveth): el Pro trae 2 sucursales; cada una más, +$280. */
-      nota: '+$280 al mes por cada sucursal extra',
+      nota: '+' + mxn(SUCURSAL_EXTRA) + ' al mes por cada sucursal extra',
       limite: 'Usuarios ilimitados · 2 sucursales incluidas',
       feats: [
         'Todo lo del Premium',
@@ -431,52 +435,58 @@ const TRUST = [
    Añade o quita objetos y la sección + los datos estructurados de SEO
    se regeneran solos.
    -------------------------------------------------------------------------- */
-const FAQS = [
-  {
-    q: '¿Qué es Neron exactamente?',
-    a: 'Neron es un ecosistema mexicano de software. Neron Celulares es el sistema para tiendas de celulares: punto de venta, inventario por IMEI, créditos, cobranza y reportes. Neron One es la aplicación para organizar tus finanzas y tus pendientes en un solo lugar. Neron Autos, para agencias y lotes de autos, llega próximamente.',
-  },
-  {
-    q: '¿Cuánto cuesta y qué formas de pago hay?',
-    a: 'Neron Celulares tiene tres planes: Normal, Premium y Pro. El Pro incluye 2 sucursales y cada una extra cuesta $280 al mes; para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Los precios de Neron Autos se publicarán cuando esté disponible; por Neron One pregúntanos por WhatsApp.',
-  },
-  {
-    q: '¿Puedo probarlo gratis antes de pagar?',
-    a: 'Sí. En Neron Celulares puedes crear tu cuenta tú mismo desde el plan Normal: tienes un mes gratis y no te pedimos tarjeta. Neron Autos todavía no está disponible; escríbenos por WhatsApp y te avisamos cuando abra.',
-  },
-  {
-    q: '¿Necesito instalar algún programa?',
-    a: 'No. Neron funciona en la nube desde el navegador, así que puedes usarlo en computadora, tablet o celular sin instalar nada. Sólo necesitas tu usuario y conexión a internet.',
-  },
-  {
-    q: '¿Mis datos y los de mis clientes están seguros?',
-    a: 'Sí. Cada negocio ve únicamente su propia información y todos los datos quedan respaldados en la nube, de modo que no dependes de una sola computadora en tu local.',
-  },
-  {
-    q: '¿Qué sistema me conviene para mi negocio?',
-    a: 'Si tienes tienda de celulares con equipos, accesorios, reparaciones y créditos, Neron Celulares. Si lo que buscas es ordenar tus finanzas y tus pendientes, Neron One. Si vendes autos, Neron Autos llega próximamente: escríbenos y te avisamos cuando esté listo. Si tienes dudas, te orientamos sin compromiso.',
-  },
-  {
-    q: '¿Qué es Neron One y cómo se conecta con los demás?',
-    a: 'Neron One es la aplicación financiera del ecosistema: tus cuentas con su capital disponible y proyectado, ingresos, gastos, pagos que se repiten, pendientes, calendario y reportes. Está diseñado para reunir también los reportes de Neron Celulares y Neron Autos; esa conexión llega por etapas, y hoy trabaja con la información que tú registras.',
-  },
-  {
-    q: '¿Cuándo estará disponible Neron Autos?',
-    a: 'Todavía no hay una fecha publicada: estamos terminando el sistema para agencias y lotes de autos. Si quieres que te avisemos cuando esté listo, escríbenos por WhatsApp.',
-  },
-  {
-    q: '¿Puedo cambiar de plan más adelante?',
-    a: 'Sí. Escríbenos por WhatsApp y te ayudamos a mover tu cuenta al plan que necesites conforme crezca tu negocio.',
-  },
-  {
-    q: '¿Cómo recibo soporte si tengo un problema?',
-    a: 'El soporte es directo por WhatsApp, con personas que conocen el sistema. También tienes el Centro de ayuda con guías por tema: facturación, inventario, ventas, configuración y más. Nuestro Instagram, @neron_fix, es el perfil de la marca: para servicio, escríbenos por WhatsApp.',
-  },
-  {
-    q: '¿Neron funciona en todo México?',
-    a: 'Sí. Al ser un sistema en la nube puedes usarlo desde cualquier parte del país.',
-  },
-];
+const FAQS = (function () {
+  /* Precios y límites salen de PLANS: si cambian allá, esta sección cambia sola. */
+  var cel = PLANS.celulares;
+  var normal = mxn(cel[0].precios.mensual), premium = mxn(cel[1].precios.mensual), pro = mxn(cel[2].precios.mensual);
+  var wa = CONTACT_CONFIG.whatsappDisplay;
+  return [
+    {
+      q: '¿Qué es Neron?',
+      a: 'Un ecosistema mexicano de software. Neron Celulares es el sistema para tiendas de celulares y Neron One organiza tus finanzas y pendientes. Neron Autos, para agencias y lotes de autos, llega próximamente.',
+    },
+    {
+      q: '¿Cuánto cuesta Neron Celulares?',
+      a: 'Normal ' + normal + ' al mes, Premium ' + premium + ' y Pro desde ' + pro + ' (incluye 2 sucursales; cada una extra, +' + mxn(SUCURSAL_EXTRA) + '). Para cadenas hay un plan Empresarial a la medida. Precios con IVA incluido, pago mes con mes y sin permanencia forzosa.',
+    },
+    {
+      q: '¿Qué cambia entre un plan y otro?',
+      a: 'Normal: punto de venta, caja, créditos e inventario, hasta 2 usuarios. Premium suma tienda en línea, reparaciones y compras, hasta 5 usuarios. Pro suma socios, auditoría y soporte prioritario, con usuarios ilimitados.',
+    },
+    {
+      q: '¿Puedo probarlo gratis?',
+      a: 'Sí, sin tarjeta. El plan Normal te da 1 mes gratis y creas tu cuenta tú mismo. Premium y Pro también se prueban gratis: escríbenos por WhatsApp.',
+    },
+    {
+      q: '¿Cuál me conviene?',
+      a: 'Si tienes una tienda de celulares, Neron Celulares. Si quieres ordenar tus finanzas, Neron One. Si tienes una agencia o lote de autos, Neron Autos (próximamente). ¿Dudas? Escríbenos y te orientamos sin compromiso.',
+    },
+    {
+      q: '¿Necesito instalar algo?',
+      a: 'No. Funciona en la nube desde el navegador, en computadora, tablet o celular, en cualquier parte del país. Solo necesitas internet.',
+    },
+    {
+      q: '¿Mis datos están seguros?',
+      a: 'Cada negocio ve únicamente su propia información, protegida y respaldada en la nube.',
+    },
+    {
+      q: '¿Qué es Neron One?',
+      a: 'La aplicación para ordenar tus finanzas: cuentas con capital disponible y proyectado, ingresos, gastos, pagos programados, pendientes, calendario y reportes. Hoy trabaja con lo que tú registras; conectarla con los demás sistemas llegará por etapas. Para conocerla, escríbenos por WhatsApp.',
+    },
+    {
+      q: '¿Cuándo estará disponible Neron Autos?',
+      a: 'Aún no hay fecha publicada: seguimos terminándolo. Si quieres que te avisemos cuando abra, escríbenos por WhatsApp.',
+    },
+    {
+      q: '¿Puedo cambiar de plan después?',
+      a: 'Sí. Escríbenos por WhatsApp y movemos tu cuenta al plan que necesites.',
+    },
+    {
+      q: '¿Cómo recibo soporte?',
+      a: 'Directo por WhatsApp (' + wa + '), con personas que conocen el sistema; el plan Pro tiene soporte prioritario. También hay un Centro de ayuda con guías por tema. Instagram (@neron_fix) es solo el perfil de la marca.',
+    },
+  ];
+})();
 
 /* --------------------------------------------------------------------------
    NAVEGACIÓN
