@@ -181,6 +181,7 @@
     K.renderFaq();
     K.renderContact();
     K.renderLoginModal();
+    K.renderProximamente();
     K.wireLinks();
 
     initHeader();

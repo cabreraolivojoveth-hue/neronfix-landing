@@ -105,8 +105,13 @@ const SYSTEMS = [
       'Ventas de contado y a crédito con pagarés',
       'Cobranza, mora y recordatorios por WhatsApp',
     ],
-    cta: 'Ver sistema de Autos',
-    url: ROUTES.autos,
+    /* AUN NO ESTÁ LISTO: la tarjeta no lleva a ningún sitio, abre la pantalla
+       «Disponible próximamente» (PROXIMAMENTE.autos). No sale en «Iniciar
+       sesión» ni en las pestañas de precios. Cuando abra, pon `proximamente`
+       en false (o bórralo), reactiva `url: ROUTES.autos` y cambia `cta`. */
+    proximamente: true,
+    cta: 'Disponible próximamente',
+    url: '',
     event: 'system_autos_click',
     mockup: 'mk-autos',
   },
@@ -388,7 +393,7 @@ const PLAN_EXTRAS = {
    NO las publiques con números inventados.
    -------------------------------------------------------------------------- */
 const STATS = [
-  { enabled:true,  icon:'i-grid',   count:3,   prefix:'',  suffix:'',      label:'Productos: Celulares, Autos y Neron One' },
+  { enabled:true,  icon:'i-grid',   count:3,   prefix:'',  suffix:'',      label:'Productos: Celulares, Neron One y Autos (próximamente)' },
   /* El "desde" sale del plan Normal más barato de PLANS, no se escribe a mano. */
   { enabled:true,  icon:'i-cash',   count:Math.min.apply(null, Object.keys(PLANS).map(function (k) { return PLANS[k][0].precios.mensual; })),
     prefix:'$', suffix:'', label:'Sistemas desde, al mes, con IVA incluido' },
@@ -429,15 +434,15 @@ const TRUST = [
 const FAQS = [
   {
     q: '¿Qué es Neron exactamente?',
-    a: 'Neron es un ecosistema mexicano de software. Neron Celulares es el sistema para tiendas de celulares y Neron Autos el de agencias y lotes de autos: cada uno maneja inventario, ventas, cobranza y reportes de su giro. Neron One es la aplicación para organizar tus finanzas y tus pendientes en un solo lugar.',
+    a: 'Neron es un ecosistema mexicano de software. Neron Celulares es el sistema para tiendas de celulares: punto de venta, inventario por IMEI, créditos, cobranza y reportes. Neron One es la aplicación para organizar tus finanzas y tus pendientes en un solo lugar. Neron Autos, para agencias y lotes de autos, llega próximamente.',
   },
   {
     q: '¿Cuánto cuesta y qué formas de pago hay?',
-    a: 'Neron Celulares y Neron Autos tienen tres planes cada uno: Normal, Premium y Pro. En Celulares el Pro incluye 2 sucursales y cada una extra cuesta $280 al mes; para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Por Neron One pregúntanos por WhatsApp.',
+    a: 'Neron Celulares tiene tres planes: Normal, Premium y Pro. El Pro incluye 2 sucursales y cada una extra cuesta $280 al mes; para cadenas grandes hay un plan Empresarial a la medida. Se pagan mes con mes, los precios ya llevan IVA incluido y no hay permanencia forzosa. Los precios de Neron Autos se publicarán cuando esté disponible; por Neron One pregúntanos por WhatsApp.',
   },
   {
     q: '¿Puedo probarlo gratis antes de pagar?',
-    a: 'Sí. En Neron Celulares puedes crear tu cuenta tú mismo desde el plan Normal: tienes un mes gratis y no te pedimos tarjeta. Para Neron Autos escríbenos por WhatsApp y te damos de alta con tu periodo de prueba, también sin tarjeta.',
+    a: 'Sí. En Neron Celulares puedes crear tu cuenta tú mismo desde el plan Normal: tienes un mes gratis y no te pedimos tarjeta. Neron Autos todavía no está disponible; escríbenos por WhatsApp y te avisamos cuando abra.',
   },
   {
     q: '¿Necesito instalar algún programa?',
@@ -449,11 +454,15 @@ const FAQS = [
   },
   {
     q: '¿Qué sistema me conviene para mi negocio?',
-    a: 'Si tienes tienda de celulares con equipos, accesorios, reparaciones y créditos, Neron Celulares. Si vendes autos y necesitas contratos y cobranza de créditos, Neron Autos. Si lo que buscas es ordenar tus finanzas y tus pendientes, Neron One. Si tienes dudas, escríbenos y te orientamos sin compromiso.',
+    a: 'Si tienes tienda de celulares con equipos, accesorios, reparaciones y créditos, Neron Celulares. Si lo que buscas es ordenar tus finanzas y tus pendientes, Neron One. Si vendes autos, Neron Autos llega próximamente: escríbenos y te avisamos cuando esté listo. Si tienes dudas, te orientamos sin compromiso.',
   },
   {
     q: '¿Qué es Neron One y cómo se conecta con los demás?',
     a: 'Neron One es la aplicación financiera del ecosistema: tus cuentas con su capital disponible y proyectado, ingresos, gastos, pagos que se repiten, pendientes, calendario y reportes. Está diseñado para reunir también los reportes de Neron Celulares y Neron Autos; esa conexión llega por etapas, y hoy trabaja con la información que tú registras.',
+  },
+  {
+    q: '¿Cuándo estará disponible Neron Autos?',
+    a: 'Todavía no hay una fecha publicada: estamos terminando el sistema para agencias y lotes de autos. Si quieres que te avisemos cuando esté listo, escríbenos por WhatsApp.',
   },
   {
     q: '¿Puedo cambiar de plan más adelante?',
@@ -492,10 +501,10 @@ const ECOSISTEMA = {
   eyebrow: 'El ecosistema Neron',
   titulo: 'Cada producto hace su trabajo.',
   tituloMarca: 'Neron One reúne tu información financiera.',
-  texto: 'Neron Celulares lleva tu tienda y Neron Autos tu agencia. Neron One es donde ves el panorama: tus cuentas, lo que entra, lo que sale y lo que tienes pendiente.',
+  texto: 'Neron Celulares lleva tu tienda y, próximamente, Neron Autos llevará tu agencia. Neron One es donde ves el panorama: tus cuentas, lo que entra, lo que sale y lo que tienes pendiente.',
   origenes: [
     { icon: 'i-mobile', name: 'Neron Celulares', ancla: '#sistema-celulares' },
-    { icon: 'i-car',    name: 'Neron Autos',     ancla: '#sistema-autos' },
+    { icon: 'i-car',    name: 'Neron Autos · próximamente', ancla: '#sistema-autos' },
   ],
   centro: { icon: 'i-chart', name: 'Neron One' },
   destino: 'Tu visión financiera',
@@ -532,6 +541,22 @@ const ANALYTICS_CONFIG = {
    hero_cta_click · whatsapp_click · system_autos_click · system_cellphones_click
    system_one_click · plan_click · plan_signup_click · plan_product_click · plan_period_click
    faq_open · instagram_click · login_click · nav_click · final_cta_click · mobile_bar_click      */
+
+/* --------------------------------------------------------------------------
+   PRÓXIMAMENTE · pantalla que abre la tarjeta de un sistema que aún no sale
+   -------------------------------------------------------------------------- */
+const PROXIMAMENTE = {
+  autos: {
+    icon: 'i-car',
+    etiqueta: 'Neron Autos',
+    titulo: 'Disponible próximamente',
+    texto: 'Estamos terminando el sistema para agencias y lotes de autos. Todavía no hay fecha publicada ni acceso; en cuanto esté listo lo verás aquí mismo.',
+    lista: 'Lo que viene',
+    ctaTexto: 'Avísame cuando esté listo',
+    ctaMensaje: 'Hola, quiero que me avisen cuando Neron Autos esté disponible',
+    cerrar: 'Entendido',
+  },
+};
 
 /* --------------------------------------------------------------------------
    MOVIMIENTO · textos de las piezas animadas
@@ -576,5 +601,5 @@ const MOTION = {
 
 window.NERON_CONFIG = {
   CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS, PLAN_EXTRAS, PERIODS, STATS,
-  BENEFITS, TRUST, FAQS, NAV, ECOSISTEMA, MOTION, ANALYTICS_CONFIG, waLink,
+  BENEFITS, TRUST, FAQS, NAV, ECOSISTEMA, MOTION, PROXIMAMENTE, ANALYTICS_CONFIG, waLink,
 };

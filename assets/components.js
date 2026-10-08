@@ -412,15 +412,16 @@
       }).join('');
       /* Neron One (tipo app) no es un sistema por giro: no tiene "tres
          planes" ni pestaña de precios. Su botón baja a su propia sección. */
-      var planes = s.tipo === 'app' ? '' :
+      var planes = (s.tipo === 'app' || s.proximamente) ? '' :
           '<p class="sys__plans">' +
             '<b>Tres planes</b> desde ' + money(desdeDe(s)) + ' al mes' +
           '</p>' +
           '<a class="sys__plans-link" href="#precios" data-plans-for="' + esc(s.id) + '"' +
             ' data-track="plan_product_click" data-track-label="' + esc(s.id) + ' desde tarjeta">' +
             'Ver los tres planes de ' + esc(s.name) + icon('i-arrow') + '</a>';
-      return '<article class="sys' + (s.tipo === 'app' ? ' sys--app' : '') + ' rv rv--scale" id="sistema-' + esc(s.id) + '" style="--d:' + i + '">' +
-        '<div class="sys__media">' + (CARD_MOCKUPS[s.mockup] || '') + '</div>' +
+      return '<article class="sys' + (s.tipo === 'app' ? ' sys--app' : '') + (s.proximamente ? ' sys--soon' : '') + ' rv rv--scale" id="sistema-' + esc(s.id) + '" style="--d:' + i + '">' +
+        '<div class="sys__media">' + (CARD_MOCKUPS[s.mockup] || '') +
+          (s.proximamente ? '<span class="sys__soon">Próximamente</span>' : '') + '</div>' +
         '<div class="sys__body">' +
           '<div class="sys__top"><span class="sys__ic">' + icon(s.icon) + '</span>' +
             '<span><span class="sys__cat">' + esc(s.cat) + '</span>' +
@@ -428,9 +429,12 @@
           '<p class="sys__desc">' + esc(s.desc) + '</p>' +
           '<ul class="sys__feats">' + feats + '</ul>' +
           planes +
-          '<a class="btn btn--primary" href="' + esc(sysLink(s)) + '"' + sysAttrs(s) +
-            ' data-track="' + esc(s.event) + '"' +
-            ' data-track-label="' + esc(s.name) + '">' + esc(s.cta) + icon('i-arrow') + '</a>' +
+          (s.proximamente
+            ? '<button class="btn btn--secondary" type="button" data-modal-open="modal-proximamente"' +
+              ' data-track="' + esc(s.event) + '" data-track-label="' + esc(s.name) + ' proximamente">' + esc(s.cta) + icon('i-arrow') + '</button>'
+            : '<a class="btn btn--primary" href="' + esc(sysLink(s)) + '"' + sysAttrs(s) +
+              ' data-track="' + esc(s.event) + '"' +
+              ' data-track-label="' + esc(s.name) + '">' + esc(s.cta) + icon('i-arrow') + '</a>') +
         '</div></article>';
     }).join('');
   }
@@ -645,7 +649,7 @@
   function renderPricingToggles() {
     var ph = U.$('#product-toggle');
     if (ph) {
-      ph.innerHTML = C.SYSTEMS.filter(function (s) { return !!C.PLANS[s.id]; }).map(function (s) {
+      ph.innerHTML = C.SYSTEMS.filter(function (s) { return !!C.PLANS[s.id] && !s.proximamente; }).map(function (s) {
         return '<button class="toggle__btn" type="button" role="tab" data-product="' + esc(s.id) + '"' +
           ' aria-selected="' + (s.id === product) + '">' + esc(s.name) + '</button>';
       }).join('');
@@ -772,13 +776,33 @@
         '<span class="link-arrow">Ir al Centro de ayuda' + icon('i-arrow') + '</span></a>';
   }
 
+  /* --- Pantalla «Disponible próximamente» ------------------------------ */
+  function renderProximamente() {
+    var host = U.$('#soon-body');
+    var P = C.PROXIMAMENTE && C.PROXIMAMENTE.autos;
+    var S = C.SYSTEMS.filter(function (s) { return s.id === 'autos'; })[0];
+    if (!host || !P) return;
+    var lista = S ? S.feats.map(function (f) {
+      return '<li>' + icon('i-check') + '<span>' + esc(f) + '</span></li>';
+    }).join('') : '';
+    host.innerHTML =
+      '<span class="soon__ic">' + icon(P.icon) + '<i></i></span>' +
+      '<span class="soon__tag">' + esc(P.etiqueta) + '</span>' +
+      '<h2 id="modal-proximamente-title">' + esc(P.titulo) + '</h2>' +
+      '<p class="soon__txt">' + esc(P.texto) + '</p>' +
+      (lista ? '<div class="soon__list"><b>' + esc(P.lista) + '</b><ul>' + lista + '</ul></div>' : '') +
+      '<a class="btn btn--wa" href="' + esc(C.waLink(P.ctaMensaje)) + '" target="_blank" rel="noopener noreferrer"' +
+        ' data-track="whatsapp_click" data-track-label="autos proximamente">' + icon('i-whatsapp') + esc(P.ctaTexto) + '</a>' +
+      '<button class="soon__ok" type="button" data-modal-close>' + esc(P.cerrar) + '</button>';
+  }
+
   /* --- Modal de acceso -------------------------------------------------- */
   /* No existe una ruta de login unificada: cada sistema tiene el suyo, así
      que el botón lleva al sistema real que el usuario ya contrató. */
   function renderLoginModal() {
     var host = U.$('#login-options');
     if (!host) return;
-    host.innerHTML = C.SYSTEMS.filter(function (s) { return !!s.url && s.tipo !== 'app'; }).map(function (s) {
+    host.innerHTML = C.SYSTEMS.filter(function (s) { return !!s.url && s.tipo !== 'app' && !s.proximamente; }).map(function (s) {
       return '<a class="modal__opt" href="' + esc(s.url) + '" data-track="login_click" data-track-label="' + esc(s.id) + '">' +
         icon(s.icon) + '<span><b>Neron ' + esc(s.name) + '</b><span>' + esc(s.cat) + '</span></span>' +
         '<span class="link-arrow">' + icon('i-arrow') + '</span></a>';
@@ -817,6 +841,6 @@
     renderNav: renderNav, renderMockup: renderMockup, renderTrust: renderTrust,
     renderStats: renderStats, renderSystems: renderSystems, renderEcosistema: renderEcosistema, renderOrden: renderOrden, renderBenefits: renderBenefits,
     initPricing: initPricing, renderFaq: renderFaq, renderContact: renderContact,
-    renderLoginModal: renderLoginModal, wireLinks: wireLinks,
+    renderLoginModal: renderLoginModal, renderProximamente: renderProximamente, wireLinks: wireLinks,
   };
 })(window, document);

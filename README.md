@@ -168,6 +168,22 @@ assets/vendor/        GSAP 3.13 + ScrollTrigger servidos desde el propio sitio
 - Para ajustar tiempos o curvas, edita las constantes al inicio de cada bloque `build…()`
   en `motion.js`.
 
+## Neron Autos: «Disponible próximamente»
+
+Neron Autos todavía no está listo, así que **no enlaza a ningún sitio**: su tarjeta abre una
+pantalla «Disponible próximamente» (contenido en `PROXIMAMENTE.autos`, `assets/config.js`).
+Mientras tanto no sale en «Iniciar sesión», en las pestañas de precios ni en los datos
+estructurados (sin precio ni URL de acceso). Sus planes siguen guardados en `PLANS.autos`.
+
+Para abrirlo al público:
+
+1. En `SYSTEMS` (id `autos`): quita `proximamente: true`, pon `url: ROUTES.autos` y
+   `cta: 'Ver sistema de Autos'`.
+2. Actualiza las preguntas del FAQ, el texto de Precios y los meta/JSON-LD de `index.html`
+   (busca «próximamente»).
+3. Vuelve a poner los enlaces a `autos.neronfix.com` en los pies de página
+   (`index.html`, `faq.html`, `contacto.html`).
+
 ## Probar en local
 
 ```bash
