@@ -471,6 +471,60 @@
       '</div>';
   }
 
+  /* --- Del desorden al control (sección animada) ------------------------
+     El texto de la izquierda es contenido real y legible. El escenario de la
+     derecha es una ilustración animada (aria-hidden) construida con MOTION. */
+  function renderOrden() {
+    var host = U.$('#orden-host');
+    var M = C.MOTION && C.MOTION.orden;
+    if (!host || !M) return;
+    var puntos = M.puntos.map(function (p) {
+      return '<li class="orden__pt">' + icon(p.icon) +
+        '<span><b>' + esc(p.title) + '</b><span>' + esc(p.text) + '</span></span></li>';
+    }).join('');
+    var ruido = M.ruido.map(function (r, i) {
+      return '<span class="nz nz--' + i + '">' + esc(r) + '</span>';
+    }).join('');
+    var skel = function (w) { return '<i class="sk" style="width:' + w + '%"></i>'; };
+    host.innerHTML =
+      '<div class="orden__sticky"><div class="wrap orden__grid">' +
+        '<div class="orden__txt">' +
+          '<span class="eyebrow eyebrow--rule">' + esc(M.eyebrow) + '</span>' +
+          '<h2 class="h-section">' + esc(M.titulo) + ' <em class="mark">' + esc(M.tituloMarca) + '</em></h2>' +
+          '<p class="orden__lead">' + esc(M.texto) + '</p>' +
+          '<ul class="orden__pts">' + puntos + '</ul>' +
+          '<p class="orden__ej">' + esc(M.ejemplo) + '</p>' +
+        '</div>' +
+        '<div class="orden__stage" aria-hidden="true">' +
+          '<div class="orden__noise">' + ruido + '</div>' +
+          '<svg class="orden__lines" viewBox="0 0 400 400" preserveAspectRatio="none" focusable="false">' +
+            '<path pathLength="1" d="M200 200H14" /><path pathLength="1" d="M200 200H386" />' +
+            '<path pathLength="1" d="M200 200V14" /><path pathLength="1" d="M200 200V386" />' +
+          '</svg>' +
+          '<div class="orden__panel">' +
+            '<div class="mod mod--venta"><div class="mod__h">' + icon('i-cart') + 'Punto de venta</div>' +
+              '<div class="mod__b">' + skel(78) + skel(56) +
+                '<div class="tick"><span>' + icon('i-check') + 'Venta confirmada</span></div></div></div>' +
+            '<div class="mod mod--inv"><div class="mod__h">' + icon('i-box') + 'Inventario</div>' +
+              '<div class="mod__b">' +
+                '<div class="row r0">' + skel(52) + '<em class="pill pill--ok">Disponible</em></div>' +
+                '<div class="row r1">' + skel(64) + '<em class="pill pill--gold">Apartado</em></div>' +
+                '<div class="row r2">' + skel(44) + '<em class="pill pill--ok">Disponible</em></div>' +
+                '<div class="row r3">' + skel(58) + '<em class="pill pill--wine">Vendido</em></div>' +
+              '</div></div>' +
+            '<div class="mod mod--cred"><div class="mod__h">' + icon('i-cash') + 'Créditos y cobranza</div>' +
+              '<div class="mod__b"><div class="tl"><span class="tl__bar"></span><span class="tl__fill"></span>' +
+                '<i class="tl__n"></i><i class="tl__n"></i><i class="tl__n"></i><i class="tl__n"></i></div>' +
+                '<div class="tl__lbl"><span>Enganche</span><span>Abonos</span></div></div></div>' +
+            '<div class="mod mod--rep"><div class="mod__h">' + icon('i-chart') + 'Reportes</div>' +
+              '<div class="mod__b"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div></div>' +
+          '</div>' +
+          '<div class="orden__hub">' + icon('i-diamond') + '</div>' +
+          '<div class="orden__cap">' + esc(M.hub) + '</div>' +
+        '</div>' +
+      '</div></div>';
+  }
+
   /* --- Beneficios ------------------------------------------------------ */
   function renderBenefits() {
     var host = U.$('#benefits');
@@ -746,7 +800,7 @@
 
   w.NeronComponents = {
     renderNav: renderNav, renderMockup: renderMockup, renderTrust: renderTrust,
-    renderStats: renderStats, renderSystems: renderSystems, renderEcosistema: renderEcosistema, renderBenefits: renderBenefits,
+    renderStats: renderStats, renderSystems: renderSystems, renderEcosistema: renderEcosistema, renderOrden: renderOrden, renderBenefits: renderBenefits,
     initPricing: initPricing, renderFaq: renderFaq, renderContact: renderContact,
     renderLoginModal: renderLoginModal, wireLinks: wireLinks,
   };

@@ -145,6 +145,29 @@ tarjeta va a WhatsApp, para no dejar un enlace que no abre. Neron One
 la oferta el 25/09/2026 y su contenido quedó en `ARCHIVO_TERAPIAS`. Si algún día hay un acceso
 único, se cambia en `SYSTEMS[].url` o se añade un `loginUrl`.
 
+## Capa de movimiento (animación)
+
+La landing se anima con una capa **opcional** encima del sitio, sin tocar su contenido:
+
+```
+assets/motion.js      Animaciones (GSAP + ScrollTrigger): hero, encabezados, sistemas,
+                      "del desorden al control", planes, FAQ y cierre
+assets/motion.css     Estados y micro-interacciones (hover, foco, FAQ, botones)
+assets/vendor/        GSAP 3.13 + ScrollTrigger servidos desde el propio sitio
+                      (la CSP de vercel.json no permite CDN). Ver LEEME.txt
+```
+
+- Los textos de las piezas animadas viven en `MOTION` dentro de `assets/config.js`.
+  Son decorativos o ilustrativos (no son cifras ni resultados de ningún negocio).
+- La sección `#orden` ("Del desorden al control") se genera en `components.js`
+  (`renderOrden`) a partir de `MOTION.orden`.
+- Mejora progresiva: sin GSAP, con un error de JS o con "reducir movimiento" activado
+  la página se muestra completa en su estado final (clase `motion-static` / `motion-fail`).
+- Sólo se animan `transform` y `opacity` (y las propiedades `translate`/`scale` con
+  variables CSS). No hay scroll-jacking: la sección fijada usa `position:sticky`.
+- Para ajustar tiempos o curvas, edita las constantes al inicio de cada bloque `build…()`
+  en `motion.js`.
+
 ## Probar en local
 
 ```bash

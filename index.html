@@ -35,6 +35,7 @@
 
 <link rel="preload" as="image" href="/logo-header.png" />
 <link rel="stylesheet" href="/assets/neron.css" />
+<link rel="stylesheet" href="/assets/motion.css" />
 
 <script type="application/ld+json">
 {
@@ -112,6 +113,10 @@
 <script src="/assets/ui.js" defer></script>
 <script src="/assets/components.js" defer></script>
 <script src="/assets/app.js" defer></script>
+<!-- Capa de movimiento: GSAP propio (la CSP no permite CDN). Si falla, la página funciona igual. -->
+<script src="/assets/vendor/gsap.min.js" defer></script>
+<script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/motion.js" defer></script>
 </head>
 <body>
 
@@ -246,6 +251,11 @@
   <div class="wrap" id="ecosistema"></div>
 </section>
 
+<!-- ══════════════════════════ DEL DESORDEN AL CONTROL ══════════════════════════ -->
+<section class="band orden" id="orden" aria-label="Del desorden al control">
+  <div id="orden-host"></div>
+</section>
+
 <!-- ══════════════════════════ BENEFICIOS ══════════════════════════ -->
 <section class="band" id="beneficios">
   <div class="wrap">
@@ -334,8 +344,8 @@
       <h2 class="h-section">Tu negocio merece <em class="mark">verse profesional</em></h2>
       <p>Elige tu sistema y empieza gratis hoy.</p>
       <div class="cta__btns">
-        <a class="btn btn--gold btn--lg" href="#sistemas" data-track="final_cta_click" data-track-label="ver sistemas">
-          Ver los sistemas
+        <a class="btn btn--gold btn--lg" href="#sistemas" data-track="final_cta_click" data-track-label="empieza gratis">
+          Empieza gratis
           <svg class="ic" aria-hidden="true"><use href="#i-arrow"></use></svg>
         </a>
         <a class="btn btn--secondary btn--lg" data-wa="Hola, quiero conocer más sobre Neron" href="#">

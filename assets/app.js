@@ -175,6 +175,7 @@
     K.renderStats();
     K.renderSystems();
     K.renderEcosistema();
+    K.renderOrden();
     K.renderBenefits();
     K.initPricing();
     K.renderFaq();

@@ -1,0 +1,2 @@
+GSAP 3.13.0 + ScrollTrigger · (c) GreenSock / Webflow · licencia "Standard no charge": https://gsap.com/standard-license
+Se sirve desde aqui (no desde un CDN) porque la CSP de vercel.json solo permite scripts propios.

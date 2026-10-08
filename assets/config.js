@@ -533,7 +533,46 @@ const ANALYTICS_CONFIG = {
    system_one_click · plan_click · plan_signup_click · plan_product_click · plan_period_click
    faq_open · login_click · nav_click · final_cta_click · mobile_bar_click      */
 
+/* --------------------------------------------------------------------------
+   MOVIMIENTO · textos de las piezas animadas
+   --------------------------------------------------------------------------
+   Todo lo de aqui es DECORATIVO o ilustrativo: no son resultados ni cifras de
+   ningun negocio. Las piezas animadas son aria-hidden; la informacion real
+   vive en SYSTEMS, BENEFITS y en la lista de la seccion `orden`.
+   -------------------------------------------------------------------------- */
+const MOTION = {
+  /* Fragmentos de interfaz que flotan alrededor del mockup del hero */
+  heroCards: [
+    { icon: 'i-check',  title: 'Venta confirmada',     sub: 'Punto de venta' },
+    { icon: 'i-mobile', title: 'Equipo en inventario', sub: 'Por IMEI' },
+    { icon: 'i-cash',   title: 'Abono recibido',       sub: 'Créditos y cobranza' },
+    { icon: 'i-chart',  title: 'Reporte del mes',      sub: 'Neron One' },
+  ],
+  /* Recorrido de cada producto al pasar el mouse / tocar su tarjeta */
+  flujos: {
+    celulares: ['Inventario', 'Venta', 'Accesorios', 'Crédito', 'Cobro'],
+    autos:     ['Unidad', 'Financiamiento', 'Expediente', 'Venta', 'Seguimiento'],
+    one:       ['Dinero', 'Flujo', 'Control', 'Organización'],
+  },
+  /* Seccion "del desorden al control" */
+  orden: {
+    eyebrow: 'Todo en un solo lugar',
+    titulo: 'Del desorden',
+    tituloMarca: 'al control',
+    texto: 'Ventas, inventario, créditos, cobranza y reportes dejan de vivir en hojas y mensajes sueltos. Cada cosa en su lugar, a la vista.',
+    puntos: [
+      { icon: 'i-cart',  title: 'Punto de venta',        text: 'Cobra, imprime el ticket y cierra la caja.' },
+      { icon: 'i-box',   title: 'Control de inventario', text: 'Cada equipo y accesorio, con su estado.' },
+      { icon: 'i-cash',  title: 'Créditos y cobranza',   text: 'Enganche, abonos y fechas de pago claras.' },
+      { icon: 'i-chart', title: 'Reportes',              text: 'La información, lista para decidir.' },
+    ],
+    ruido: ['Hojas de inventario', 'Mensajes sin responder', 'Pagos pendientes', 'Notas sueltas'],
+    hub: 'Todo en un solo lugar',
+    ejemplo: 'Vista ilustrativa de la interfaz. Los datos mostrados son de ejemplo.',
+  },
+};
+
 window.NERON_CONFIG = {
   CONTACT_CONFIG, ROUTES, SYSTEMS, PLANS, PLAN_EXTRAS, PERIODS, STATS,
-  BENEFITS, TRUST, FAQS, NAV, ECOSISTEMA, ANALYTICS_CONFIG, waLink,
+  BENEFITS, TRUST, FAQS, NAV, ECOSISTEMA, MOTION, ANALYTICS_CONFIG, waLink,
 };
