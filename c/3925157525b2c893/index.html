@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<title>Cotización Fernando</title>
+<style>
+/* Documento de una columna, tipo cotización comercial: sobrio, números alineados */
+:root{--bg:#f6f7f9;--card:#ffffff;--fg:#1d2430;--muted:#5d6877;--line:#dfe3e9;--accent:#1f5eff;--accent-soft:#e8efff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141b;--card:#171c25;--fg:#e8ecf2;--muted:#9aa5b5;--line:#283040;--accent:#6b97ff;--accent-soft:#1c2740;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141b;--card:#171c25;--fg:#e8ecf2;--muted:#9aa5b5;--line:#283040;--accent:#6b97ff;--accent-soft:#1c2740;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.55;padding-inline:16px;padding-block:24px}
+.hoja{max-width:680px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 20px}
+h1{font-size:1.6rem;line-height:1.2;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 16px}
+.datos{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:.95rem;margin:0 0 16px}
+.datos dt{color:var(--muted)}.datos dd{margin:0}
+h2{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:28px 0 8px}
+.fila{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.fila>div{min-width:0}
+.fila b{display:block;margin-bottom:4px}
+.fila ul{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem}
+.monto{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.total{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-top:2px solid var(--fg);padding-top:14px;margin-top:2px;font-size:1.15rem;font-weight:700;font-variant-numeric:tabular-nums}
+.nota{background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:.93rem;margin-top:14px}
+ul.simple{margin:0;padding-left:18px}
+.firma{margin-top:28px}
+</style>
+</head><body><main class="hoja">
+<h1>Cotización</h1>
+<p class="sub">Inventario a consignación con acceso para proveedores</p>
+<dl class="datos">
+<dt>Para</dt><dd>Fernando</dd>
+<dt>De</dt><dd>Mía, equipo NeronFix</dd>
+<dt>Fecha</dt><dd>14 de octubre de 2026</dd>
+</dl>
+<p>Hola Fernando. Te enviamos la cotización del cambio especial para tu sistema. Es solo una cotización, no es obligatoria.</p>
+
+<h2>Qué incluye</h2>
+<div class="fila"><div><b>1. Inventario a consignación</b><ul><li>Marcar equipos como «consignación» y ligarlos a su proveedor.</li><li>Guardar el costo de cada equipo y la fecha en que se dejó.</li><li>Cada equipo vendido queda ligado a su proveedor.</li></ul></div><span class="monto">$600</span></div>
+<div class="fila"><div><b>2. Acceso propio para cada proveedor</b><ul><li>Cada proveedor entra con su usuario.</li><li>Ve sus equipos dejados, cuáles se vendieron y cuáles siguen en la tienda.</li><li>Ve el costo de sus equipos.</li><li><strong>No ve</strong> el precio de venta, las ganancias, los clientes ni los equipos de otros proveedores.</li><li>Tú le das o le quitas el acceso cuando quieras.</li></ul></div><span class="monto">$900</span></div>
+<div class="fila"><div><b>3. Cuenta con cada proveedor</b><ul><li>Lista de lo vendido que se le debe a cada proveedor.</li><li>Marcar como «pagado» y ver el historial de pagos.</li></ul></div><span class="monto">$500</span></div>
+<div class="fila"><div><b>4. Pruebas de seguridad y puesta en marcha</b><ul><li>Comprobar que un proveedor no pueda ver datos de otro.</li><li>Publicarlo en tu sistema y dejarlo funcionando.</li></ul></div><span class="monto">$300</span></div>
+<div class="total"><span>Total, pago único</span><span>$2,300 MXN</span></div>
+<p class="nota">Tu mensualidad de $650 no cambia.</p>
+
+<h2>Cómo se paga</h2>
+<ul class="simple"><li>50% para empezar ($1,150) y 50% al entregar ($1,150).</li></ul>
+
+<h2>Qué no incluye</h2>
+<ul class="simple"><li>Que el proveedor suba o registre sus propios equipos.</li><li>Reportes o gráficas extra para el proveedor.</li><li>Cualquier otro cambio que se pida después se cotiza aparte.</li></ul>
+
+<p class="firma">Quedamos atentos.<br><strong>Mía</strong><br>Equipo NeronFix</p>
+</main>
+</body></html>
