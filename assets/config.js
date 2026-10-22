@@ -175,14 +175,14 @@ const PLANS = {
       desc: 'Vender, cobrar y saber cuánto ganaste',
       precios: { mensual: 450 },
       limite: '2 usuarios · 1 sucursal',
-      /* Se contrata solo: crea la cuenta en Neron POS sin pasar por WhatsApp.
-         Verificado el 25/09/2026: el alta está abierta, pide correo, código
-         y contraseña, y NO pide tarjeta. */
+      /* ALTA CERRADA (Joveth, 22/10/2026): StorePhone ya no deja que cualquiera
+         cree su cuenta sola. Se pide acceso por WhatsApp y Joveth da de alta el
+         correo con su plan; después la persona entra con ese correo. */
       alta: {
-        url: ROUTES.celularesAlta,
-        texto: 'Crear cuenta gratis',
-        nota: '1 mes gratis · Sin tarjeta',
-        como: 'Escribe tu correo en Neron POS y te llega un código para crear tu cuenta.',
+        url: waLink('Hola, quiero pedir acceso a StorePhone (Neron Celulares), plan Normal.'),
+        texto: 'Pedir acceso',
+        nota: 'Por WhatsApp · te damos de alta con tu plan',
+        como: 'Escríbenos por WhatsApp; te damos de alta tu correo y entras a StorePhone.',
       },
       feats: [
         'Punto de venta con IMEI y código de barras',
@@ -455,7 +455,7 @@ const FAQS = (function () {
     },
     {
       q: '¿Puedo probarlo gratis?',
-      a: 'Sí, sin tarjeta. El plan Normal te da 1 mes gratis y creas tu cuenta tú mismo. Premium y Pro también se prueban gratis: escríbenos por WhatsApp.',
+      a: 'Pide acceso por WhatsApp y te damos de alta con el plan que escojas. Escríbenos y te explicamos cómo empezar.',
     },
     {
       q: '¿Cuál me conviene?',
