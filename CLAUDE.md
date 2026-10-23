@@ -32,14 +32,21 @@ No hace falta abrir pull request ni esperar aprobación.
   solo para aligerar el header.
 - **No se inventan datos.** Nada de clientes, ventas, estadísticas,
   testimonios ni certificaciones sin respaldo real. Lo que no exista se deja
-  como placeholder desactivado en `assets/config.js`.
-- **El contenido se edita en `assets/config.js`**, no en el HTML.
-- **Los precios viven en `PLANS` de `assets/config.js`**, no en una API. La
-  escalera no se rompe: el anual son diez mensualidades y el trimestral ronda
-  el 10% de descuento sobre tres meses. Se publican con IVA incluido.
-- **Un sistema sin `url` va a WhatsApp**, nunca a un subdominio que no exista.
-  Ya pasó con `celulares.neronfix.com`, que contestaba 404 y dejaba muerto el
-  botón principal de la tarjeta; el sistema real vive en `storephone`.
+  sin pintar (ver el hueco comentado «Clientes que ya lo usan» en `index.html`).
+- **Desde el 23/10/2026 la página es de UN SOLO programa: StorePhone** (por
+  Neron). Neron One, Neron Autos y Terapias no se mencionan.
+- **El contenido vive en `index.html`, escrito en el HTML** (sin scripts), para
+  que los buscadores lo lean tal cual. Ya no hay `assets/`: lo viejo está en git.
+- **Precios (02/10/2026, solo mensual, IVA incluido):** Normal $450 (2 usuarios ·
+  1 sucursal), Premium $750 (5 usuarios · 1 sucursal), Pro desde $1,250 (usuarios
+  ilimitados · 2 sucursales; +$280 por sucursal extra). Aparecen en las tarjetas,
+  en la pregunta «¿Cuánto cuesta?» y en el JSON-LD: si cambian, se cambian en los
+  tres; la prueba (`neron-landing/pruebas/prueba-landing.mjs`) vigila que
+  coincidan, y que las preguntas del JSON-LD sean idénticas a las visibles.
+- **Alta cerrada:** todo botón de alta abre WhatsApp 646 287 5283 con «Hola,
+  quiero acceso a StorePhone[, me interesa el plan X]». Nada de «crear cuenta»,
+  «gratis» ni «sin tarjeta». `storephone.neronfix.com` solo se liga como «Entrar».
+- `faq.html` y `contacto.html` ya no existen: `vercel.json` los redirige a `/`.
 
 ## Después de desplegar
 
