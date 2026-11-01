@@ -26,10 +26,15 @@ No hace falta abrir pull request ni esperar aprobación.
 
 ## Reglas del proyecto
 
-- **El logotipo no se modifica.** Los archivos `logo-final.png`,
-  `logo-principal-full.png`, `logo-mono.png` y `logo-neron.png` se conservan
-  tal cual. `logo-header.png` es una copia a escala exacta 1:3 del original,
-  solo para aligerar el header.
+- **Logo oficial (Joveth, 01/11/2026): `logo-oficial.png`**, marca «NO» + «NERON»
+  en negro sobre blanco (1254×1254). Se copia tal cual, sin retocar; no se cambia
+  su forma ni su color. Todo lo demás sale de él: `logo-oficial-cabecera.png`
+  (marca + palabra en negro, fondo transparente, para la cabecera),
+  `favicon-32.png`, `favicon-192.png`, `favicon-512.png` y `apple-touch-icon.png`
+  (solo la marca «NO» negra centrada sobre blanco, con margen). Nada de versiones
+  vino, plateadas o con brillo. Las variantes viejas se borraron (siguen en git).
+  Si se rehacen los iconos, cambiar el `?v=` de sus enlaces para que el navegador
+  no muestre el viejo.
 - **No se inventan datos.** Nada de clientes, ventas, estadísticas,
   testimonios ni certificaciones sin respaldo real. Lo que no exista se deja
   sin pintar (ver el hueco comentado «Clientes que ya lo usan» en `index.html`).

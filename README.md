@@ -7,8 +7,9 @@ Una sola página estática, sin scripts ni fuentes externas.
 |---|---|
 | `index.html` | Toda la página: textos, estilo (en `<style>`), metadatos y JSON-LD |
 | `og-storephone.jpg` | Imagen 1200×630 para WhatsApp, Facebook y X |
-| `logo-header-88.webp` | Copia chica del logo para la cabecera (los originales no se tocan) |
-| `site.webmanifest`, `favicon-*.png`, `apple-touch-icon.png` | Iconos |
+| `logo-oficial.png` | Logo oficial (negro sobre blanco), tal cual; lo usa el JSON-LD |
+| `logo-oficial-cabecera.png` | Marca + palabra del oficial, en negro y fondo transparente, para la cabecera |
+| `site.webmanifest`, `favicon-32/192/512.png`, `apple-touch-icon.png` | Iconos: la marca «NO» del oficial, negra sobre blanco |
 | `robots.txt`, `sitemap.xml` | Para buscadores (cambiar `lastmod` al publicar un cambio de texto) |
 | `vercel.json` | Cabeceras de seguridad, caché y redirecciones de las páginas viejas |
 
