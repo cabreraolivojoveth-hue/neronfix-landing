@@ -31,7 +31,10 @@ No hace falta abrir pull request ni esperar aprobación.
   su forma ni su color. Todo lo demás sale de él: `logo-oficial-cabecera.png`
   (marca + palabra en negro, fondo transparente, para la cabecera),
   `favicon-32.png`, `favicon-192.png`, `favicon-512.png` y `apple-touch-icon.png`
-  (solo la marca «NO» negra centrada sobre blanco, con margen). Nada de versiones
+  (solo la marca «NO» negra sobre blanco, con CENTRADO ÓPTICO: el centro de peso al
+  centro horizontal, en vertical a la mitad entre peso y bordes; margen ≥12%) y, para el
+  perfil de Google, `logo-perfil.png` (720, solo la marca, ~58% del ancho) y
+  `logo-perfil-completo.png` (1080, marca + palabra), que no se ligan desde la página. Nada de versiones
   vino, plateadas o con brillo. Las variantes viejas se borraron (siguen en git).
   Si se rehacen los iconos, cambiar el `?v=` de sus enlaces para que el navegador
   no muestre el viejo.
