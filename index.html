@@ -167,6 +167,18 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
 .faq details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
 .faq p{color:var(--ink2);padding:0 0 18px}
 
+/* Opiniones: una caja chica con el botón a Google (sin reseñas ni estrellas: no hay ninguna aprobada) */
+#preguntas{padding-bottom:44px}
+.opinion{padding:0 0 76px}
+.opinion__caja{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px 32px;background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:24px 28px;position:relative}
+.opinion__caja::before{content:"";position:absolute;left:28px;top:-1px;width:32px;height:2px;background:var(--gold)}
+@media (min-width:1000px){.opinion__caja{max-width:1000px}}
+.opinion h2{font-size:1.25rem;letter-spacing:-.015em;margin-bottom:4px}
+.opinion p{color:var(--ink2);font-size:.96875rem;line-height:1.5;max-width:560px}
+.btn--borde{flex:none;color:var(--wine);background:#fff;box-shadow:inset 0 0 0 1.5px var(--wine)}
+.btn--borde:hover{background:#fbf3f4}
+.btn--borde .ico{width:18px;height:18px;fill:none;stroke-width:2}
+
 /* Cierre en vino: tres pasos y WhatsApp */
 .cierre{background:var(--wine);color:#fff;text-align:center;position:relative;overflow:hidden}
 .cierre::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 50% 0%,rgba(255,255,255,.1),rgba(255,255,255,0) 70%);pointer-events:none}
@@ -230,6 +242,11 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
   .plan{padding:26px 22px}
   .plan--rec{padding:25px 21px}
   .pasos{margin-top:32px}
+  #preguntas{padding-bottom:36px}
+  .opinion{padding-bottom:60px}
+  .opinion__caja{flex-direction:column;align-items:stretch;text-align:left;padding:22px 20px}
+  .opinion__caja::before{left:20px}
+  .opinion .btn{width:100%;padding:12px 16px;font-size:1rem}
   .barra{display:flex;justify-content:center;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:0 16px calc(12px + env(safe-area-inset-bottom));pointer-events:none}
   .barra .btn{pointer-events:auto;min-height:48px;padding:10px 22px;font-size:1rem;box-shadow:0 2px 6px rgba(122,18,37,.25),0 10px 28px rgba(17,17,17,.2)}
   .pie{padding-bottom:calc(34px + 72px + env(safe-area-inset-bottom))}
@@ -529,6 +546,21 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
         <summary>¿De quién es la información?</summary>
         <p>Tuya. Cada negocio ve solo su información, respaldada en la nube y disponible para ti siempre. Firmamos contrato de confidencialidad.</p>
       </details>
+    </div>
+  </div>
+</section>
+
+<!-- OPINIONES · solo el botón para dejarla en Google (Perfil de Negocio de Neron, 01/11/2026).
+     No se pintan reseñas, estrellas ni frases de clientes hasta que haya aprobadas (etapa 2),
+     y nunca marcado de reseñas para Google. -->
+<section class="opinion" id="opiniones">
+  <div class="wrap">
+    <div class="opinion__caja rv">
+      <div>
+        <h2>¿Ya usas StorePhone?</h2>
+        <p>Cuéntanos cómo te va. Tu opinión nos ayuda a mejorar y a que otras tiendas de celulares nos conozcan.</p>
+      </div>
+      <a class="btn btn--borde" href="https://g.page/r/CVudwG50ReTqEBM/review" target="_blank" rel="noopener">Déjanos tu opinión en Google<svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
     </div>
   </div>
 </section>
