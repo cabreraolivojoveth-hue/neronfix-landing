@@ -158,7 +158,7 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
 
 /* Preguntas */
 .faq{max-width:760px;margin:32px auto 0;border-top:1px solid var(--line)}
-@media (min-width:1000px){.faq{max-width:1000px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(3,auto);column-gap:48px;align-items:start;border-top:0}.faq details:nth-child(1),.faq details:nth-child(4){border-top:1px solid var(--line)}}
+@media (min-width:1000px){.faq{max-width:1000px;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(4,auto);column-gap:48px;align-items:start;border-top:0}.faq details:nth-child(1),.faq details:nth-child(5){border-top:1px solid var(--line)}}
 .faq details{border-bottom:1px solid var(--line)}
 .faq summary{list-style:none;cursor:pointer;padding:18px 40px 18px 0;min-height:44px;font-weight:600;position:relative;transition:color .2s var(--out)}
 .faq summary:hover{color:var(--wine)}
@@ -166,6 +166,45 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
 .faq summary::after{content:"";position:absolute;right:8px;top:24px;width:9px;height:9px;border-right:2px solid var(--gold-ic);border-bottom:2px solid var(--gold-ic);transform:rotate(45deg);transition:transform .25s var(--out)}
 .faq details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
 .faq p{color:var(--ink2);padding:0 0 18px}
+
+/* Sigue trabajando: 3 tarjetas (sin internet, cualquier pantalla, Neri) */
+.destacado{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.dest{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--sh1);position:relative}
+.dest::before{content:"";position:absolute;left:24px;top:-1px;width:32px;height:2px;background:var(--gold)}
+.dest .ic{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--wine-07);color:var(--wine);margin-bottom:14px}
+.dest p{color:var(--ink2);font-size:.96875rem;line-height:1.5}
+.dest .chico{margin-top:8px;font-size:.875rem;color:var(--ink3)}
+.yt{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--wine);text-decoration:none;min-height:44px}
+.yt:hover{color:var(--wine-osc)}
+.yt__ic{flex:none}
+#diferente+#planes{border-top:1px solid var(--line)}
+
+/* Aprende a usar StorePhone: fila de videos que se recorre con el dedo (y flechas en PC) */
+.videos__cabeza{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.videos__cabeza .cabeza{text-align:left}
+.videos__cabeza h2::after{margin-left:0}
+.videos__cabeza .sub{margin:0}
+.flechas{display:none;gap:8px}
+.flechas--si{display:flex}
+.flecha{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background-color .2s var(--out),border-color .2s var(--out)}
+.flecha:hover{border-color:var(--gold)}
+.flecha:disabled{opacity:.35;cursor:default}
+.flecha svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.carrusel{margin-top:28px}
+.carrusel__pista{list-style:none;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;padding:4px 2px 8px;scroll-padding:0 2px}
+.carrusel__pista::-webkit-scrollbar{display:none}
+.carrusel__pista li{flex:0 0 280px;scroll-snap-align:start}
+.video{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);border-radius:16px}
+.video__img{position:relative;display:block;border-radius:14px;overflow:hidden;background:#111;aspect-ratio:16/9;box-shadow:var(--sh1)}
+.video__img img{width:100%;height:100%;object-fit:cover;transition:transform .3s var(--out)}
+.video__play{position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:var(--wine);box-shadow:0 0 0 2px #fff,0 4px 12px rgba(0,0,0,.3)}
+.video__play::after{content:"";position:absolute;left:16px;top:12px;border-style:solid;border-width:8px 0 8px 12px;border-color:transparent transparent transparent #fff}
+.video__titulo{font-weight:600;font-size:.96875rem;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (hover:hover){.video:hover .video__img img{transform:scale(1.03)}.video:hover .video__titulo{color:var(--wine)}}
+.videos__todos{margin-top:12px}
+@media (max-width:900px){.destacado{grid-template-columns:1fr;max-width:620px;margin-left:auto;margin-right:auto}}
+@media (max-width:600px){.destacado{gap:12px;margin-top:28px}.dest{padding:20px}.carrusel__pista li{flex-basis:76%}.carrusel{margin-top:22px}}
+@media (prefers-reduced-motion:reduce){.video__img img{transition:none}}
 
 /* Opiniones de Google en vivo (02/11/2026): estrellas, total y una línea de
    tarjetas que se recorre. La llena opiniones.js; sin datos no se pinta. */
@@ -231,6 +270,7 @@ a.resena__autor:hover{color:var(--wine)}
 .pie a{color:var(--gold);text-decoration-color:rgba(199,154,62,.45);text-underline-offset:3px}
 .pie a:hover{color:#fff}
 .pie nav{line-height:1.9}
+.pie .yt{color:var(--gold);min-height:0;font-weight:400;gap:6px}
 .pie :focus-visible{outline-color:var(--gold)}
 
 /* Botón fijo de WhatsApp en el celular (aparece al bajar si el navegador sabe;
@@ -394,7 +434,9 @@ a.resena__autor:hover{color:var(--wine)}
         { "@type": "Question", "name": "¿Atienden fuera de Ensenada?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, en todo México. Nos ponemos de acuerdo por llamada, Google Meet o mensaje. En Ensenada también podemos platicar en persona." } },
         { "@type": "Question", "name": "¿Necesito instalar algo?", "acceptedAnswer": { "@type": "Answer", "text": "No. Funciona en el navegador de tu computadora, tablet o celular. Solo necesitas internet." } },
         { "@type": "Question", "name": "¿Hay plazo forzoso?", "acceptedAnswer": { "@type": "Answer", "text": "No. Trabajamos con contrato, mes con mes, y puedes cambiar de plan cuando lo necesites." } },
-        { "@type": "Question", "name": "¿De quién es la información?", "acceptedAnswer": { "@type": "Answer", "text": "Tuya. Cada negocio ve solo su información, respaldada en la nube y disponible para ti siempre. Firmamos contrato de confidencialidad." } }
+        { "@type": "Question", "name": "¿De quién es la información?", "acceptedAnswer": { "@type": "Answer", "text": "Tuya. Cada negocio ve solo su información, respaldada en la nube y disponible para ti siempre. Firmamos contrato de confidencialidad." } },
+        { "@type": "Question", "name": "¿Funciona sin internet?", "acceptedAnswer": { "@type": "Answer", "text": "En parte: sin conexión sigues cobrando de contado (efectivo en pesos o dólares) lo que no lleva IMEI y puedes abrir la caja; al volver, todo se sube solo con su folio. Los equipos con IMEI, créditos, abonos, pagos con tarjeta o transferencia, devoluciones y el cierre de caja esperan a que vuelva la red." } },
+        { "@type": "Question", "name": "¿Cómo me ayudan si tengo dudas?", "acceptedAnswer": { "@type": "Answer", "text": "Por WhatsApp al 646 287 5283, o dentro de StorePhone con Neri, el ayudante con IA para el dueño: le preguntas cómo hacer algo o le pides revisar algo que no te cuadra. También hay tutoriales en video en nuestro canal de YouTube." } }
       ]
     }
   ]
@@ -489,7 +531,42 @@ a.resena__autor:hover{color:var(--wine)}
   </div>
 </section>
 
-<section id="planes">
+<section id="diferente">
+  <div class="wrap">
+    <div class="cabeza rv">
+      <h2>Sigue trabajando, pase lo que pase</h2>
+      <p class="sub">Tres cosas que tu tienda nota desde el primer día.</p>
+    </div>
+    <div class="destacado">
+      <div class="dest rv">
+        <span class="ic"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.8 16a4.8 4.8 0 0 1 6.4 0"/><path d="M12 19.5h.01"/><path d="M3 3l18 18"/></svg></span>
+        <h3>Funciona sin internet</h3>
+        <p>Si se va la conexión, sigues cobrando de contado (efectivo en pesos o dólares) lo que no lleva IMEI y puedes abrir la caja. Cuando vuelve, todo se sube solo, cada venta con su folio.</p>
+        <p class="chico">Equipos con IMEI, créditos, abonos, tarjeta o transferencia, devoluciones y cierre de caja esperan a que vuelva la red.</p>
+      </div>
+      <div class="dest rv">
+        <span class="ic"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><rect x="2.5" y="4" width="13" height="10" rx="1.5"/><path d="M6 17.5h6"/><rect x="17" y="8" width="4.5" height="11" rx="1.2"/></svg></span>
+        <h3>Hecho para cualquier pantalla</h3>
+        <p>La computadora del mostrador, la tablet o tu celular: cada pantalla de StorePhone se acomoda a tu aparato, sin letras cortadas ni botones fuera de lugar.</p>
+      </div>
+      <div class="dest rv">
+        <span class="ic"><svg class="ico" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></span>
+        <h3>Neri, tu ayudante con IA</h3>
+        <p>Una segunda mano para el dueño: pregúntale cómo hacer algo en StorePhone o pídele revisar algo que no te cuadra. Solo mira, no cambia nada.</p>
+        <p class="chico">¿Dudas? Escríbenos por WhatsApp o pregúntale a Neri dentro de la plataforma.</p>
+        <a class="yt" href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener"><svg class="yt__ic" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 9.3v5.4l4.6-2.7z" fill="currentColor"/></svg>Síguenos en YouTube</a>
+      </div>
+    </div>
+    <div class="cta rv">
+      <a class="btn btn--vino" href="https://wa.me/5216462875283?text=Hola%2C%20quiero%20acceso%20a%20StorePhone" rel="noopener">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3z"/></svg>
+        Quiero acceso por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="soft" id="planes">
   <div class="wrap">
     <div class="cabeza rv">
       <h2>Planes y precios</h2>
@@ -544,7 +621,7 @@ a.resena__autor:hover{color:var(--wine)}
      Joveth dé fotos o frases reales y el permiso de cada cliente. No inventar
      nombres, cifras, reseñas ni estrellas (y no ponerlas en el JSON-LD). -->
 
-<section class="soft" id="contacto">
+<section id="contacto">
   <div class="wrap">
     <div class="cabeza rv">
       <h2>Cómo trabajamos</h2>
@@ -558,6 +635,36 @@ a.resena__autor:hover{color:var(--wine)}
       <div class="item rv"><h3>Con contrato, mes con mes</h3><p>Trabajamos con contrato y sin plazo forzoso: sigues mientras te sirva.</p></div>
       <div class="item rv"><h3>Confidencialidad</h3><p>Firmamos un contrato de confidencialidad sobre la información de tu negocio.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="soft" id="videos" aria-labelledby="videos-titulo">
+  <div class="wrap">
+    <div class="videos__cabeza">
+      <div class="cabeza rv">
+        <h2 id="videos-titulo">Aprende a usar StorePhone</h2>
+        <p class="sub">Tutoriales en video de las funciones principales en nuestro canal de YouTube.</p>
+      </div>
+      <div class="flechas" id="videos-flechas">
+        <button class="flecha" type="button" id="videos-antes" aria-label="Videos anteriores"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="flecha" type="button" id="videos-despues" aria-label="Más videos"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+    <!-- Los títulos vienen en el HTML (buscadores). Este bloque lo escribe neron-landing/videos.py --html;
+         en vivo, videos.js lo repinta si /videos.json (cron cada 30 min, RSS del canal) trae otra lista. -->
+    <div class="carrusel">
+      <ul class="carrusel__pista" id="videos-pista" tabindex="0" aria-label="Videos de StorePhone"><!-- VIDEOS:INICIO -->
+        <li><a class="video" href="https://www.youtube.com/watch?v=QLFRXqWBjIc" target="_blank" rel="noopener" data-id="QLFRXqWBjIc"><span class="video__img"><img src="/videos/QLFRXqWBjIc.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Entradas, salidas y retiros de caja</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=e6Q6AudyXLE" target="_blank" rel="noopener" data-id="e6Q6AudyXLE"><span class="video__img"><img src="/videos/e6Q6AudyXLE.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo atender una garantía</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=1H4klJwEFzs" target="_blank" rel="noopener" data-id="1H4klJwEFzs"><span class="video__img"><img src="/videos/1H4klJwEFzs.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo apartar un teléfono</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=0SPrWoH3IIE" target="_blank" rel="noopener" data-id="0SPrWoH3IIE"><span class="video__img"><img src="/videos/0SPrWoH3IIE.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo recibir y cobrar una reparación</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=4H1zEoaXnUs" target="_blank" rel="noopener" data-id="4H1zEoaXnUs"><span class="video__img"><img src="/videos/4H1zEoaXnUs.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo vender un celular con IMEI</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=Oz-obGYdODE" target="_blank" rel="noopener" data-id="Oz-obGYdODE"><span class="video__img"><img src="/videos/Oz-obGYdODE.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo recibir un celular a cuenta</span></a></li>
+        <li><a class="video" href="https://www.youtube.com/watch?v=5MiQuQSmqe4" target="_blank" rel="noopener" data-id="5MiQuQSmqe4"><span class="video__img"><img src="/videos/5MiQuQSmqe4.jpg" alt="" width="320" height="180" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span></span><span class="video__titulo">Cómo hacer tu corte de caja</span></a></li>
+        <!-- VIDEOS:FIN -->
+      </ul>
+    </div>
+    <p class="videos__todos"><a class="liga" href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener">Ver todos en YouTube</a></p>
   </div>
 </section>
 
@@ -588,6 +695,14 @@ a.resena__autor:hover{color:var(--wine)}
       <details>
         <summary>¿De quién es la información?</summary>
         <p>Tuya. Cada negocio ve solo su información, respaldada en la nube y disponible para ti siempre. Firmamos contrato de confidencialidad.</p>
+      </details>
+      <details>
+        <summary>¿Funciona sin internet?</summary>
+        <p>En parte: sin conexión sigues cobrando de contado (efectivo en pesos o dólares) lo que no lleva IMEI y puedes abrir la caja; al volver, todo se sube solo con su folio. Los equipos con IMEI, créditos, abonos, pagos con tarjeta o transferencia, devoluciones y el cierre de caja esperan a que vuelva la red.</p>
+      </details>
+      <details>
+        <summary>¿Cómo me ayudan si tengo dudas?</summary>
+        <p>Por WhatsApp al 646 287 5283, o dentro de StorePhone con Neri, el ayudante con IA para el dueño: le preguntas cómo hacer algo o le pides revisar algo que no te cuadra. También hay tutoriales en video en nuestro canal de YouTube.</p>
       </details>
     </div>
   </div>
@@ -636,6 +751,7 @@ a.resena__autor:hover{color:var(--wine)}
   <div class="wrap">
     <span>© 2026 Neron · Ensenada, Baja California, México</span>
     <a href="https://www.instagram.com/neron_fix" rel="noopener">Instagram @neron_fix</a>
+    <a class="yt" href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener"><svg class="yt__ic" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 9.3v5.4l4.6-2.7z" fill="currentColor"/></svg>Síguenos en YouTube</a>
     <nav aria-label="Más de StorePhone"><a href="/control-de-imei/">Control de IMEI para tu tienda de celulares</a> · <a href="/punto-de-venta-con-creditos/">Punto de venta con créditos y cobranza</a> · <a href="/sistema-para-celulares-monterrey/">Sistema para tiendas de celulares en Monterrey</a> · <a href="/sistema-para-celulares-cdmx/">Sistema para tiendas de celulares en CDMX</a></nav>
   </div>
 </footer>
@@ -647,5 +763,6 @@ a.resena__autor:hover{color:var(--wine)}
   </a>
 </div>
 <script src="/opiniones.js?v=1" defer></script>
+<script src="/videos.js?v=1" defer></script>
 </body>
 </html>

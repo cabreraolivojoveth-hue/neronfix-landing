@@ -43,6 +43,16 @@ No hace falta abrir pull request ni esperar aprobación.
   vino, plateadas o con brillo. Las variantes viejas se borraron (siguen en git).
   Si se rehacen los iconos, cambiar el `?v=` de sus enlaces para que el navegador
   no muestre el viejo.
+- **Videos (02/11/2026):** la fila «Aprende a usar StorePhone» sale del RSS público del
+  canal https://www.youtube.com/@neronfix. `neron-landing/videos.py` (cron cada 30 min)
+  deja `datos/videos.json` y las miniaturas; nginx las prefiere sobre `videos.json` y
+  `videos/` del repo (la lista de la última publicación). Al publicar, refrescar el
+  bloque con `neron-landing/videos.py --html index.html` (los títulos van en el HTML
+  para buscadores). Nada de reproductor de YouTube en la página: el video abre en
+  YouTube, en otra pestaña.
+- **Sin internet (StorePhone 1.20.0):** solo cobrar de contado lo que no lleva IMEI y
+  abrir caja. Si la app cambia (paso B: IMEI sin red), se cambian la tarjeta y la
+  pregunta «¿Funciona sin internet?» (visible y JSON-LD).
 - **No se inventan datos.** Nada de clientes, ventas, estadísticas,
   testimonios ni certificaciones sin respaldo real. Lo que no exista se deja
   sin pintar (ver el hueco comentado «Clientes que ya lo usan» en `index.html`).
