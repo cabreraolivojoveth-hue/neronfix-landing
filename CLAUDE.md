@@ -50,6 +50,11 @@ No hace falta abrir pull request ni esperar aprobación.
   bloque con `neron-landing/videos.py --html index.html` (los títulos van en el HTML
   para buscadores). Nada de reproductor de YouTube en la página: el video abre en
   YouTube, en otra pestaña.
+- **Movimiento (02/11/2026): `movimiento.js`** hace el carrusel de planes (puntitos,
+  flechas con ratón, arranca en Premium; en ≥1000px van los 3 juntos), el avance solo de
+  los videos (4.5 s; se pausa con ratón, dedo, foco, fuera de pantalla o pestaña oculta)
+  y el aparecer al bajar (`.rv`). Con «reducir movimiento» nada se mueve solo. Sin
+  efectos con rebote; solo opacidad y desplazamientos ≤12px.
 - **Sin internet (StorePhone 1.20.0):** solo cobrar de contado lo que no lleva IMEI y
   abrir caja. Si la app cambia (paso B: IMEI sin red), se cambian la tarjeta y la
   pregunta «¿Funciona sin internet?» (visible y JSON-LD).
