@@ -9,7 +9,8 @@ Flujo de cada cambio:
 
 1. Hacer el cambio y probarlo.
 2. `git commit` con mensaje descriptivo.
-3. `git push origin main` — esto dispara el build de producción en Vercel.
+3. `git push origin main` y luego `sh /home/joveth/neron/neron-landing/publicar.sh`
+   (copia main a la carpeta que sirve el servidor NERON y comprueba que se entrega).
 4. Mantener la rama de trabajo asignada al día con `main`.
 5. **Verificar en vivo** con `curl` contra `https://www.neronfix.com` que los
    archivos nuevos responden 200 antes de dar el trabajo por terminado.
@@ -18,10 +19,14 @@ No hace falta abrir pull request ni esperar aprobación.
 
 ## Despliegue
 
-- Hosting: **Vercel**, conectado al repositorio de GitHub.
-- Rama de producción: **`main`**. Cualquier otra rama solo genera preview.
-- No hay Vercel CLI ni token en el entorno: el único modo de desplegar es
-  empujar a `main`.
+- Hosting: **el servidor NERON** (orden de Joveth, 02/11/2026): contenedor
+  `neron-landing` (127.0.0.1:8081, nginx con las mismas cabeceras y redirecciones
+  que tenía `vercel.json`) detrás del túnel de Cloudflare. Lo llena SOLO
+  `neron-landing/publicar.sh` con la rama **`main`**.
+- La mudanza del dominio la hace `neron-landing/mudar-al-servidor.sh` (sudo, una
+  vez). Hasta que se corra, Vercel sigue entregando lo que se empuja a `main`.
+- `vercel.json` se queda como respaldo para regresar; si cambian cabeceras, se
+  cambian en los dos.
 - Dominio real: **`https://www.neronfix.com`** (el apex responde 301 hacia www).
 
 ## Reglas del proyecto
