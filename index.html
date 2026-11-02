@@ -167,6 +167,33 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
 .faq details[open] summary::after{transform:translateY(4px) rotate(-135deg)}
 .faq p{color:var(--ink2);padding:0 0 18px}
 
+/* Opiniones de Google en vivo (02/11/2026): estrellas, total y una línea de
+   tarjetas que se recorre. La llena opiniones.js; sin datos no se pinta. */
+.resenas{padding:0 0 72px}
+.resenas[hidden]{display:none}
+.resenas__cabeza{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;text-align:center}
+.resenas h2{font-size:1.25rem;letter-spacing:-.015em;margin:0}
+.resenas__nota{display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font-size:.96875rem;border-radius:8px;padding:2px 4px}
+#resenas-total{color:var(--ink3)}
+.estrellas{position:relative;display:inline-block;font-size:1.0625rem;line-height:1;letter-spacing:2px;color:#d9d2cb}
+.estrellas::before{content:"★★★★★"}
+.estrellas span{position:absolute;inset:0 auto 0 0;overflow:hidden;white-space:nowrap;color:var(--gold)}
+.estrellas span::before{content:"★★★★★"}
+.resenas__cinta{max-width:1000px;margin:20px auto 0;padding:4px 0}
+.resenas__cinta[hidden]{display:none}
+.resenas__lista{gap:14px;padding-right:14px;align-items:stretch}
+.resena{flex:none;width:300px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;text-align:left}
+.resena__est{color:var(--gold);letter-spacing:2px;font-size:.9375rem;line-height:1}
+.resena__txt{color:var(--ink2);font-size:.9375rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.resena__pie{margin-top:auto;font-size:.875rem;color:var(--ink3)}
+.resena__autor{color:var(--ink);font-weight:600;text-decoration:none}
+a.resena__autor:hover{color:var(--wine)}
+.resenas__cinta--quieta{-webkit-mask-image:none;mask-image:none;display:flex;justify-content:center}
+.resenas__cinta--quieta .cinta__pista{animation:none!important}
+.resenas__fuente{text-align:center;color:var(--ink3);font-size:.8125rem;margin-top:12px}
+.resenas__fuente a{color:var(--ink2)}
+@media (max-width:600px){.resena{width:260px}.resenas{padding-bottom:56px}}
+
 /* Opiniones: una caja chica con el botón a Google (sin reseñas ni estrellas: no hay ninguna aprobada) */
 #preguntas{padding-bottom:44px}
 .opinion{padding:0 0 76px}
@@ -446,6 +473,22 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
   </div>
 </section>
 
+<!-- OPINIONES DE GOOGLE EN VIVO (Joveth, 02/11/2026): las pinta opiniones.js con
+     /opiniones.json (lo deja el servidor cada 30 min). Sin datos queda escondida.
+     Sin marcado de reseñas para buscadores. -->
+<section class="soft resenas" id="resenas" aria-labelledby="resenas-titulo" hidden>
+  <div class="wrap">
+    <div class="resenas__cabeza">
+      <h2 id="resenas-titulo">Opiniones en Google</h2>
+      <a class="resenas__nota" id="resenas-nota" href="https://maps.google.com/?cid=16925729665941806427" target="_blank" rel="noopener"><span class="estrellas" aria-hidden="true"><span id="resenas-relleno"></span></span><b id="resenas-promedio"></b><span id="resenas-total"></span></a>
+    </div>
+    <div class="cinta resenas__cinta" id="resenas-cinta" role="group" aria-labelledby="resenas-titulo" tabindex="0" hidden>
+      <div class="cinta__pista" id="resenas-pista"></div>
+    </div>
+    <p class="resenas__fuente">Opiniones reales de clientes, tomadas de <a id="resenas-mapa" href="https://maps.google.com/?cid=16925729665941806427" target="_blank" rel="noopener">Google Maps</a>.</p>
+  </div>
+</section>
+
 <section id="planes">
   <div class="wrap">
     <div class="cabeza rv">
@@ -603,5 +646,6 @@ h3{font-size:1.0625rem;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
     Quiero acceso por WhatsApp
   </a>
 </div>
+<script src="/opiniones.js?v=1" defer></script>
 </body>
 </html>
