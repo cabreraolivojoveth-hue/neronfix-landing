@@ -63,6 +63,12 @@ No hace falta abrir pull request ni esperar aprobación.
   sin pintar (ver el hueco comentado «Clientes que ya lo usan» en `index.html`).
 - **Desde el 23/10/2026 la página es de UN SOLO programa: StorePhone** (por
   Neron). Neron One, Neron Autos y Terapias no se mencionan.
+- **«Neron Fix» = SOLO StorePhone (Joveth, 02/11/2026).** En el JSON-LD la empresa se llama
+  «Neron Fix» (logo oficial, YouTube, perfil de Google) y su único producto es el
+  SoftwareApplication StorePhone; las 4 páginas para buscadores lo publican «Neron Fix» con el
+  mismo `@id`. `/llms.txt` lo dice para las IAs. Ninguna palabra de otros giros en nada servido
+  (la prueba lo vigila). Los sistemas de clientes (autos., estetica., terapias., one.,
+  storephone.) mandan `X-Robots-Tag: noindex` desde su servidor.
 - **El contenido vive en `index.html`, escrito en el HTML** (sin scripts), para
   que los buscadores lo lean tal cual. Ya no hay `assets/`: lo viejo está en git.
 - **Precios (02/10/2026, solo mensual, IVA incluido):** Normal $450 (2 usuarios ·
