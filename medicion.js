@@ -1,26 +1,26 @@
 /* Medición de StorePhone (06/11/2026). Chico, propio y diferido.
 
-   1) MARCA PROPIA (ya prendida): cada toque a un botón de WhatsApp manda una marca
-      vacía a NUESTRO servidor (POST /clic?d=<botón>&p=<página>&a=<1 si llegó por un
-      anuncio>). Solo queda en el registro de nginx; neron-landing/clics.py la cuenta.
-      Sin cookies, sin datos de la persona y sin nada de fuera.
+   1) MARCA PROPIA (prendida): cada toque a un botón de WhatsApp manda una marca vacía
+      a nuestro servidor: POST /clic?d=<botón>&p=<página>&a=<1 llegó por anuncio · 0 no ·
+      p prueba>. Esta marca no usa cookies ni datos de la persona ni nada de fuera.
 
-   2) ETIQUETA DE GOOGLE ADS (lista, APAGADA): se enciende llenando las dos líneas de
-      abajo con lo que da Google Ads (Objetivos → Conversiones → «Clic en WhatsApp» →
-      Configurar etiqueta → «Usar Google tag»: AW-… y la etiqueta de conversión) y
-      abriendo la CSP del servidor con neron-landing/google-ads.sh encender.
-      Vacías = no se carga nada de Google. No se inventan: las da Joveth. */
+   2) ETIQUETA DE GOOGLE ADS (lista, APAGADA): se llenan las dos líneas de abajo con lo que
+      da Google Ads (Objetivos → Conversiones → «Clic en WhatsApp» → etiqueta de Google).
+      Vacías = no se carga nada de Google. Encendida, Google pone sus propias cookies:
+      antes va el aviso de privacidad. Los IDs no se inventan. */
 (function () {
   'use strict'
   var GOOGLE_ADS = ''        // ID de conversión, ej. 'AW-123456789'
   var ETIQUETA_WHATSAPP = '' // etiqueta de la conversión «Clic en WhatsApp», ej. 'AbC-dEfGh12'
 
+  // a=1 llegó por anuncio · a=p visita de prueba (gclid=prueba…) · a=0 lo demás
   var DE_ANUNCIO = /[?&](gclid|gbraid|wbraid|gad_source)=/
-  var anuncio = DE_ANUNCIO.test(location.search)
+  var anuncio = /[?&]gclid=prueba/.test(location.search) ? 'p' : (DE_ANUNCIO.test(location.search) ? '1' : '')
   try {
-    if (anuncio) sessionStorage.setItem('neron-anuncio', '1')
-    else anuncio = sessionStorage.getItem('neron-anuncio') === '1'
+    if (anuncio) sessionStorage.setItem('neron-anuncio', anuncio)
+    else anuncio = sessionStorage.getItem('neron-anuncio') || ''
   } catch (e) {}
+  if (anuncio !== '1' && anuncio !== 'p') anuncio = '0'
 
   var conGoogle = /^AW-\d{6,}$/.test(GOOGLE_ADS) && /^[\w-]{4,}$/.test(ETIQUETA_WHATSAPP)
   if (conGoogle) {
@@ -49,16 +49,18 @@
   }
 
   function marca(d) {
-    var u = '/clic?d=' + encodeURIComponent(d) + '&p=' + encodeURIComponent(location.pathname) + '&a=' + (anuncio ? 1 : 0)
+    var u = '/clic?d=' + encodeURIComponent(d) + '&p=' + encodeURIComponent(location.pathname) + '&a=' + anuncio
     try { if (navigator.sendBeacon && navigator.sendBeacon(u)) return } catch (e) {}
     try { fetch(u, { method: 'POST', keepalive: true, credentials: 'omit' }) } catch (e) {}
   }
 
-  document.addEventListener('click', function (ev) {
+  function toque(ev) {
+    if (ev.type === 'auxclick' && ev.button !== 1) return // botón de en medio = abrir en otra pestaña
     var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="wa.me/"]') : null
     if (!a) return
-    var d = donde(a)
-    marca(d)
+    marca(donde(a))
     if (conGoogle) window.gtag('event', 'conversion', { send_to: GOOGLE_ADS + '/' + ETIQUETA_WHATSAPP, transport_type: 'beacon' })
-  }, true)
+  }
+  document.addEventListener('click', toque, true)
+  document.addEventListener('auxclick', toque, true)
 })()

@@ -81,13 +81,16 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   quiero acceso a StorePhone[, me interesa el plan X]». Nada de «crear cuenta»,
   «gratis» ni «sin tarjeta». `storephone.neronfix.com` solo se liga como «Entrar».
 - **Medición (06/11/2026): `medicion.js`** (portada y las 4 páginas para buscadores). Cada
-  toque a un botón de WhatsApp manda una marca vacía a NUESTRO servidor (`POST /clic?d=botón&p=página&a=1|0`,
-  nginx contesta 204 y solo queda en su registro); la cuenta `neron-landing/clics.py`. Sin cookies
-  ni nada de fuera. La **etiqueta de Google Ads está lista y APAGADA**: `GOOGLE_ADS` y
-  `ETIQUETA_WHATSAPP` vacíos = no se carga nada de Google. Se enciende con los dos datos que dé
-  Joveth (nunca inventados) + `neron-landing/google-ads.sh encender` (abre la CSP con
-  `servidor/csp-con-google.txt`). La prueba vigila que con la CSP normal Google quede bloqueado y
-  con la de Google cargue y mande la conversión.
+  toque a un botón de WhatsApp (clic o botón de en medio) manda una marca vacía a NUESTRO servidor
+  (`POST /clic?d=botón&p=página&a=1|0|p`; `a=p` = visita de prueba con `gclid=prueba…`, no se
+  cuenta); nginx contesta 204 y solo queda en su registro; la cuenta `neron-landing/clics.py`.
+  La marca no usa cookies ni nada de fuera. La **etiqueta de Google Ads está lista y APAGADA**
+  (`GOOGLE_ADS` y `ETIQUETA_WHATSAPP` vacíos = nada de Google). Encender, EN ESTE ORDEN:
+  1) publicar el aviso de privacidad (`/privacidad/`; con Google, Google pone sus cookies);
+  2) `sh neron-landing/google-ads.sh encender` (CSP con `servidor/csp-con-google.txt`; no enciende
+  sin el aviso); 3) los dos IDs reales de Joveth en `medicion.js` y publicarlo; 4) probar con el
+  gtag.js REAL y ver la conversión en Google Ads. La prueba sabe si está apagada o encendida y
+  exige, con IDs, que se sirva la CSP de Google.
 - `faq.html` y `contacto.html` ya no existen: `vercel.json` los redirige a `/`.
 
 ## Después de desplegar
