@@ -1,21 +1,21 @@
 # Instrucciones de trabajo · neronfix-landing
 
-## Publicación
+## Publicación (con el Protocolo Maestro, modo directo — 06/11/2026)
 
-**Publica siempre, sin preguntar.** El dueño del proyecto dio autorización
-permanente para desplegar a producción sin confirmación previa.
+Aquí manda `/home/joveth/neron/protocolo` (sin «sí» de Joveth, pero con su comparativa
+toda en APROBADO). **Nunca** `git push origin main` ni `publicar.sh` a mano: así se
+publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL PROTOCOLO».
 
-Flujo de cada cambio:
-
-1. Hacer el cambio y probarlo.
-2. `git commit` con mensaje descriptivo.
-3. `git push origin main` y luego `sh /home/joveth/neron/neron-landing/publicar.sh`
-   (copia main a la carpeta que sirve el servidor NERON y comprueba que se entrega).
-4. Mantener la rama de trabajo asignada al día con `main`.
-5. **Verificar en vivo** con `curl` contra `https://www.neronfix.com` que los
-   archivos nuevos responden 200 antes de dar el trabajo por terminado.
-
-No hace falta abrir pull request ni esperar aprobación.
+1. Cambio en esta carpeta (rama `main`), `git commit`.
+2. `python3 /home/joveth/neron/protocolo/comparar.py /home/joveth/neron/repos/neronfix-landing --que "…" --visto <capturas>`
+   — corre `neron-landing/pruebas/probar-en-neron-2.sh` en A y en B: sirve el árbol con el
+   MISMO nginx de producción en un contenedor desechable de **neron-2** y pasa
+   `prueba-landing.mjs` con Chromium (nunca en el servidor).
+3. Las revisiones que pida su nivel (`revision.py`, luego `comparar.py --releer`).
+4. `python3 /home/joveth/neron/protocolo/publicar.py landing-neronfix --comparativa <json>`:
+   corre `neron-landing/publicar.sh` (copia `main` a `sitio/`), sube `main` a GitHub y
+   comprueba que internet sirve el `index.html` del commit.
+5. Verificar en vivo con `curl` y `guardia.py --detalle`; renglón en `memoria/landing/BITACORA.md`.
 
 ## Despliegue
 
@@ -80,6 +80,14 @@ No hace falta abrir pull request ni esperar aprobación.
 - **Alta cerrada:** todo botón de alta abre WhatsApp 646 287 5283 con «Hola,
   quiero acceso a StorePhone[, me interesa el plan X]». Nada de «crear cuenta»,
   «gratis» ni «sin tarjeta». `storephone.neronfix.com` solo se liga como «Entrar».
+- **Medición (06/11/2026): `medicion.js`** (portada y las 4 páginas para buscadores). Cada
+  toque a un botón de WhatsApp manda una marca vacía a NUESTRO servidor (`POST /clic?d=botón&p=página&a=1|0`,
+  nginx contesta 204 y solo queda en su registro); la cuenta `neron-landing/clics.py`. Sin cookies
+  ni nada de fuera. La **etiqueta de Google Ads está lista y APAGADA**: `GOOGLE_ADS` y
+  `ETIQUETA_WHATSAPP` vacíos = no se carga nada de Google. Se enciende con los dos datos que dé
+  Joveth (nunca inventados) + `neron-landing/google-ads.sh encender` (abre la CSP con
+  `servidor/csp-con-google.txt`). La prueba vigila que con la CSP normal Google quede bloqueado y
+  con la de Google cargue y mande la conversión.
 - `faq.html` y `contacto.html` ya no existen: `vercel.json` los redirige a `/`.
 
 ## Después de desplegar
