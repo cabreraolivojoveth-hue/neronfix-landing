@@ -55,7 +55,9 @@
   }
 
   function toque(ev) {
-    if (ev.type === 'auxclick' && ev.button !== 1) return // botón de en medio = abrir en otra pestaña
+    // clic normal = botón principal; el de en medio llega como auxclick (abrir en otra pestaña).
+    // Así un navegador que mande los dos no cuenta doble.
+    if (ev.type === 'click' ? ev.button !== 0 : ev.button !== 1) return
     var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="wa.me/"]') : null
     if (!a) return
     marca(donde(a))
