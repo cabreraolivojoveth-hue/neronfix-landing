@@ -77,9 +77,19 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   en la pregunta «¿Cuánto cuesta?» y en el JSON-LD: si cambian, se cambian en los
   tres; la prueba (`neron-landing/pruebas/prueba-landing.mjs`) vigila que
   coincidan, y que las preguntas del JSON-LD sean idénticas a las visibles.
-- **Alta cerrada:** todo botón de alta abre WhatsApp 646 287 5283 con «Hola,
-  quiero acceso a StorePhone[, me interesa el plan X]». Nada de «crear cuenta»,
-  «gratis» ni «sin tarjeta». `storephone.neronfix.com` solo se liga como «Entrar».
+- **Alta cerrada:** el alta es por invitación y pasa por WhatsApp 646 287 5283. Los botones
+  generales (cabecera, portada, barra flotante) abren WhatsApp con «Hola, quiero acceso a
+  StorePhone»; los botones de PLAN abren la mini encuesta (abajo). Nada de «crear cuenta»
+  ni «sin tarjeta». `storephone.neronfix.com` solo se liga como «Entrar».
+- **Prueba gratuita (Joveth, 10/11/2026):** SÍ se dice «gratis», pero solo en el formato aprobado:
+  primer mes gratis (30 días); después empieza a correr el plan normal (letra chica con su
+  precio con IVA); «si no te gusta, no estás obligado a quedarte»; atención directa con los
+  programadores. Precio del plan TACHADO con «Gratis» en grande. NADA de 10% de descuento ni
+  otras promesas («sin tarjeta», «cancela cuando quieras»). Los botones de plan dicen «Probar
+  gratis 30 días» y abren la MINI ENCUESTA de 6 pasos (`encuesta.js`: plan, tienda, ciudad,
+  sucursales, correo, resumen) que arma el mensaje de WhatsApp «Hola, quiero mi prueba gratuita
+  (30 días) de StorePhone…»; no guarda nada en servidor. La prueba es
+  `neron-landing/pruebas/prueba-encuesta.mjs` (y `prueba-landing.mjs` vigila la oferta).
 - **Medición (06/11/2026): `medicion.js`** (portada y las 4 páginas para buscadores). Cada
   toque a un botón de WhatsApp (clic o botón de en medio) manda una marca vacía a NUESTRO servidor
   (`POST /clic?d=botón&p=página&a=1|0|p`; `a=p` = visita de prueba con `gclid=prueba…`, no se
