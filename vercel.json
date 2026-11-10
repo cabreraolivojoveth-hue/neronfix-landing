@@ -87,6 +87,16 @@
       "source": "/assets/:path*",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/punto-de-venta/celulares",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/punto-de-venta/celulares/",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
