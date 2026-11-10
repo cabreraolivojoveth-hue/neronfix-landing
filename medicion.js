@@ -36,6 +36,7 @@
 
   // De qué botón salió: barra de abajo, cabecera o la sección (y el plan, si lo dice el mensaje)
   function donde(a) {
+    if (a.closest('#encuesta')) return 'encuesta-whatsapp'
     if (a.closest('.barra')) return 'barra'
     if (a.closest('.hdr')) return 'cabecera'
     var sec = a.closest('section')
@@ -60,9 +61,12 @@
     if (ev.type === 'click' ? ev.button !== 0 : ev.button !== 1) return
     var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="wa.me/"]') : null
     if (!a) return
+    if (a.hasAttribute('data-encuesta')) return // abre la encuesta, no WhatsApp: se cuenta con 'encuesta:inicio'
     marca(donde(a))
     if (conGoogle) window.gtag('event', 'conversion', { send_to: GOOGLE_ADS + '/' + ETIQUETA_WHATSAPP, transport_type: 'beacon' })
   }
+  // Inicio de la encuesta del mes gratis (encuesta.js); la marca no lleva ningún dato de la persona
+  document.addEventListener('encuesta:inicio', function () { marca('encuesta-inicio') })
   document.addEventListener('click', toque, true)
   document.addEventListener('auxclick', toque, true)
 })()
