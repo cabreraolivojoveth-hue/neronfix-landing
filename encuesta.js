@@ -15,7 +15,14 @@
   var datos = { plan: '', tienda: '', ciudad: '', sucursales: '', correo: '' }
   var actual = 0, abierto = false, quien = null, aparte = []
 
-  function limpio(v) { return String(v || '').replace(/\s+/g, ' ').trim() }
+  // Quita mitades sueltas de emoji (las deja el maxlength) que romperían encodeURIComponent
+  function limpio(v) {
+    var t = String(v || '')
+    t = t.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '').replace(/([^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g, '$1')
+    return t.replace(/\s+/g, ' ').trim()
+  }
+  var ultimo = 0 // cerrojo de ~300 ms contra el doble clic
+  function libre() { var n = Date.now(); if (n - ultimo < 300) return false; ultimo = n; return true }
   function campo(i) { return pasos[i].querySelector('input[type=text],input[type=email]') }
   function titulo(i) { return pasos[i].querySelector('h2') }
 
@@ -61,7 +68,8 @@
         var dt = document.createElement('dt'), dd = document.createElement('dd')
         dt.textContent = x[0]; dd.textContent = x[1]; resumen.appendChild(dt); resumen.appendChild(dd)
       })
-      enlace.href = WA + '?text=' + encodeURIComponent(mensaje())
+      try { enlace.href = WA + '?text=' + encodeURIComponent(mensaje()) }
+      catch (e) { enlace.href = WA + '?text=' + encodeURIComponent(mensaje().replace(/[^\u0000-\uD7FF\uE000-\uFFFF]/g, '')) }
       enlace.setAttribute('data-plan', datos.plan)
     }
   }
@@ -80,7 +88,7 @@
       if (e.el.type !== 'radio') e.el.setAttribute('aria-invalid', 'true')
       e.el.setAttribute('aria-describedby', 'enc-err'); e.el.focus(); return
     }
-    if (actual < pasos.length - 1) ir(actual + 1)
+    if (actual < pasos.length - 1 && libre()) ir(actual + 1)
   }
 
   form.addEventListener('submit', function (ev) { ev.preventDefault(); if (actual < pasos.length - 1) siguiente() })
@@ -95,7 +103,7 @@
     // el resto de la página no recibe foco ni lector mientras la ventana está abierta
     aparte = [].slice.call(document.body.children).filter(function (e) { return e !== raiz && e.tagName !== 'SCRIPT' })
     aparte.forEach(function (e) { e.inert = true; e.setAttribute('aria-hidden', 'true') })
-    raiz.hidden = false
+    raiz.hidden = false; tAbre = Date.now()
     document.documentElement.classList.add('noscroll'); document.body.classList.add('noscroll')
     ir(0)
     document.dispatchEvent(new CustomEvent('encuesta:inicio', { detail: { plan: datos.plan } }))
@@ -110,7 +118,15 @@
   }
 
   document.getElementById('enc-x').addEventListener('click', cerrar)
-  raiz.addEventListener('mousedown', function (ev) { if (ev.target === raiz) cerrar() })
+  // El fondo cierra solo si el clic empieza Y termina en el fondo, y no en los primeros 400 ms (doble clic en el botón)
+  var desdeFondo = false, tAbre = 0
+  raiz.addEventListener('mousedown', function (ev) { desdeFondo = ev.target === raiz && Date.now() - tAbre > 400 })
+  raiz.addEventListener('click', function (ev) { if (ev.target === raiz && desdeFondo) cerrar(); desdeFondo = false })
+  // Un segundo clic seguido en «Abrir WhatsApp» no abre otra pestaña ni cuenta dos veces (antes que medicion.js)
+  window.addEventListener('click', function (ev) {
+    var a = ev.target && ev.target.closest ? ev.target.closest('#enc-wa') : null
+    if (a && !libre()) { ev.preventDefault(); ev.stopImmediatePropagation() }
+  }, true)
   document.addEventListener('keydown', function (ev) {
     if (!abierto) return
     if (ev.key === 'Escape') { ev.preventDefault(); cerrar(); return }
