@@ -655,6 +655,8 @@ if (GOOGLE_ON) {
     ['?utm_source=' + encodeURIComponent('Mi‮evil​ anuncio x'), undefined, 'Mievil anunciox', 'utm_source con U+202E, espacio invisible y NBSP → sin esos caracteres'],
     ['?utm_source=' + encodeURIComponent('a'.repeat(50)), undefined, 'a'.repeat(30), 'utm_source de 50 letras → corta a 30'],
     ['?utm_source=' + encodeURIComponent('a'.repeat(29) + '\u{1D400}'), undefined, 'a'.repeat(29) + '\u{1D400}', 'utm_source de 29 «a» + 𝐀 (4 bytes) → exacto, sin partir el carácter'],
+    ['?utm_source=constructor', undefined, 'constructor', 'utm_source=constructor → «constructor» tal cual (no la función de fábrica)'],
+    ['?utm_source=__proto__', undefined, '__proto__', 'utm_source=__proto__ → «__proto__» tal cual (no «[object Object]»)'],
     ['?utm_source=' + encodeURIComponent('<script>'), undefined, 'script', 'utm_source con < > → solo texto seguro'],
   ]) {
     const v = await visita(ruta, { referer }); const r = await v.lee()
@@ -690,11 +692,13 @@ if (GOOGLE_ON) {
   { const r = await pagosInyectado(); di(r.n === 0 && r.abrio, '/pagos/: un enlace inyectado a wa.me/5216462875283 abre y NO manda conversión (0)', JSON.stringify(r)) }
   { const r = await pagosInyectado((t) => t.replace('if (enPagos) return', '')); di(r.n >= 1, '/pagos/: la prueba se pone ROJA si se quita «if (enPagos) return» (con el candado quitado entra la conversión)', JSON.stringify(r)) }
   // d) «Probar gratis» (data-encuesta): el clic normal abre la encuesta y NO cuenta; ctrl+clic y botón de en medio abren WhatsApp y cuentan una vez
-  for (const [nombre, opts, esperado] of [['clic normal (abre la encuesta)', {}, 0], ['ctrl+clic', { modifiers: ['Control'] }, 1], ['shift+clic', { modifiers: ['Shift'] }, 1], ['botón de en medio', { button: 'middle' }, 1], ['alt+clic (no abre WhatsApp)', { modifiers: ['Alt'] }, 0]]) {
+  for (const [nombre, opts, esperado] of [['clic normal (abre la encuesta)', {}, 0], ['ctrl+clic', { modifiers: ['Control'] }, 1], ['shift+clic', { modifiers: ['Shift'] }, 1], ['botón de en medio', { button: 'middle' }, 1], ['meta+clic', { modifiers: ['Meta'] }, 1], ['alt+clic (no abre WhatsApp)', { modifiers: ['Alt'] }, 0]]) {
     const v = await visita('?gclid=x', { referer: 'https://www.google.com/' })
+    // meta+clic en Linux navega en la MISMA pestaña (no abre otra): se frena la navegación para poder leer el dataLayer; igual debe contar 1
+    const esMeta = (opts.modifiers || []).includes('Meta'); if (esMeta) await v.pag.evaluate(() => document.addEventListener('click', (e) => { if (e.target.closest('a[href*="wa.me"]')) e.preventDefault() }))
     await v.pag.locator('#planes a[data-encuesta="Premium"]').first().scrollIntoViewIfNeeded(); await v.pag.locator('#planes a[data-encuesta="Premium"]').first().click(opts); await v.pag.waitForTimeout(600)
     const r = await v.lee()
-    di(r.conv.length === esperado && (esperado === 1 ? v.wa.length >= 1 : v.wa.length === 0), `Conversión en «Probar gratis»: ${nombre} → ${esperado} conversión(es)${esperado === 1 ? ' y WhatsApp abre' : ' y WhatsApp no abre'}`, `${r.conv.length} · WhatsApp abierto: ${v.wa.length}`); await v.ctx.close()
+    di(r.conv.length === esperado && (esMeta || (esperado === 1 ? v.wa.length >= 1 : v.wa.length === 0)), `Conversión en «Probar gratis»: ${nombre} → ${esperado} conversión(es)${esperado === 1 ? ' y WhatsApp abre' : ' y WhatsApp no abre'}`, `${r.conv.length} · WhatsApp abierto: ${v.wa.length}`); await v.ctx.close()
   }
 }
 

@@ -28,7 +28,8 @@
   function limpiaOrigen(v) {
     var t = String(v || '').replace(NO_SEGURO, '').replace(/ +/g, ' ').trim()
     t = (Array.from ? Array.from(t) : (t.match(/[\s\S]/g) || [])).slice(0, 30).join('').trim() // Array.from cuenta caracteres completos (𝐀 es uno, no dos mitades)
-    return BONITOS[t.toLowerCase()] || t
+    var k = t.toLowerCase() // solo claves propias: 'constructor' o '__proto__' no son nombres bonitos
+    return Object.prototype.hasOwnProperty.call(BONITOS, k) ? BONITOS[k] : t
   }
   function detecta() {
     var q = new URLSearchParams(location.search), host = ''
