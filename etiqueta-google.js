@@ -20,8 +20,15 @@
   try { window.gtag('js', new Date()); window.gtag('config', ID) } catch (e) {}
 
   // ---- Origen ----
+  // Solo texto seguro: letras, numeros, espacio, _ y -; maximo 30 (por caracteres completos, sin partir emojis).
+  // Fuera caracteres de control, de direccion (U+202E...), espacios invisibles y cualquier otro simbolo.
+  var NO_SEGURO
+  try { NO_SEGURO = new RegExp('[^\\p{L}\\p{N} _-]', 'gu') } catch (e) { NO_SEGURO = /[^A-Za-z0-9 _-]/g }
+  var BONITOS = { google: 'Google', youtube: 'YouTube', instagram: 'Instagram', ig: 'Instagram', facebook: 'Facebook', fb: 'Facebook', tiktok: 'TikTok' }
   function limpiaOrigen(v) {
-    return String(v || '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 40)
+    var t = String(v || '').replace(NO_SEGURO, '').replace(/ +/g, ' ').trim()
+    t = Array.prototype.slice.call(t).slice(0, 30).join('').trim()
+    return BONITOS[t.toLowerCase()] || t
   }
   function detecta() {
     var q = new URLSearchParams(location.search), host = ''
@@ -73,14 +80,22 @@
   else todos()
 
   // ---- Clic: texto al dia (por si el enlace cambio) + conversion. Nada frena la navegacion. ----
+  var ultimo = { a: null, t: 0 }
   function toque(ev) {
     try {
       if (ev.type === 'click' ? ev.button !== 0 : ev.button !== 1) return
       var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="wa.me/' + NUMERO + '"]') : null
-      if (!a || a.hasAttribute('data-encuesta')) return // data-encuesta abre la encuesta, no WhatsApp
+      if (!a) return
+      // data-encuesta: el clic normal (boton 0 sin ctrl/meta/shift/alt) abre la encuesta, no WhatsApp: no cuenta.
+      // Con ctrl/meta/shift/alt o con el boton de en medio el enlace SI abre WhatsApp: cuenta.
+      if (a.hasAttribute('data-encuesta') && ev.type === 'click' && !(ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey)) return
       aplica(a)
       if (enPagos) return
-      window.gtag('event', 'conversion', { 'send_to': ENVIO, 'value': 1.0, 'currency': 'MXN' })
+      var ahora = Date.now() // un mismo gesto (click + auxclick en algunos navegadores) cuenta una sola vez
+      if (ultimo.a === a && ahora - ultimo.t < 600) return
+      ultimo = { a: a, t: ahora }
+      // transport_type beacon: la conversion sale aunque la pagina se vaya a WhatsApp; no frena el enlace
+      window.gtag('event', 'conversion', { 'send_to': ENVIO, 'value': 1.0, 'currency': 'MXN', 'transport_type': 'beacon' })
     } catch (e) {}
   }
   document.addEventListener('click', toque, true)

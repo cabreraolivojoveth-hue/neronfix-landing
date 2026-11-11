@@ -94,13 +94,14 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   toque a un botón de WhatsApp (clic o botón de en medio) manda una marca vacía a NUESTRO servidor
   (`POST /clic?d=botón&p=página&a=1|0|p`; `a=p` = visita de prueba con `gclid=prueba…`, no se
   cuenta); nginx contesta 204 y solo queda en su registro; la cuenta `neron-landing/clics.py`.
-  La marca no usa cookies ni nada de fuera. La **etiqueta de Google Ads está lista y APAGADA**
-  (`GOOGLE_ADS` y `ETIQUETA_WHATSAPP` vacíos = nada de Google). Encender, EN ESTE ORDEN:
-  1) publicar el aviso de privacidad (`/privacidad/`; con Google, Google pone sus cookies);
-  2) `sh neron-landing/google-ads.sh encender` (CSP con `servidor/csp-con-google.txt`; no enciende
-  sin el aviso); 3) los dos IDs reales de Joveth en `medicion.js` y publicarlo; 4) probar con el
-  gtag.js REAL y ver la conversión en Google Ads. La prueba sabe si está apagada o encendida y
-  exige, con IDs, que se sirva la CSP de Google.
+  La marca no usa cookies ni nada de fuera. **Google Ads (ACUERDO #9, 10/11/2026) NO va en `medicion.js`:**
+  la etiqueta (gtag.js async, ID AW-18555345517, en el `<head>` de todas las páginas) y la conversión
+  del clic a WhatsApp las hace **`etiqueta-google.js`** (no cuenta en `/pagos/`; también guarda el origen
+  del anuncio en sessionStorage y lo pone en el mensaje de WhatsApp). La CSP con Google se abre con
+  `sh neron-landing/google-ads.sh encender` (necesita `/privacidad/` publicado). **NO se llenen
+  `GOOGLE_ADS` ni `ETIQUETA_WHATSAPP` de `medicion.js`: la conversión saldría DOBLE.** La prueba
+  (`prueba-landing.mjs`) decide por lo que sirve la portada: sin etiqueta espera CSP normal y nada
+  de Google; con etiqueta, la CSP con Google, y exige `medicion.js` sin IDs.
 - `faq.html` y `contacto.html` ya no existen: `vercel.json` los redirige a `/`.
 
 ## Después de desplegar

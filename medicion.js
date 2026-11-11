@@ -4,10 +4,10 @@
       a nuestro servidor: POST /clic?d=<botón>&p=<página>&a=<1 llegó por anuncio · 0 no ·
       p prueba>. Esta marca no usa cookies ni datos de la persona ni nada de fuera.
 
-   2) ETIQUETA DE GOOGLE ADS (lista, APAGADA): se llenan las dos líneas de abajo con lo que
-      da Google Ads (Objetivos → Conversiones → «Clic en WhatsApp» → etiqueta de Google).
-      Vacías = no se carga nada de Google. Encendida, Google pone sus propias cookies:
-      antes va el aviso de privacidad. Los IDs no se inventan. */
+   2) GOOGLE ADS NO SE ENCIENDE AQUÍ (ACUERDO #9, 10/11/2026): la etiqueta y la conversión del clic las
+      hace /etiqueta-google.js (con el gtag.js del <head>); la CSP se abre con `google-ads.sh encender`.
+      Estas dos líneas se quedan VACÍAS a propósito: si se llenan, la conversión sale DOBLE. El bloque
+      de abajo queda solo como código viejo sin uso. */
 (function () {
   'use strict'
   var GOOGLE_ADS = ''        // ID de conversión, ej. 'AW-123456789'

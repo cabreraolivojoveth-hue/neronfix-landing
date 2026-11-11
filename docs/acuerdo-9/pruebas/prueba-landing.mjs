@@ -622,6 +622,76 @@ dl.push=function(a){var r=push(a);try{if(a&&a[0]==='event'&&a[1]==='conversion')
   di(sin.length === 0, `Estado de Google: ${GOOGLE_ON ? 'ENCENDIDO' : 'APAGADO'} igual en las 8 páginas (la portada, las 4 de buscadores, /recomienda/, /pagos/ y /privacidad/)`, sin.join(' '))
 }
 
+// ── 2h. Origen, texto de WhatsApp y conversion (ACUERDO #9, revision del 10/11/2026). Solo con la etiqueta puesta (paso 2) ──
+if (GOOGLE_ON) {
+  const GH = /(^|\.)(googletagmanager\.com|googleadservices\.com|google\.com|google\.com\.mx|doubleclick\.net)$/
+  const ENV = 'AW-18555345517/BhxrCLnIg7YdEO208I9F'
+  const SALUDO = 'Hola, quiero acceso a StorePhone'
+  // Una visita: devuelve origen guardado, textos de los enlaces y las conversiones que entraron al dataLayer
+  async function visita(ruta, { referer, mutar, antes } = {}) {
+    const ctx = await nav.newContext({ viewport: { width: 1280, height: 900 } }), pag = await ctx.newPage(); const wa = []
+    await ctx.route((u) => GH.test(u.hostname), (r) => r.fulfill({ status: /gtag\/js/.test(r.request().url()) ? 200 : 204, contentType: 'text/javascript', body: '' }))
+    await ctx.route(/wa\.me/, (r) => { wa.push(r.request().url()); r.fulfill({ status: 200, contentType: 'text/html', body: 'wa' }) })
+    if (mutar) await pag.route('**/etiqueta-google.js*', async (r) => { const res = await r.fetch(); await r.fulfill({ response: res, body: mutar(await res.text()) }) })
+    await pag.goto(new globalThis.URL(ruta, URL).href, { waitUntil: 'networkidle', ...(referer ? { referer } : {}) })
+    if (antes) await antes(pag)
+    const lee = async () => pag.evaluate(() => ({
+      ss: (() => { try { return sessionStorage.getItem('neron-origen') } catch { return null } })(),
+      textos: [...document.querySelectorAll('a[href*="wa.me/5216462875283"]')].map((a) => decodeURIComponent((a.getAttribute('href').split('text=')[1] || ''))),
+      conv: (window.dataLayer || []).map((a) => [...a]).filter((a) => a[0] === 'event' && a[1] === 'conversion').map((a) => a[2]) }))
+    return { pag, ctx, wa, lee }
+  }
+  // a) origen y texto
+  for (const [ruta, referer, esperado, nombre] of [
+    ['?gclid=prueba', 'https://www.google.com/', 'Google', 'gclid + referrer google → «Google»'],
+    ['?gclid=prueba', undefined, 'YouTube', 'gclid sin referrer → «YouTube»'],
+    ['?gbraid=x', 'https://www.google.com.mx/', 'Google', 'gbraid + referrer google.com.mx → «Google»'],
+    ['?utm_source=newsletter', undefined, 'newsletter', 'utm_source=newsletter → «newsletter»'],
+    ['?utm_source=ig', undefined, 'Instagram', 'utm_source=ig → «Instagram»'],
+    ['?utm_source=FB', undefined, 'Facebook', 'utm_source=FB → «Facebook»'],
+    ['?utm_source=tiktok', undefined, 'TikTok', 'utm_source=tiktok → «TikTok»'],
+    ['', 'https://l.instagram.com/', 'Instagram', 'referrer instagram → «Instagram»'],
+    ['?utm_source=' + encodeURIComponent('Mi‮evil​ anuncio x'), undefined, 'Mievil anunciox', 'utm_source con U+202E, espacio invisible y NBSP → sin esos caracteres'],
+    ['?utm_source=' + encodeURIComponent('a'.repeat(50)), undefined, 'a'.repeat(30), 'utm_source de 50 letras → corta a 30'],
+    ['?utm_source=' + encodeURIComponent('<script>'), undefined, 'script', 'utm_source con < > → solo texto seguro'],
+  ]) {
+    const v = await visita(ruta, { referer }); const r = await v.lee()
+    di(r.ss === esperado && r.textos.includes(`Hola, vi su anuncio en ${esperado} y quiero acceso a StorePhone`) && r.textos.every((t) => t === '' || t.startsWith(`Hola, vi su anuncio en ${esperado} y quiero acceso a StorePhone`) || t.startsWith(`Vi su anuncio en ${esperado}. `)), `Origen: ${nombre}, y el texto de WhatsApp cambia`, `${r.ss} · ${r.textos.slice(0, 2).join(' | ')}`)
+    await v.ctx.close()
+  }
+  { const v = await visita('?utm_source=' + encodeURIComponent('\u{1F600}‮​'), {}); const r = await v.lee()
+    di(r.ss === null && r.textos.includes(SALUDO) && r.textos.every((t) => !/anuncio/.test(t)), 'Origen: utm_source sin nada de texto seguro → sin origen y los textos quedan iguales', `${r.ss} · ${r.textos[0]}`); await v.ctx.close() }
+  { const v = await visita('', {}); const r = await v.lee()
+    di(r.ss === null && r.textos.includes(SALUDO) && r.textos.every((t) => !/anuncio/.test(t)), 'Origen: visita normal → sin origen y los textos quedan iguales', `${r.ss}`); await v.ctx.close() }
+  { // textos con su original respetado (plan Premium) y emoji partido no
+    const v = await visita('?gclid=x', { referer: 'https://www.google.com/' }); const r = await v.lee()
+    di(r.textos.includes('Vi su anuncio en Google. Hola, quiero acceso a StorePhone, me interesa el plan Premium'), 'Texto: los demás enlaces llevan «Vi su anuncio en Google. » al inicio y conservan su texto original', r.textos.join(' | ').slice(0, 200)); await v.ctx.close() }
+  // b) conversion: parametros exactos, una vez, y el enlace abre
+  {
+    const v = await visita('?gclid=x', { referer: 'https://www.google.com/' })
+    const t0 = Date.now(); await v.pag.locator('.hero .cta a[href*="wa.me"]').first().click(); const dt = Date.now() - t0; await v.pag.waitForTimeout(500)
+    const r = await v.lee(); const c = r.conv
+    di(c.length === 1 && c[0].send_to === ENV && c[0].value === 1 && c[0].currency === 'MXN' && c[0].transport_type === 'beacon', 'Conversión: el clic manda send_to exacto, value:1, currency:MXN y transport_type:beacon (una sola vez)', JSON.stringify(c))
+    di(v.wa.length >= 1 && dt < 1500, `Conversión: el enlace abre igual y sin retraso (${dt} ms)`, String(v.wa)); await v.ctx.close()
+  }
+  // c) /pagos/ con un enlace INYECTADO a wa.me/5216462875283: 0 conversiones; y la prueba se pone roja si se quita el candado
+  const pagosInyectado = async (mutar) => {
+    const v = await visita('pagos/?gclid=x', { referer: 'https://www.google.com/', mutar })
+    await v.pag.evaluate(() => { const a = document.createElement('a'); a.id = 'inyectado'; a.href = 'https://wa.me/5216462875283?text=Hola%2C%20quiero%20acceso%20a%20StorePhone'; a.target = '_blank'; a.textContent = 'inyectado'; a.style.cssText = 'display:block;padding:20px'; document.querySelector('main').appendChild(a) })
+    await v.pag.locator('#inyectado').click(); await v.pag.waitForTimeout(500)
+    const r = await v.lee(); const abrio = v.wa.length >= 1; await v.ctx.close(); return { n: r.conv.length, abrio }
+  }
+  { const r = await pagosInyectado(); di(r.n === 0 && r.abrio, '/pagos/: un enlace inyectado a wa.me/5216462875283 abre y NO manda conversión (0)', JSON.stringify(r)) }
+  { const r = await pagosInyectado((t) => t.replace('if (enPagos) return', '')); di(r.n >= 1, '/pagos/: la prueba se pone ROJA si se quita «if (enPagos) return» (con el candado quitado entra la conversión)', JSON.stringify(r)) }
+  // d) «Probar gratis» (data-encuesta): el clic normal abre la encuesta y NO cuenta; ctrl+clic y botón de en medio abren WhatsApp y cuentan una vez
+  for (const [nombre, opts, esperado] of [['clic normal (abre la encuesta)', {}, 0], ['ctrl+clic', { modifiers: ['Control'] }, 1], ['shift+clic', { modifiers: ['Shift'] }, 1], ['botón de en medio', { button: 'middle' }, 1]]) {
+    const v = await visita('?gclid=x', { referer: 'https://www.google.com/' })
+    await v.pag.locator('#planes a[data-encuesta="Premium"]').first().scrollIntoViewIfNeeded(); await v.pag.locator('#planes a[data-encuesta="Premium"]').first().click(opts); await v.pag.waitForTimeout(600)
+    const r = await v.lee()
+    di(r.conv.length === esperado, `Conversión en «Probar gratis»: ${nombre} → ${esperado} conversión(es)`, `${r.conv.length} · WhatsApp abierto: ${v.wa.length}`); await v.ctx.close()
+  }
+}
+
 // ── 3. Archivos para buscadores y redirecciones ──
 const pide = async (p) => { try { const r = await fetch(new globalThis.URL(p, URL)); return [r.status, await r.text(), r.headers.get('content-type') || ''] } catch (e) { return [0, '', ''] } }
 const [sS, sitemap] = await pide('sitemap.xml')
