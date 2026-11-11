@@ -12,3 +12,13 @@ Pruebas: prueba-acuerdo9.mjs (23 casos, red de Google simulada) y prueba-red-rea
 La prueba prueba-landing.mjs de neron-landing/pruebas da por hecho "Google apagado": hay que actualizar
 sus casos de Velocidad (7 scripts), Medicion (HTML sin Google), "sin servidores de fuera",
 "pesa menos de 150 KB" y /recomienda/ ("sin scripts") para el nuevo estado.
+
+--- Segunda parte (aviso de privacidad), 10/11/2026 ---
+Copiar al montaje (neron-landing/):
+  docs/acuerdo-9/servidor/csp-con-google.txt  -> neron-landing/servidor/csp-con-google.txt
+  docs/acuerdo-9/servidor/revisar-csp.py      -> neron-landing/revisar-csp.py   (solo agrega https://ad.doubleclick.net a GOOGLE)
+  docs/acuerdo-9/pruebas/prueba-landing.mjs   -> neron-landing/pruebas/prueba-landing.mjs
+  docs/acuerdo-9/pruebas/prueba-encuesta.mjs  -> neron-landing/pruebas/prueba-encuesta.mjs
+Y en neron-landing/servidor/nginx-produccion.conf y cabeceras.inc: cambiar el texto de la CSP
+(la linea add_header Content-Security-Policy "...") por el de csp-con-google.txt. csp-normal.txt no cambia.
+Con nginx -t y recarga. Respaldar cada archivo con fecha antes.

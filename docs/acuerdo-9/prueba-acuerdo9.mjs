@@ -98,5 +98,24 @@ r = await visita('?gclid=x', { referer: 'https://www.google.com.mx/search?q=a', 
   di(wa.length === 1 && /^Vi su anuncio en Google\. Hola, quiero mi prueba gratuita/.test(dec(wa[0])), '8 encuesta: el WhatsApp final lleva el origen', dec(wa[0] || ''))
   await ctx.close()
 }
+// 9) /privacidad/ (aviso): abre a 390 y 1280, sin desborde, con la etiqueta y ligado en el pie de las 7 paginas
+for (const ancho of [390, 1280]) {
+  const ctx = await nav.newContext({ viewport: { width: ancho, height: 800 } }), pag = await ctx.newPage(); const err = []
+  pag.on('pageerror', (e) => err.push(String(e)))
+  await pag.route(/googletagmanager\.com|google\.com|doubleclick|googleadservices/, (r) => r.fulfill({ status: 200, body: '' }))
+  const resp = await pag.goto(URL_ + 'privacidad/', { waitUntil: 'networkidle' })
+  const d = await pag.evaluate(() => ({ h1: document.querySelector('h1')?.textContent, sobra: document.documentElement.scrollWidth - innerWidth, txt: document.body.innerText, etiqueta: !!document.querySelector('script[src*="AW-18555345517"]') }))
+  di(resp.status() === 200 && d.h1 === 'Aviso de privacidad' && d.sobra <= 0 && err.length === 0, `9 /privacidad/ ${ancho}: abre, un h1, sin desborde ni errores`, JSON.stringify([resp.status(), d.sobra, err]))
+  di(/etiqueta de Google Ads/.test(d.txt) && /cookies/.test(d.txt) && /646 287 5283/.test(d.txt) && /no vendemos/i.test(d.txt) && d.etiqueta, `9 /privacidad/ ${ancho}: dice lo de Google Ads, cookies, WhatsApp y que no se venden datos; lleva la etiqueta`)
+  await pag.screenshot({ path: `privacidad-${ancho}.png`, fullPage: true }); await ctx.close()
+}
+{
+  const ctx = await nav.newContext(), pag = await ctx.newPage(); const mal = []
+  await pag.route(/googletagmanager\.com|google\.com|doubleclick|googleadservices/, (r) => r.fulfill({ status: 200, body: '' }))
+  for (const r of ['', 'control-de-imei/', 'punto-de-venta-con-creditos/', 'sistema-para-celulares-monterrey/', 'sistema-para-celulares-cdmx/', 'recomienda/', 'pagos/']) {
+    await pag.goto(URL_ + r); const n = await pag.locator('footer.pie a[href="/privacidad/"]').count(); if (n !== 1) mal.push(r)
+  }
+  di(mal.length === 0, '9 el pie de las 7 paginas liga a /privacidad/ (una vez)', mal.join(' ')); await ctx.close()
+}
 console.log(`\nRESULTADO: ${bien} bien, ${mal} mal`)
 await nav.close(); process.exit(mal ? 1 : 0)
