@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aviso de privacidad | StorePhone</title>
+<meta name="description" content="Aviso de privacidad de Neron Fix (StorePhone): qué datos se juntan, para qué se usan, la etiqueta de Google Ads y cómo pedir acceso, corrección o borrado.">
+<link rel="canonical" href="https://www.neronfix.com/privacidad/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#7a1225">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2026110102">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2026110102">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:url" content="https://www.neronfix.com/privacidad/">
+<meta property="og:title" content="Aviso de privacidad">
+<meta property="og:description" content="Cómo cuida Neron Fix tus datos.">
+<meta property="og:image" content="https://www.neronfix.com/og-storephone.jpg">
+<style>
+/* Condiciones del programa de recomendación (Joveth, 02/11/2026). Mismos colores que
+   la portada: vino #7A1225, dorado #C79A3E (#8A6620 en texto sobre blanco, AA),
+   negro #111 y blanco. Sin scripts: es texto para leer. */
+:root{
+  --bg:#fff;--soft:#f7f5f3;--ink:#111;--ink2:#4f4744;--ink3:#6b625f;
+  --wine:#7a1225;--wine-osc:#5f0d1c;--gold:#c79a3e;--gold-tx:#8a6620;
+  --line:#e8e1da;
+  --out:cubic-bezier(.22,.61,.36,1);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font:1.0625rem/1.6 var(--font);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:clip;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+main{flex:1 0 auto}
+a{color:var(--wine)}
+img{display:block;max-width:100%;height:auto}
+p,li{text-wrap:pretty}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--wine);outline-offset:3px;border-radius:6px}
+
+/* Cabecera (igual que la portada) */
+.hdr{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid var(--line)}
+@media (prefers-reduced-transparency:reduce){.hdr{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}}
+.hdr .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand img{height:34px;width:auto}
+.brand span{font-weight:700;font-size:1.125rem;letter-spacing:-.02em}
+.hdr__entrar{margin-left:auto;color:var(--ink2);text-decoration:none;font-size:.9375rem}
+.hdr__entrar:hover{color:var(--wine)}
+
+/* Botón */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:1rem;text-decoration:none;text-align:center;transition:background-color .2s var(--out),transform .12s var(--out)}
+.btn:active{transform:scale(.97)}
+.btn--vino{background:var(--wine);color:#fff;box-shadow:0 1px 2px rgba(122,18,37,.22),0 6px 18px rgba(122,18,37,.2)}
+.btn--vino:hover{background:var(--wine-osc)}
+.btn svg{width:20px;height:20px;flex:none;fill:currentColor}
+
+/* Condiciones */
+.cond{padding:64px 0 72px;background:radial-gradient(70% 40% at 50% 0%,rgba(122,18,37,.07),rgba(122,18,37,0) 70%),var(--bg)}
+.cond .wrap{max-width:760px}
+.cond__sello{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-tx)}
+h1{margin-top:10px;font-size:clamp(2rem,5.6vw,3rem);font-weight:700;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+.puntos{list-style:none;counter-reset:punto;margin-top:36px;display:grid;gap:14px}
+.puntos li{counter-increment:punto;position:relative;padding:18px 20px 18px 64px;border:1px solid var(--line);border-radius:18px;background:#fff;color:var(--ink2)}
+.puntos li::before{content:counter(punto);position:absolute;left:18px;top:16px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--ink);font-weight:700;font-size:.9375rem}
+.puntos strong{color:var(--ink)}
+.vigente{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:.9375rem}
+.dudas{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.dudas p{color:var(--ink2)}
+
+/* Pie en negro (igual que la portada) */
+.pie{padding:28px 0 32px;background:var(--ink);color:rgba(255,255,255,.7);font-size:.875rem}
+.pie .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+.pie a{color:var(--gold);text-decoration-color:rgba(199,154,62,.45);text-underline-offset:3px}
+.pie a:hover{color:#fff}
+.pie :focus-visible{outline-color:var(--gold)}
+
+@media (max-width:600px){
+  .cond{padding:36px 0 56px}
+  .puntos{margin-top:26px}
+  .puntos li{padding:16px 16px 16px 58px}
+  .puntos li::before{left:14px;top:14px}
+  .dudas .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.hdr{position:static}.dudas .btn{display:none}}
+@media (prefers-contrast:more){:root{--ink2:#2e2725;--ink3:#3f3633;--line:#b9aea8}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="StorePhone por Neron, inicio">
+      <img src="/logo-oficial-cabecera.png" alt="" width="132" height="102">
+      <span>StorePhone</span>
+    </a>
+    <a class="hdr__entrar" href="https://storephone.neronfix.com" rel="noopener">Entrar</a>
+  </div>
+</header>
+<main>
+<section class="cond">
+  <div class="wrap">
+    <p class="cond__sello">Privacidad</p>
+    <h1>Aviso de privacidad</h1>
+    <ol class="puntos">
+      <li><strong>Quién es responsable.</strong> NERON FIX, de Joveth Cabrera, en Ensenada, Baja California, México. Contacto: WhatsApp <span style="white-space:nowrap">646 287 5283</span>.</li>
+      <li><strong>Qué datos se juntan.</strong> Lo que tú nos escribes por WhatsApp (por ejemplo nombre de tu tienda, ciudad, correo y plan que te interesa). Además, una medición propia y sencilla de cuántas veces se toca un botón de WhatsApp: no guarda tu nombre ni tu teléfono. Y la etiqueta de Google Ads, que mide si nuestros anuncios funcionan y usa cookies de Google.</li>
+      <li><strong>Para qué se usan.</strong> Para contestarte y darte informes de StorePhone, y para medir y mejorar nuestros anuncios.</li>
+      <li><strong>Etiqueta de Google Ads.</strong> Este sitio usa la etiqueta de Google Ads para medir los anuncios. Google puede poner cookies en tu navegador. Puedes borrarlas o bloquearlas desde la configuración de tu navegador; el sitio funciona igual.</li>
+      <li><strong>No vendemos tus datos.</strong> No los vendemos ni los regalamos. Solo los ven quienes te atienden en Neron Fix y, en lo de los anuncios, Google.</li>
+      <li><strong>Tus derechos.</strong> Puedes pedir por WhatsApp que te mostremos, corrijamos o borremos tus datos. Escríbenos al número de arriba y lo atendemos.</li>
+    </ol>
+    <p class="vigente">Vigente desde el 10 de noviembre de 2026. Si cambia, lo avisamos en esta página.</p>
+    <div class="dudas">
+      <p>¿Dudas? Escríbenos por WhatsApp.</p>
+      <a class="btn btn--vino" href="https://wa.me/5216462875283" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="pie">
+  <div class="wrap">
+    <span>© 2026 Neron · Ensenada, Baja California, México</span>
+    <a href="/privacidad/">Aviso de privacidad</a>
+    <a href="/">Conoce StorePhone</a>
+    <a href="https://www.youtube.com/@neronfix" target="_blank" rel="noopener">Síguenos en YouTube</a>
+  </div>
+</footer>
+</body>
+</html>
