@@ -666,13 +666,17 @@ if (GOOGLE_ON) {
   { // textos con su original respetado (plan Premium) y emoji partido no
     const v = await visita('?gclid=x', { referer: 'https://www.google.com/' }); const r = await v.lee()
     di(r.textos.includes('Vi su anuncio en Google. Hola, quiero acceso a StorePhone, me interesa el plan Premium'), 'Texto: los demás enlaces llevan «Vi su anuncio en Google. » al inicio y conservan su texto original', r.textos.join(' | ').slice(0, 200)); await v.ctx.close() }
-  // b) conversion: parametros exactos, una vez, y el enlace abre
+  // b) conversion: parametros exactos, una vez (el clic no navega para poder leer el dataLayer) y, aparte, el enlace abre sin retraso
   {
     const v = await visita('?gclid=x', { referer: 'https://www.google.com/' })
-    const t0 = Date.now(); await v.pag.locator('.hero .cta a[href*="wa.me"]').first().click(); const dt = Date.now() - t0; await v.pag.waitForTimeout(500)
-    const r = await v.lee(); const c = r.conv
+    await v.pag.evaluate(() => document.addEventListener('click', (e) => { if (e.target.closest('a[href*="wa.me"]')) e.preventDefault() }))
+    await v.pag.locator('.hero .cta a[href*="wa.me"]').first().click(); await v.pag.waitForTimeout(500)
+    const c = (await v.lee()).conv
     di(c.length === 1 && c[0].send_to === ENV && c[0].value === 1 && c[0].currency === 'MXN' && c[0].transport_type === 'beacon', 'Conversión: el clic manda send_to exacto, value:1, currency:MXN y transport_type:beacon (una sola vez)', JSON.stringify(c))
-    di(v.wa.length >= 1 && dt < 1500, `Conversión: el enlace abre igual y sin retraso (${dt} ms)`, String(v.wa)); await v.ctx.close()
+    await v.ctx.close()
+    const w = await visita('?gclid=x', { referer: 'https://www.google.com/' })
+    const t0 = Date.now(); await w.pag.locator('.hero .cta a[href*="wa.me"]').first().click(); const dt = Date.now() - t0; await w.pag.waitForTimeout(400)
+    di(w.wa.length >= 1 && dt < 1500, `Conversión: el enlace abre igual y sin retraso (${dt} ms)`, String(w.wa)); await w.ctx.close()
   }
   // c) /pagos/ con un enlace INYECTADO a wa.me/5216462875283: 0 conversiones; y la prueba se pone roja si se quita el candado
   const pagosInyectado = async (mutar) => {
