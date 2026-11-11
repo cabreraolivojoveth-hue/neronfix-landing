@@ -1,0 +1,14 @@
+ACUERDO #9 (10/11/2026) — etiqueta de Google Ads + origen en el mensaje de WhatsApp
+Rama: trabajo/acuerdo-9-whatsapp. NO publicado.
+
+Para publicar (con el «si» de Joveth) hacen falta DOS cosas, no solo el repo:
+1) El repo (esta rama): etiqueta-google.js, el <head> de las 7 paginas y vercel.json.
+2) La CSP de nginx (neron-landing/servidor/nginx-produccion.conf y cabeceras.inc): hoy es la NORMAL
+   (script-src 'self') y bloquearia gtag.js. Poner en ambos archivos el texto de csp-con-google.txt de
+   esta carpeta (= la csp-con-google.txt de servidor/ MAS https://ad.doubleclick.net en connect-src e
+   img-src: la prueba con la red real mostro que gtag lo pide). Tambien actualizar en
+   neron-landing/servidor/csp-con-google.txt y la lista GOOGLE de neron-landing/revisar-csp.py.
+Pruebas: prueba-acuerdo9.mjs (23 casos, red de Google simulada) y prueba-red-real.mjs (red real).
+La prueba prueba-landing.mjs de neron-landing/pruebas da por hecho "Google apagado": hay que actualizar
+sus casos de Velocidad (7 scripts), Medicion (HTML sin Google), "sin servidores de fuera",
+"pesa menos de 150 KB" y /recomienda/ ("sin scripts") para el nuevo estado.
