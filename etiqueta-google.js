@@ -27,7 +27,7 @@
   var BONITOS = { google: 'Google', youtube: 'YouTube', instagram: 'Instagram', ig: 'Instagram', facebook: 'Facebook', fb: 'Facebook', tiktok: 'TikTok' }
   function limpiaOrigen(v) {
     var t = String(v || '').replace(NO_SEGURO, '').replace(/ +/g, ' ').trim()
-    t = Array.prototype.slice.call(t).slice(0, 30).join('').trim()
+    t = (Array.from ? Array.from(t) : (t.match(/[\s\S]/g) || [])).slice(0, 30).join('').trim() // Array.from cuenta caracteres completos (𝐀 es uno, no dos mitades)
     return BONITOS[t.toLowerCase()] || t
   }
   function detecta() {
@@ -86,9 +86,9 @@
       if (ev.type === 'click' ? ev.button !== 0 : ev.button !== 1) return
       var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="wa.me/' + NUMERO + '"]') : null
       if (!a) return
-      // data-encuesta: el clic normal (boton 0 sin ctrl/meta/shift/alt) abre la encuesta, no WhatsApp: no cuenta.
-      // Con ctrl/meta/shift/alt o con el boton de en medio el enlace SI abre WhatsApp: cuenta.
-      if (a.hasAttribute('data-encuesta') && ev.type === 'click' && !(ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey)) return
+      // data-encuesta: el clic normal (boton 0 sin ctrl/meta/shift; alt+clic tampoco abre WhatsApp, lo mismo que encuesta.js) abre la encuesta, no WhatsApp: no cuenta.
+      // Con ctrl/meta/shift o con el boton de en medio el enlace SI abre WhatsApp: cuenta.
+      if (a.hasAttribute('data-encuesta') && ev.type === 'click' && !(ev.ctrlKey || ev.metaKey || ev.shiftKey)) return
       aplica(a)
       if (enPagos) return
       var ahora = Date.now() // un mismo gesto (click + auxclick en algunos navegadores) cuenta una sola vez
