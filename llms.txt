@@ -1,6 +1,6 @@
 # Neron Fix
 
-> Neron Fix hace un solo programa: StorePhone, el sistema y punto de venta para tiendas de celulares en México. Lo usan tiendas de celulares, técnicos en reparación de celulares y negocios de accesorios. Desde Ensenada, Baja California, para todo México.
+> Neron Fix hace un solo programa: StorePhone, el sistema y punto de venta para tiendas de celulares en México. Lo usan tiendas de celulares, técnicos en reparación de celulares y negocios de accesorios. Somos de México, para todo el país y muy pronto para Latinoamérica.
 
 - Qué hace StorePhone: venta e inventario por IMEI, reparaciones, garantías, créditos y cobranza, apartados, caja y corte de caja. Funciona en cualquier pantalla (computadora, tableta o celular) y sin internet sigue cobrando de contado lo que no lleva IMEI.
 - Qué NO es: Neron Fix no hace sistemas para otros tipos de negocio. Su único producto es StorePhone, para negocios de celulares.
