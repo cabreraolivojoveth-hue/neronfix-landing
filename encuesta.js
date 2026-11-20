@@ -71,6 +71,9 @@
       try { enlace.href = WA + '?text=' + encodeURIComponent(mensaje()) }
       catch (e) { enlace.href = WA + '?text=' + encodeURIComponent(mensaje().replace(/[^\u0000-\uD7FF\uE000-\uFFFF]/g, '')) }
       enlace.setAttribute('data-plan', datos.plan)
+      // 19/11/2026: Normal y Premium son de 1 sucursal; con más, se avisa que eso es el plan Pro (no se cambia el plan elegido)
+      var aviso = document.getElementById('enc-aviso')
+      if (aviso) aviso.hidden = !(datos.plan !== 'Pro' && +datos.sucursales > 1)
     }
   }
 

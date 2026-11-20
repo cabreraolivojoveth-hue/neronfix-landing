@@ -73,13 +73,17 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   que los buscadores lo lean tal cual. Ya no hay `assets/`: lo viejo está en git.
 - **Precios (Joveth, 19/11/2026, solo mensual, IVA incluido):** Normal $650 (2 usuarios ·
   1 sucursal), Premium $850 (5 usuarios · 1 sucursal), Pro desde $1,350 (usuarios
-  ilimitados · 2 sucursales; +$280 por sucursal extra). Todos los planes traen todas las
-  funciones: cambian solo usuarios y sucursales (`planReglas.ts` de NeronCell).
+  ilimitados · 2 sucursales; +$280 por sucursal extra). Qué incluye cada plan (la oferta) está
+  en `decisiones/DECISIONES.md` «2026-11-19 · Qué incluye cada plan»: Normal lo básico, Premium
+  comisionistas/apartados/roles a tu gusto/Auditoría/reportes, Pro sucursales/traspasos/Neri. La app
+  aún NO limita funciones por plan (solo usuarios y sucursales): nunca escribir «se bloquea». La
+  prueba gratis trae todo abierto. Las páginas por ciudad dicen el plan de cada función.
 - **Solo lo que el programa hace HOY (Joveth, 19/11/2026):** nada de tienda en línea, cupones,
   contratos (tampoco de confidencialidad), firmas de reparación, facturación, consignación (solo un
   negocio la tiene), dominio propio, soporte prioritario ni respaldo diario sin comprobar. Cada
   promesa nueva se comprueba antes en el código o la bitácora de NeronCell. La prueba vigila
-  «tienda en línea», «contrato», «firma» y los precios viejos en todas las páginas. Aparecen en las tarjetas,
+  «tienda en línea», «contrato», «firma», «facturación», «dominio propio», «soporte prioritario»,
+  «respaldo diario», «trato por escrito», «consignación», «se bloquea» y los precios viejos en todas las páginas. Aparecen en las tarjetas,
   en la pregunta «¿Cuánto cuesta?» y en el JSON-LD: si cambian, se cambian en los
   tres; la prueba (`neron-landing/pruebas/prueba-landing.mjs`) vigila que
   coincidan, y que las preguntas del JSON-LD sean idénticas a las visibles.

@@ -1,10 +1,13 @@
 # Neron Fix
 
-> Neron Fix hace un solo programa: StorePhone, el sistema y punto de venta para tiendas de celulares en México. Lo usan tiendas de celulares, técnicos en reparación de celulares y negocios de accesorios. Somos de México, para todo el país y muy pronto para Latinoamérica.
+> Neron Fix hace un solo programa: StorePhone, el sistema y punto de venta para tiendas de celulares en México. Hecho para tiendas de celulares, técnicos en reparación de celulares y negocios de accesorios. Somos de México, para todo el país y muy pronto para Latinoamérica.
 
-- Qué hace StorePhone: venta e inventario por IMEI, reparaciones, garantías, créditos y cobranza, apartados, caja y corte de caja. Funciona en cualquier pantalla (computadora, tableta o celular) y sin internet sigue cobrando de contado lo que no lleva IMEI.
+- Qué hace StorePhone: venta e inventario por IMEI, reparaciones, garantías, créditos y cobranza, caja y corte de caja. Funciona en cualquier pantalla (computadora, tableta o celular) y sin internet sigue cobrando de contado lo que no lleva IMEI.
 - Qué NO es: Neron Fix no hace sistemas para otros tipos de negocio. Su único producto es StorePhone, para negocios de celulares.
-- Precios: mensual, IVA incluido. Normal $650, Premium $850 y Pro desde $1,350.
+- Precios: mensual, IVA incluido. Primer mes gratis (30 días), con todo abierto.
+  - Normal $650 (2 usuarios, 1 sucursal): IMEI, inventario y Excel del inventario, crédito propio y financieras, reparaciones, garantías e incidencias, dólares y cobro mixto, impresión y ticket por WhatsApp o PDF, corte de caja, corte por persona y retiro de utilidades.
+  - Premium $850 (5 usuarios, 1 sucursal): todo lo del Normal, más comisionistas y colaboradores, equipo a cuenta, apartados y anticipos, inventario compartido con afiliados, roles a tu gusto y Auditoría, y reportes de ganancia, metas y Excel de ventas.
+  - Pro desde $1,350 (usuarios sin límite, 2 sucursales; +$280 al mes por cada sucursal extra): todo lo del Premium, más todas las sucursales juntas, traspasos, aviso si el cliente debe en otra sucursal y Neri, el ayudante con IA.
 - Alta: por invitación, se pide por WhatsApp al 646 287 5283.
 
 ## Enlaces
