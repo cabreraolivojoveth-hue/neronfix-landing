@@ -83,7 +83,9 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   negocio la tiene), dominio propio, soporte prioritario ni respaldo diario sin comprobar. Cada
   promesa nueva se comprueba antes en el código o la bitácora de NeronCell. La prueba vigila
   «tienda en línea», «contrato», «firma», «facturación», «dominio propio», «soporte prioritario»,
-  «respaldo diario», «trato por escrito», «consignación», «se bloquea» y los precios viejos en todas las páginas. Aparecen en las tarjetas,
+  «respaldo diario», «trato por escrito», «consignación», «se bloquea», «confidencialidad», «ya lo usan»,
+  «recomendar a una tienda» y los precios viejos en todas las páginas. El Excel del inventario no se
+  menciona en ningún plan hasta que Joveth decida (solo «Excel de ventas» en Premium). Aparecen en las tarjetas,
   en la pregunta «¿Cuánto cuesta?» y en el JSON-LD: si cambian, se cambian en los
   tres; la prueba (`neron-landing/pruebas/prueba-landing.mjs`) vigila que
   coincidan, y que las preguntas del JSON-LD sean idénticas a las visibles.
