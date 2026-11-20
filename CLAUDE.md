@@ -71,9 +71,15 @@ publicaron `ec882f9` y `831c464` y la guardia e-protocolo lo marcó «FUERA DEL 
   storephone.) mandan `X-Robots-Tag: noindex` desde su servidor.
 - **El contenido vive en `index.html`, escrito en el HTML** (sin scripts), para
   que los buscadores lo lean tal cual. Ya no hay `assets/`: lo viejo está en git.
-- **Precios (02/10/2026, solo mensual, IVA incluido):** Normal $450 (2 usuarios ·
-  1 sucursal), Premium $750 (5 usuarios · 1 sucursal), Pro desde $1,250 (usuarios
-  ilimitados · 2 sucursales; +$280 por sucursal extra). Aparecen en las tarjetas,
+- **Precios (Joveth, 19/11/2026, solo mensual, IVA incluido):** Normal $650 (2 usuarios ·
+  1 sucursal), Premium $850 (5 usuarios · 1 sucursal), Pro desde $1,350 (usuarios
+  ilimitados · 2 sucursales; +$280 por sucursal extra). Todos los planes traen todas las
+  funciones: cambian solo usuarios y sucursales (`planReglas.ts` de NeronCell).
+- **Solo lo que el programa hace HOY (Joveth, 19/11/2026):** nada de tienda en línea, cupones,
+  contratos (tampoco de confidencialidad), firmas de reparación, facturación, consignación (solo un
+  negocio la tiene), dominio propio, soporte prioritario ni respaldo diario sin comprobar. Cada
+  promesa nueva se comprueba antes en el código o la bitácora de NeronCell. La prueba vigila
+  «tienda en línea», «contrato», «firma» y los precios viejos en todas las páginas. Aparecen en las tarjetas,
   en la pregunta «¿Cuánto cuesta?» y en el JSON-LD: si cambian, se cambian en los
   tres; la prueba (`neron-landing/pruebas/prueba-landing.mjs`) vigila que
   coincidan, y que las preguntas del JSON-LD sean idénticas a las visibles.
